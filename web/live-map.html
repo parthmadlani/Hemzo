@@ -69,7 +69,7 @@
   @keyframes draw { from { stroke-dashoffset: 420 } to { stroke-dashoffset: 0 } }
 
   /* ---- shell: one screen, no page scroll ---- */
-  .shell { height: 100vh; display: grid; grid-template-rows: auto auto 1fr; }
+  .shell { height: calc(100vh - var(--hz-strip, 0px)); display: grid; grid-template-rows: auto auto 1fr; }
 
   nav {
     background: var(--red); color: var(--paper); border-bottom: 2px solid rgba(255,247,243,.28);
@@ -363,6 +363,7 @@
 <script src="js/ui.js" defer></script>
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="js/hemzo-data.js"></script>
+<script src="js/pulse.js"></script>
 <script>
 const HD = window.HemzoData;
 let META, GROUPS, DATA = [];

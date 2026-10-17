@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 
 from . import model as M
+from . import schedule
 from .districts import COORDS
 from .features import D, HORIZONS, feature_cube, flatten, stack_rows
 from .panel import GROUPS, build_wide
@@ -112,6 +113,7 @@ def main(raw_dir="data/raw", out_path="web/data/forecast.json"):
             "state": state, "banks_listed": pmeta["banks_listed"], "banks_reporting": pmeta["banks_reporting"],
             "districts": len(districts), "series_modelled": int(len(paths)),
             "components": comps, "groups": GROUPS, "thresholds": {"critical": THRESHOLDS[0], "low": THRESHOLDS[1], "surplus": THRESHOLDS[2]},
+            "schedule": schedule.as_dict(),
         },
         "metrics": {
             "unit": "mean absolute error as % of each series' own recent level; lower is better",

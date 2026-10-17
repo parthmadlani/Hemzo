@@ -2,11 +2,13 @@ name: eraktkosh-snapshot
 
 on:
   schedule:
-    # Every 4 hours (00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC) — GitHub
-    # Actions cron is "best effort" and can run a few minutes late under
-    # load; that's fine at this granularity.
-    - cron: "0 */4 * * *"
-  workflow_dispatch: {}  # lets you trigger a run manually from the Actions tab, for testing
+    # Wake up every hour, at minute 7 (off the busy :00 mark, where GitHub tends to drop jobs).
+    # The gate job below only lets a wake-up through when the newest snapshot is old enough, so
+    # data still refreshes about every 4 hours, but one dropped trigger now costs an hour rather
+    # than a whole cycle. (A plain "0 */4 * * *" cron was in practice running every ~6 hours.)
+    # The numbers live in pipeline/schedule.py and are published to the website's countdown.
+    - cron: "7 * * * *"
+  workflow_dispatch: {}  # lets you trigger a run manually from the Actions tab; always goes ahead
 
 # one run at a time, so two runs never race each other's commits
 concurrency:
@@ -17,7 +19,18 @@ permissions:
   contents: write
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: gate
+        run: python3 -m pipeline.gate
+
   scrape:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
