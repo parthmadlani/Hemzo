@@ -12,7 +12,7 @@
   'use strict';
 
   var DATA = 'data/forecast.json';
-  var DEFAULTS = { check_minute: 7, min_gap_minutes: 210, start_lag_minutes: 10, process_seconds: 120 };
+  var DEFAULTS = { check_minute: 7, min_gap_minutes: 210, start_lag_minutes: 10, process_seconds: 75 };
   var LATE_AFTER_MS = 20 * 60000;       // this long past the expected time counts as "late"
   var skew = 0;
   try {
@@ -74,8 +74,8 @@
     bar.innerHTML =
       '<div class="hzp-top">' +
         '<button type="button" class="hzp-row" aria-expanded="false" aria-controls="hzp-panel">' +
-          '<span class="hzp-dot" aria-hidden="true"></span>' +
-          '<span class="hzp-label">Checking when the data updates…</span>' +
+          '<span class="hzp-mark" aria-hidden="true"></span>' +
+          '<span class="hzp-label"><span class="hzp-k">Data freshness</span></span>' +
           '<span class="hzp-sub"></span>' +
           '<span class="hzp-chev" aria-hidden="true">▾</span>' +
         '</button>' +
@@ -92,6 +92,10 @@
       open = !open; row.setAttribute('aria-expanded', String(open)); panel.hidden = !open; toggle.textContent = open ? '▴' : '▾'; render(); sizeVar();
     });
     bar.querySelector('.hzp-refresh').addEventListener('click', function (e) { e.preventDefault(); location.reload(); });
+    function close() { if (!open) return; open = false; row.setAttribute('aria-expanded', 'false'); panel.hidden = true; toggle.textContent = '▾'; sizeVar(); }
+    panel.addEventListener('click', function (e) { if (e.target.closest('.hzp-close')) { close(); row.focus(); } });
+    document.addEventListener('click', function (e) { if (open && !bar.contains(e.target)) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
     if (window.ResizeObserver) new ResizeObserver(sizeVar).observe(bar);
     sizeVar();
   }
@@ -103,14 +107,15 @@
     var check = late ? nextCheckAfter(p, n) : p.check;
     var start = check + S.start_lag_minutes * 60000, live = start + S.process_seconds * 1000;
     var gap = Math.floor(S.min_gap_minutes / 60) + 'h ' + pad(S.min_gap_minutes % 60) + 'm';
-    return '<ol class="hzp-steps">' +
+    return '<div class="hzp-head"><span class="hzp-k">How the data stays fresh</span><button type="button" class="hzp-close" aria-label="Close">×</button></div>' +
+      '<ol class="hzp-steps">' +
       '<li><b>Last refresh</b><span>Data through ' + when(p.last) + ' (' + age(n - p.last) + ' ago)' +
         (built ? '; forecast rebuilt ' + hm(built) + ' IST' : '') + '.</span></li>' +
       '<li><b>' + (late ? 'Missed slot, next try' : 'Next bot run') + '</b><span>' +
         (late ? 'The ' + hm(p.check) + ' IST run has not shown up. The bot tries again at ' : 'Scheduled for ') + when(check) +
         '; GitHub usually starts it about ' + S.start_lag_minutes + ' minutes later (around ' + hm(start) + ' IST). ' +
         'The bot wakes at :' + pad((S.check_minute + 30) % 60) + ' IST every hour and only runs when the data is at least ' + gap + ' old.</span></li>' +
-      '<li><b>Scrape, forecast, publish</b><span>Reading eRaktKosh, rebuilding the forecast and publishing the site takes about ' + Math.round(S.process_seconds / 60) + ' minutes.</span></li>' +
+      '<li><b>Scrape, forecast, publish</b><span>Reading eRaktKosh, rebuilding the forecast and publishing the site takes about ' + (S.process_seconds < 100 ? 'a minute' : Math.round(S.process_seconds / 60) + ' minutes') + '.</span></li>' +
       '<li><b>Live on this site</b><span>' + (late ? 'If the next try runs on time, ' : 'About ') + when(live) + '.</span></li>' +
       '</ol>' +
       '<p class="hzp-note">GitHub runs scheduled jobs on a best-effort basis, so the bot can be late. If it is, this bar says so instead of guessing, and the page tells you as soon as new data is published.</p>';
@@ -121,18 +126,18 @@
     if (!meta) return;
     var n = now(), p = plan(meta), over = n - p.live, state, text, subtext, color;
     if (fresh) {
-      state = 'new'; text = 'New data is live'; subtext = 'through ' + when(Date.parse(fresh.data_through)); color = 'ok';
+      state = 'new'; text = '<span class="hzp-k">New data is live</span>'; subtext = 'through ' + when(Date.parse(fresh.data_through)); color = 'new';
     } else if (over < 0) {
       state = 'wait'; color = 'ok';
-      text = 'Next update in <b>' + dur(-over) + '</b>';
+      text = '<span class="hzp-k">Next update in</span> <b>' + dur(-over) + '</b>';
       subtext = 'Data through ' + hm(p.last) + ' IST · ' + age(n - p.last) + ' old';
     } else if (over < LATE_AFTER_MS) {
       state = 'due'; color = 'warn';
-      text = 'Update due now — checking';
+      text = '<span class="hzp-k">Update due</span> <b>checking now</b>';
       subtext = 'Expected around ' + hm(p.live) + ' IST · data is ' + age(n - p.last) + ' old';
     } else {
       state = 'late'; color = 'bad';
-      text = 'Update running late · waiting <b>' + age(over) + '</b>';
+      text = '<span class="hzp-k">Running late</span> <b>waiting ' + age(over) + '</b>';
       subtext = 'GitHub is behind on its schedule · next try about ' + hm(nextCheckAfter(p, n)) + ' IST';
     }
     bar.setAttribute('data-state', color);

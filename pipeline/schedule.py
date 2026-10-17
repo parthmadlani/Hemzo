@@ -10,7 +10,7 @@ trigger then costs an hour, not a whole cycle.
 CHECK_MINUTE = 7        # the workflow wakes at this minute past every UTC hour (":37" in IST)
 MIN_GAP_MINUTES = 210   # ...and only runs if the newest snapshot is at least this old (about 4 h per cycle)
 START_LAG_MINUTES = 10  # typical delay between that minute and GitHub actually starting the run
-PROCESS_SECONDS = 120   # scrape + forecast + publish, from run start until the site serves it
+PROCESS_SECONDS = 75    # scrape + forecast + publish, from run start until the site serves it (measured: ~55 s run + ~3 s Vercel build)
 
 
 def as_dict():
