@@ -1,0 +1,4 @@
+requests>=2.31
+pandas>=3.0,<4
+numpy>=2.0
+scikit-learn>=1.6
