@@ -1,0 +1,44 @@
+/* Phone and tablet rules shared by every page. Page markup is mostly inline-styled, so these use
+   !important and attribute hooks rather than touching each component. */
+
+/* Menu button: a 44px touch target on every screen that shows the burger */
+@media (max-width: 1180px) {
+  .hzc-burger summary { min-width: 44px; min-height: 44px; padding: 0 5px !important; align-items: center; justify-content: center; }
+  .hzc-burger a { min-height: 48px; display: flex !important; align-items: center; }
+}
+
+/* ---------- tablet and below ---------- */
+@media (max-width: 900px) {
+  /* home: message first, graphic second, side padding that fits a phone */
+  .hz-grid { padding: 12px 20px 36px !important; gap: 8px !important; }
+  .hz-visual { order: 1 !important; min-height: 0 !important; padding: 40px 0 28px !important; }
+  [style*="78vw"] { width: min(280px, 66vw) !important; height: min(280px, 66vw) !important; }
+  .hz-main { align-items: flex-start !important; }
+
+  /* forecast detail: one column, nothing wider than the screen */
+  .fd-head { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .fd-split { grid-template-columns: 1fr !important; }
+  .fd-chartcol { padding: 18px 0 !important; border-right: none !important; }
+  .fd-aside { padding: 20px 0 24px !important; border-top: 2px solid #171019; }
+  .fd-chartcol span, .fd-aside > span { white-space: normal !important; }
+  .fd-legend { margin-left: 0 !important; flex-wrap: wrap; row-gap: 6px; }
+  .fd-crumb { flex-wrap: wrap; white-space: normal !important; row-gap: 4px; }
+  /* long single-line captions must wrap instead of widening the page */
+  main span[style*="nowrap"], main footer span, main footer a { white-space: normal !important; }
+  .fd-main { padding-left: 20px !important; padding-right: 20px !important; }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 640px) {
+
+  /* data sources: the source table becomes stacked cards */
+  [style*="minmax(180px"]:not([data-row]) { display: none !important; }
+  [style*="minmax(180px"] { grid-template-columns: 1fr !important; gap: 6px !important; }
+
+  /* full-width, thumb-sized buttons in hero button rows */
+  .hz-foot a, .hz-foot a:link { min-height: 44px; }
+  nav > div > a:first-child { min-height: 44px; }
+  .hz-btn { text-align: center; }
+  .hz-ctas { flex-direction: column; align-items: stretch !important; }
+  .hz-ctas > * { width: 100%; text-align: center; justify-content: center; }
+}

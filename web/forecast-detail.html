@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Forecast Detail — Hemzo</title>
 <meta name="description" content="Seven-day blood-stock forecast for any Gujarat district, with an 80% uncertainty band and the three-day shortage risk.">
+<style id="boot">
+  html{background:#E3312A}
+  x-dc{display:none!important}
+  #boot-splash{position:fixed;inset:0;z-index:2147483000;background:#E3312A;color:#FFF7F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;font:800 15px/1.3 Archivo,Arial,sans-serif;letter-spacing:.02em;text-align:center;padding:24px}
+  #boot-splash img{width:64px;height:64px;animation:hzBoot 1.2s ease-in-out infinite}
+  @keyframes hzBoot{50%{transform:scale(1.1);opacity:.7}}
+  #dc-root:not(:empty)~#boot-splash{display:none}
+  @media (prefers-reduced-motion:reduce){#boot-splash img{animation:none}}
+</style>
+<script>window.__resources={"https://unpkg.com/react@18.3.1/umd/react.production.min.js": "vendor/react.production.min.js", "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "vendor/react-dom.production.min.js"};window.__hdp=fetch('data/forecast.json',{cache:'no-cache'});</script>
+<link rel="preload" href="vendor/react.production.min.js" as="script">
+<link rel="preload" href="vendor/react-dom.production.min.js" as="script">
+<link rel="preload" href="vendor/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="ds/fonts.css">
+<link rel="stylesheet" href="ds/responsive.css">
+<link rel="stylesheet" href="ds/styles.css">
 <meta name="theme-color" content="#E3312A">
 <link rel="canonical" href="https://hemzo.vercel.app/forecast-detail.html">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
@@ -25,17 +41,15 @@
   .hzc-link, .hzc-cta { display:inline-flex; align-items:center; min-height:32px; }
   .hz-foot a { display:inline-flex; align-items:center; min-height:32px; }
 </style>
-<script src="js/hemzo-data.js"></script>
-<script src="./support.js"></script>
+<script src="js/ui.js" defer></script>
+<script src="js/hemzo-data.js" defer></script>
+<script src="./support.js" defer></script>
 </head>
 <body>
 <x-dc>
 <helmet>
   <link rel="stylesheet" href="ds/styles.css">
   <script src="ds/ds-bundle.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@600;700&display=swap">
   <style>
     body { margin: 0; background: #FFF7F3; }
     a { color: #171019; text-decoration: none; }
@@ -134,9 +148,9 @@
     </div>
   </nav>
 
-  <main id="main" style="max-width:1560px; margin:0 auto; padding:0 28px;">
+  <main id="main" class="fd-main" style="max-width:1560px; margin:0 auto; padding:0 28px;">
 
-    <div style="display:flex; align-items:center; gap:10px; padding:20px 0 0; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); animation:fdFade .6s ease both;">
+    <div class="fd-crumb" style="display:flex; align-items:center; gap:10px; padding:20px 0 0; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); animation:fdFade .6s ease both;">
       <a href="live-map.html" style="color:rgba(23,16,25,0.72);">Live map</a>
       <span>→</span>
       <span>{{ hubName }}</span>
@@ -144,7 +158,7 @@
       <span style="color:#E3312A;">{{ group }} forecast</span>
     </div>
 
-    <header style="display:grid; grid-template-columns:minmax(0,1.25fr) minmax(280px,0.75fr); gap:40px; align-items:end; padding:18px 0 18px; border-bottom:2px solid #171019;">
+    <header class="fd-head" style="display:grid; grid-template-columns:minmax(0,1.25fr) minmax(280px,0.75fr); gap:40px; align-items:end; padding:18px 0 18px; border-bottom:2px solid #171019;">
       <div>
         <div style="display:inline-flex; align-items:center; gap:8px; background:#E3312A; color:#FFF7F3; padding:5px 11px; margin-bottom:12px; animation:fdRise .6s cubic-bezier(.16,1,.3,1) .05s both;">
           <span style="{{ liveDotStyle }}"></span>
@@ -206,12 +220,12 @@
       </sc-for>
     </div>
 
-    <section style="display:grid; grid-template-columns:minmax(0,1.62fr) minmax(280px,0.9fr); border-bottom:2px solid #171019;">
+    <section class="fd-split" style="display:grid; grid-template-columns:minmax(0,1.62fr) minmax(280px,0.9fr); border-bottom:2px solid #171019;">
 
-      <div style="padding:22px 26px 26px 0; border-right:2px solid #171019; min-width:0;">
+      <div class="fd-chartcol" style="padding:22px 26px 26px 0; border-right:2px solid #171019; min-width:0;">
         <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:6px;">
           <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">Units of {{ group }} · 14 days observed, {{ axisEnd }} forecast</span>
-          <span style="margin-left:auto; display:flex; gap:14px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
+          <span class="fd-legend" style="margin-left:auto; display:flex; gap:14px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#171019; display:inline-block;"></span>Observed</span>
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#E3312A; display:inline-block;"></span>Forecast</span>
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:10px; background:#FCD9C8; border:1px solid rgba(23,16,25,.3); display:inline-block;"></span>80% band</span>
@@ -246,7 +260,7 @@
         <p style="font-size:13.5px; font-weight:500; line-height:1.5; color:rgba(23,16,25,0.75); max-width:660px; margin:16px 0 0; text-wrap:pretty;">{{ narrative }}</p>
       </div>
 
-      <aside data-reveal="true" style="padding:22px 0 26px 26px; min-width:0;">
+      <aside class="fd-aside" data-reveal="true" style="padding:22px 0 26px 26px; min-width:0;">
         <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:12px;">What the record shows</span>
         <div style="border-top:2px solid #171019;">
           <sc-for list="{{ drivers }}" as="d" hint-placeholder-count="4">
@@ -311,6 +325,7 @@
 </div>
 
 </x-dc>
+<div id="boot-splash" role="status" aria-live="polite"><img src="assets/favicon-64.png" alt="" width="64" height="64"><span>Loading live blood-stock data…</span></div>
 <script type="text/x-dc" data-dc-script>
 const HD = window.HemzoData;
 const NOTE_INK = { critical: '#E3312A', low: '#7A5A00', steady: '#0B4A66', surplus: '#0B4A38', sparse: 'rgba(23,16,25,0.75)', none: 'rgba(23,16,25,0.75)' };

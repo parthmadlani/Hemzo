@@ -5,7 +5,7 @@ window.HemzoData = (function () {
 
   function load() {
     if (!promise) {
-      promise = fetch('data/forecast.json', { cache: 'no-cache' }).then(function (r) {
+      promise = (window.__hdp || fetch('data/forecast.json', { cache: 'no-cache' })).then(function (r) {
         if (!r.ok) throw new Error('forecast.json: HTTP ' + r.status);
         return r.json();
       });
