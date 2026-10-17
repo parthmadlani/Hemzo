@@ -54,3 +54,11 @@ jobs:
           git diff --quiet --cached || git commit -m "forecast $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git pull --rebase
           git push
+
+      # Tell Vercel to publish the commit we just pushed (no-op until the secret exists).
+      - name: Deploy site
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "VERCEL_DEPLOY_HOOK secret not set; skipping"; exit 0; fi
+          curl -fsS -X POST "$HOOK"

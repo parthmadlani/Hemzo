@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" role="img" aria-label="Illustration of shelves of blood bags in a cold room">
+  <rect width="1000" height="700" fill="#FFF7F3"/>
+  <rect width="1000" height="90" fill="#E3312A"/>
+  <g font-family="Archivo,Arial,sans-serif" font-weight="800" fill="#FFF7F3"><text x="40" y="58" font-size="34">COLD ROOM</text><text x="800" y="58" font-size="34">2 - 6 &#176;C</text></g>
+  <g stroke="#171019" stroke-width="6" stroke-linecap="round"><path d="M60 270 H940 M60 450 H940 M60 630 H940"/><path d="M60 120 V660 M940 120 V660"/></g>
+  <g stroke="#171019" stroke-width="4" stroke-linejoin="round">
+    <g fill="#E3312A">
+      <path d="M90 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M190 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M290 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
+      <path d="M390 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M490 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
+      <path d="M90 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M190 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M290 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
+      <path d="M690 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M790 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
+      <path d="M90 550 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M190 550 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
+    </g>
+    <g fill="#FFC845"><path d="M690 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M790 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M590 550 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/></g>
+    <g fill="#FCD9C8"><path d="M390 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M490 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M590 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/></g>
+    <g fill="#171019" stroke="none" font-family="Archivo,Arial,sans-serif" font-weight="800" font-size="22" text-anchor="middle">
+      <text x="128" y="232" fill="#FFF7F3">O+</text><text x="228" y="232" fill="#FFF7F3">A+</text><text x="328" y="232" fill="#FFF7F3">B+</text><text x="428" y="232" fill="#FFF7F3">B+</text><text x="528" y="232" fill="#FFF7F3">O+</text>
+      <text x="728" y="232">AB</text><text x="828" y="232">AB</text>
+    </g>
+  </g>
+  <rect x="860" y="540" width="80" height="100" fill="#171019"/><g fill="#FFF7F3" font-family="Archivo,Arial,sans-serif" font-weight="800" font-size="20" text-anchor="middle"><text x="900" y="580">LOG</text><text x="900" y="610">05:30</text></g>
+</svg>

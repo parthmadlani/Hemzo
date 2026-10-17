@@ -102,13 +102,13 @@
     <div style="max-width:1440px; margin:0 auto;">
       <div style="display:flex; align-items:center; gap:14px; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; animation:hzFade .6s ease both;">
         <span style="width:8px; height:8px; background:#FCD9C8; animation:hzBlink 1.6s ease-in-out infinite;"></span>
-        <span>Onboarding — 15 minutes of paperwork</span>
+        <span>Register interest — two minutes</span>
       </div>
       <h1 style="font-size:clamp(38px,7vw,110px); line-height:0.88; letter-spacing:-0.05em; font-weight:900; margin:28px 0 0;">
-        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .1s both;">Alerts from</span></span>
-        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; color:#FCD9C8; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .22s both;">tomorrow morning.</span></span>
+        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .1s both;">Tell us how</span></span>
+        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; color:#FCD9C8; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .22s both;">you would use it.</span></span>
       </h1>
-      <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,20px); line-height:1.5; max-width:46ch; margin:30px 0 0; animation:hzRise .8s cubic-bezier(.16,1,.3,1) .4s both;">Tell us which bank you run and how you can send stock. We handle the rest — no software to install, no change to your register.</p>
+      <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,20px); line-height:1.5; max-width:46ch; margin:30px 0 0; animation:hzRise .8s cubic-bezier(.16,1,.3,1) .4s both;">Tell us which bank you run and how you would want flags delivered. Message alerts are still being built, and your answers decide what we build first.</p>
     </div>
   </section>
 
@@ -116,17 +116,17 @@
     <div class="hz-two" style="max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:start;">
       <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
         <div style="border:2px solid #171019; background:#FCD9C8; padding:40px 32px;">
-          <div style="font-size:11px; letter-spacing:0.28em; text-transform:uppercase; font-weight:800; color:#E3312A;">Request received</div>
+          <div style="font-size:11px; letter-spacing:0.28em; text-transform:uppercase; font-weight:800; color:#E3312A;">Interest noted</div>
           <div style="font-size:clamp(26px,3.4vw,44px); font-weight:900; letter-spacing:-0.04em; line-height:1.02; margin:14px 0 16px;">{{ successTitle }}</div>
-          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:16px; line-height:1.55; color:#171019; margin:0 0 28px; max-width:48ch;">We'll confirm your district and send a test alert to the number you gave within one working day. Nothing goes live until you reply to that test.</p>
-          <a class="hz-btn" href="alerts.html" style="display:inline-block; background:#E3312A; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #E3312A; text-align:left;">See what an alert looks like</a>
+          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:16px; line-height:1.55; color:#171019; margin:0 0 28px; max-width:48ch;">Thanks. We'll get in touch once a channel for your district is ready. Nothing is sent to you before then.</p>
+          <a class="hz-btn" href="alerts.html" style="display:inline-block; background:#E3312A; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #E3312A; text-align:left;">See what a flag looks like</a>
         </div>
       </sc-if>
 
       <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
         <form onSubmit="{{ onSubmit }}" style="border:2px solid #171019; background:#FFF7F3;">
           <div style="background:#171019; color:#FFF7F3; padding:14px 20px; display:flex; justify-content:space-between; gap:16px; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800;">
-            <span>Bank enrolment</span><span>Form 01</span>
+            <span>Interest form</span><span>Form 01</span>
           </div>
           <div style="padding:30px 24px 28px; display:grid; gap:24px;">
             <div class="hz-half" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
@@ -142,15 +142,15 @@
               <label style="display:block;"><span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:8px;">Email</span><input class="hz-in" name="email" type="email" required placeholder="bloodbank@hospital.gov.in"></label>
             </div>
             <div>
-              <span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:10px;">How you can send stock</span>
+              <span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:10px;">How you would want flags</span>
               <div style="display:grid; gap:2px; background:#171019; border:2px solid #171019;">
-                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="csv" checked><span>Nightly CSV by email</span></label>
-                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="eraktkosh"><span>Only what eRaktKosh already publishes</span></label>
-                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="api"><span>Direct API from our LIMS</span></label>
+                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="csv" checked><span>Morning email digest</span></label>
+                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="eraktkosh"><span>Dashboard only (this site)</span></label>
+                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="api"><span>SMS or WhatsApp to the duty phone</span></label>
               </div>
             </div>
             <div>
-              <span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:10px;">Components to watch</span>
+              <span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:10px;">Components you care about</span>
               <div style="display:flex; flex-wrap:wrap; gap:10px;">
                 <label class="hz-opt"><input type="checkbox" name="component" value="whole" checked><span>Whole blood</span></label>
                 <label class="hz-opt"><input type="checkbox" name="component" value="prbc" checked><span>Packed red cells</span></label>
@@ -158,10 +158,10 @@
                 <label class="hz-opt"><input type="checkbox" name="component" value="plasma"><span>Plasma</span></label>
               </div>
             </div>
-            <label class="hz-opt" style="align-items:flex-start; background:#FCD9C8;"><input type="checkbox" name="consent" required style="margin-top:2px;"><span style="font-family:var(--font-body), Arial, sans-serif; font-weight:600; line-height:1.5;">I confirm we share unit counts only — no donor or patient identity — and that transfer decisions stay with this bank.</span></label>
+            <label class="hz-opt" style="align-items:flex-start; background:#FCD9C8;"><input type="checkbox" name="consent" required style="margin-top:2px;"><span style="font-family:var(--font-body), Arial, sans-serif; font-weight:600; line-height:1.5;">I understand Hemzo only uses aggregate unit counts, never donor or patient identity, and that transfer decisions stay with each bank.</span></label>
             <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
-              <button class="hz-btn" type="submit" style="background:#E3312A; color:#FFF7F3; font-family:var(--font-heading), Arial, sans-serif; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #E3312A; cursor:pointer; text-align:left;">Request onboarding</button>
-              <span style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442;">Demo form — nothing is transmitted.</span>
+              <button class="hz-btn" type="submit" style="background:#E3312A; color:#FFF7F3; font-family:var(--font-heading), Arial, sans-serif; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #E3312A; cursor:pointer; text-align:left;">Register interest</button>
+              <span style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442;">Not connected to anything yet — nothing is sent.</span>
             </div>
           </div>
         </form>
@@ -171,16 +171,16 @@
         <div>
           <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A; margin-bottom:18px;">What happens next</div>
           <div style="border-top:2px solid #171019;">
-            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">01</span><span><b style="display:block; font-size:16px; font-weight:800;">We match your district</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">Against the public register, so your baseline exists before day one.</span></span></div>
-            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">02</span><span><b style="display:block; font-size:16px; font-weight:800;">One test alert</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">Sent to your number. Reply once and the feed switches on.</span></span></div>
-            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">03</span><span><b style="display:block; font-size:16px; font-weight:800;">05:40 every morning</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">Shortfall, expiry and surplus signals for your district only.</span></span></div>
+            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">01</span><span><b style="display:block; font-size:16px; font-weight:800;">Your district is already forecast</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">From the public register, so there is a baseline before you say a word.</span></span></div>
+            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">02</span><span><b style="display:block; font-size:16px; font-weight:800;">We get in touch</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">When a channel you asked for is ready.</span></span></div>
+            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">03</span><span><b style="display:block; font-size:16px; font-weight:800;">Flags when ready</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">Shortfall and surplus flags for your district.</span></span></div>
           </div>
         </div>
         <figure style="margin:0;">
-          <div style="position:relative; width:100%; height:300px; border:2px solid #171019; filter:grayscale(1) contrast(1.05); background:#EAE7E7; display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:var(--font-body), Arial, sans-serif; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.45);">Photo — pilot site cold room</span>
+          <div style="position:relative; width:100%; height:300px; border:2px solid #171019; background:#FFF7F3;">
+            <img src="assets/photos/onboarding-coldroom.svg" alt="Illustration: shelves of blood bags in a cold room" style="width:100%; height:100%; object-fit:cover; display:block;">
           </div>
-          <figcaption style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:10px;">Pilot site, Rajkot — component fridge logged every morning at 05:30.</figcaption>
+          <figcaption style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:10px;">Illustration: a cold room and its morning stock log.</figcaption>
         </figure>
       </div>
     </div>
@@ -196,7 +196,7 @@ class Component extends DCLogic {
     return {
       submitted: this.state.submitted,
       notSubmitted: !this.state.submitted,
-      successTitle: (this.state.bank || "Your bank") + " is queued for enrolment",
+      successTitle: (this.state.bank || "Your bank") + " is on the list",
       onSubmit: (e) => {
         e.preventDefault();
         const fd = new FormData(e.target);

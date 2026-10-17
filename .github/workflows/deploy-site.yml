@@ -1,0 +1,20 @@
+name: deploy-site
+
+# Redeploy the site when someone edits it. (Scraper/forecast commits made by the
+# bot do not trigger workflows, so eraktkosh-snapshot.yml calls the same hook itself.)
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "vercel.json"]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "VERCEL_DEPLOY_HOOK secret not set; skipping"; exit 0; fi
+          curl -fsS -X POST "$HOOK"

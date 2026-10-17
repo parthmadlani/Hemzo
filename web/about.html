@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About — Hemzo</title>
+<script src="js/hemzo-data.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -110,7 +111,7 @@
     <div style="max-width:1440px; margin:0 auto;">
       <div style="display:flex; align-items:baseline; gap:16px; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700; color:#FFD9CF; animation:hzFade .7s ease both;">
         <span style="width:8px; height:8px; background:#FCD9C8; display:inline-block; animation:hzBlink 1.6s ease-in-out infinite;"></span>
-        <span>About Hemzo — est. 2024, Ahmedabad</span>
+        <span>About Hemzo — Gujarat, built on public data</span>
       </div>
 
       <h1 style="font-size:clamp(38px, 7.6vw, 136px); line-height:0.88; letter-spacing:-0.045em; font-weight:900; margin:34px 0 0;">
@@ -121,7 +122,7 @@
       </h1>
 
       <div class="hz-two" style="display:grid; grid-template-columns:1.1fr 1fr; gap:56px; align-items:end; padding:56px 0 72px;">
-        <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,21px); line-height:1.5; max-width:34ch; margin:0; color:#FFF7F3; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .52s both;">India collects enough blood. It just sits in the wrong fridge, in the wrong district, on the wrong day. Hemzo is a forecasting layer for the shelf life nobody watches.</p>
+        <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,21px); line-height:1.5; max-width:34ch; margin:0; color:#FFF7F3; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .52s both;">Blood banks publish what is on their shelves, but nobody keeps the history. Hemzo keeps it, watches every district for the slow drift toward a shortage, and says so early enough to act.</p>
         <div style="display:flex; gap:14px; flex-wrap:wrap; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .64s both;">
           <a class="hz-btn" href="live-map.html" style="background:#FCD9C8; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FCD9C8;">See the live map</a>
           <a class="hz-btn" href="how-it-works.html" style="background:transparent; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid rgba(255,247,243,0.5);">How it works</a>
@@ -131,10 +132,10 @@
     <div style="border-top:2px solid rgba(255,247,243,0.28); border-bottom:2px solid rgba(255,247,243,0.28); overflow:hidden; margin:0 -48px; padding:14px 0;">
       <div style="display:flex; width:max-content; animation:hzTicker 26s linear infinite; will-change:transform;">
         <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;">
-          <span>No shortage</span><span>◆</span><span>No waste</span><span>◆</span><span>42 days of platelet math</span><span>◆</span><span>1,206 fridges watched</span><span>◆</span><span>Zero guesswork</span><span>◆</span>
+          <span>Public data only</span><span>◆</span><span>Rebuilt every ~4 hours</span><span>◆</span><span>Honest error bars</span><span>◆</span><span>No donor data</span><span>◆</span><span>One public source</span><span>◆</span>
         </div>
         <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;" aria-hidden="true">
-          <span>No shortage</span><span>◆</span><span>No waste</span><span>◆</span><span>42 days of platelet math</span><span>◆</span><span>1,206 fridges watched</span><span>◆</span><span>Zero guesswork</span><span>◆</span>
+          <span>Public data only</span><span>◆</span><span>Rebuilt every ~4 hours</span><span>◆</span><span>Honest error bars</span><span>◆</span><span>No donor data</span><span>◆</span><span>One public source</span><span>◆</span>
         </div>
       </div>
     </div>
@@ -142,18 +143,12 @@
 
   <section style="background:#171019; color:#FFF7F3; padding:80px 48px;">
     <div class="hz-stats" style="max-width:1440px; margin:0 auto; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; background:rgba(255,247,243,0.2);">
-      <div data-reveal style="background:#171019; padding:40px 36px 36px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <div style="font-size:clamp(52px,7vw,92px); font-weight:900; letter-spacing:-0.05em; line-height:1; color:#FCD9C8;"><span data-count="38" data-suffix="%">38%</span></div>
-        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:rgba(255,247,243,0.72); margin-top:14px; max-width:26ch;">of collected units expire unused in surplus districts each quarter</div>
-      </div>
-      <div data-reveal data-delay="120" style="background:#171019; padding:40px 36px 36px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <div style="font-size:clamp(52px,7vw,92px); font-weight:900; letter-spacing:-0.05em; line-height:1; color:#FCD9C8;"><span data-count="1206">1,206</span></div>
-        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:rgba(255,247,243,0.72); margin-top:14px; max-width:26ch;">blood bank fridges under continuous forecast in 4 states</div>
-      </div>
-      <div data-reveal data-delay="240" style="background:#171019; padding:40px 36px 36px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <div style="font-size:clamp(52px,7vw,92px); font-weight:900; letter-spacing:-0.05em; line-height:1; color:#FCD9C8;"><span data-count="72" data-prefix="−" data-suffix="h">−72h</span></div>
-        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:rgba(255,247,243,0.72); margin-top:14px; max-width:26ch;">earlier warning than a bank's own stock report, on average</div>
-      </div>
+      <sc-for list="{{ stats }}" as="st" hint-placeholder-count="3">
+        <div data-reveal data-delay="{{ st.delay }}" style="background:#171019; padding:40px 36px 36px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
+          <div style="font-size:clamp(52px,7vw,92px); font-weight:900; letter-spacing:-0.05em; line-height:1; color:#FCD9C8;"><span>{{ st.value }}</span></div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:rgba(255,247,243,0.72); margin-top:14px; max-width:26ch;">{{ st.label }}</div>
+        </div>
+      </sc-for>
     </div>
   </section>
 
@@ -168,15 +163,15 @@
         <div class="hz-rowgrid" style="display:grid; grid-template-columns:120px 1fr 1.1fr 64px; gap:24px; align-items:center; padding:30px 20px;">
           <div class="hz-num" style="font-size:44px; font-weight:900; letter-spacing:-0.04em; color:inherit; transition:transform .4s cubic-bezier(.16,1,.3,1);">01</div>
           <div class="hz-rowtitle" style="font-size:clamp(20px,2.4vw,30px); font-weight:800; letter-spacing:-0.02em; color:inherit;">Public data, always</div>
-          <div class="hz-rowbody" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:inherit; opacity:0.82;">Every forecast is traceable to an open feed. If we can't show the source row, we don't publish the number.</div>
+          <div class="hz-rowbody" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:inherit; opacity:0.82;">Every forecast is traceable to an open feed. If we can't show where a number came from, we don't publish it.</div>
           <div class="hz-arrow" style="font-size:26px; font-weight:800; color:inherit; transition:transform .4s cubic-bezier(.16,1,.3,1); text-align:right;">→</div>
         </div>
       </div>
       <div class="hz-row" data-reveal data-delay="80" style="transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1), background-color .35s ease, color .35s ease; border-bottom:2px solid #171019;" style-hover="background:#E3312A; color:#FFF7F3;">
         <div class="hz-rowgrid" style="display:grid; grid-template-columns:120px 1fr 1.1fr 64px; gap:24px; align-items:center; padding:30px 20px;">
           <div class="hz-num" style="font-size:44px; font-weight:900; letter-spacing:-0.04em; color:inherit; transition:transform .4s cubic-bezier(.16,1,.3,1);">02</div>
-          <div class="hz-rowtitle" style="font-size:clamp(20px,2.4vw,30px); font-weight:800; letter-spacing:-0.02em; color:inherit;">Shelf life over stock count</div>
-          <div class="hz-rowbody" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:inherit; opacity:0.82;">A full fridge on day 33 is a shortage in waiting. We rank units by days remaining, never by volume alone.</div>
+          <div class="hz-rowtitle" style="font-size:clamp(20px,2.4vw,30px); font-weight:800; letter-spacing:-0.02em; color:inherit;">Honest error bars</div>
+          <div class="hz-rowbody" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:inherit; opacity:0.82;">Every forecast carries a band and a backtest. If the model cannot beat a naive guess, we ship the naive guess and say so.</div>
           <div class="hz-arrow" style="font-size:26px; font-weight:800; color:inherit; transition:transform .4s cubic-bezier(.16,1,.3,1); text-align:right;">→</div>
         </div>
       </div>
@@ -206,35 +201,35 @@
         <div style="width:112px; height:112px; border:2px solid #171019; display:grid; place-items:center; animation:hzSpin 22s linear infinite;">
           <div style="width:64px; height:64px; background:#E3312A;"></div>
         </div>
-        <p style="font-family:var(--font-body), Arial, sans-serif; font-size:16px; line-height:1.6; color:#4A4442; margin:26px 0 0; max-width:30ch;">Two winters of spreadsheets, one hackathon, and a blood bank in Rajkot that let us read their fridge log every morning.</p>
+        <p style="font-family:var(--font-body), Arial, sans-serif; font-size:16px; line-height:1.6; color:#4A4442; margin:26px 0 0; max-width:30ch;">A scraper, a schedule, and patience: the public register changes every few hours, and only a record that is kept can be forecast.</p>
 
       <figure style="margin:0;">
-        <div style="position:relative; width:100%; height:260px; border:2px solid #171019; filter:grayscale(1) contrast(1.05); background:#EAE7E7; display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-body), Arial, sans-serif; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.45);">Photo — the Rajkot component fridge</span>
+        <div style="position:relative; width:100%; height:260px; border:2px solid #171019; background:#EAE7E7;">
+          <img src="assets/photos/about-ledger.svg" alt="Illustration: a blood bank stock register and a refrigerator" style="width:100%; height:100%; object-fit:cover; display:block;">
         </div>
-        <figcaption style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; line-height:1.5; color:rgba(23,16,25,0.75); margin-top:10px; max-width:52ch;">The original fridge log — read by hand every morning before it became a nightly data feed.</figcaption>
+        <figcaption style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; line-height:1.5; color:rgba(23,16,25,0.75); margin-top:10px; max-width:52ch;">Illustration. The real source is a public web register, read by a script every four hours.</figcaption>
       </figure>
       </div>
       <div style="border-left:2px solid #171019;">
         <div data-reveal style="display:grid; grid-template-columns:96px 1fr; gap:28px; padding:0 0 38px 28px; position:relative; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <span style="position:absolute; left:-9px; top:8px; width:16px; height:16px; background:#E3312A;"></span>
-          <div style="font-size:15px; font-weight:800; letter-spacing:0.04em;">Mar 2024</div>
-          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">One fridge, one spreadsheet</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">A manual expiry tracker for a single Rajkot bank predicted its first avoidable discard four days out.</div></div>
+          <div style="font-size:15px; font-weight:800; letter-spacing:0.04em;">13 Sep 2026</div>
+          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">The first snapshot</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">A scheduled job began saving what eRaktKosh publishes for Gujarat, unmodified, every four hours.</div></div>
         </div>
         <div data-reveal data-delay="100" style="display:grid; grid-template-columns:96px 1fr; gap:28px; padding:0 0 38px 28px; position:relative; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <span style="position:absolute; left:-9px; top:8px; width:16px; height:16px; background:#E3312A;"></span>
-          <div style="font-size:15px; font-weight:800; letter-spacing:0.04em;">Nov 2024</div>
-          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">eRaktKosh, parsed nightly</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">The public feed became a standardized district table — the spine every forecast still runs on.</div></div>
+          <div style="font-size:15px; font-weight:800; letter-spacing:0.04em;">Oct 2026</div>
+          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">Forecasts from the archive</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">The pipeline began rebuilding per-district, per-blood-group forecasts after every snapshot, and testing them against a naive guess.</div></div>
         </div>
         <div data-reveal data-delay="200" style="display:grid; grid-template-columns:96px 1fr; gap:28px; padding:0 0 38px 28px; position:relative; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <span style="position:absolute; left:-9px; top:8px; width:16px; height:16px; background:#E3312A;"></span>
-          <div style="font-size:15px; font-weight:800; letter-spacing:0.04em;">Jul 2025</div>
-          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">First seven-day forecast</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">Twelve banks in Gujarat started receiving surplus and shortfall signals a week ahead of demand.</div></div>
+          <div style="font-size:15px; font-weight:800; letter-spacing:0.04em;">Oct 2026</div>
+          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">This site</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">The map, forecast pages and risk flags now read that forecast directly.</div></div>
         </div>
         <div data-reveal data-delay="300" style="display:grid; grid-template-columns:96px 1fr; gap:28px; padding:0 0 4px 28px; position:relative; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <span style="position:absolute; left:-9px; top:8px; width:16px; height:16px; background:#171019;"></span>
           <div style="font-size:15px; font-weight:800; letter-spacing:0.04em;">Today</div>
-          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">1,206 fridges, four states</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">Gujarat, Maharashtra, Rajasthan and Madhya Pradesh, with alerts landing before the morning round.</div></div>
+          <div><div style="font-size:clamp(19px,2.2vw,26px); font-weight:800; letter-spacing:-0.02em; margin-bottom:6px;">{{ todayTitle }}</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:46ch;">{{ todayBody }}</div></div>
         </div>
       </div>
     </div>
@@ -243,29 +238,14 @@
   <section style="border-top:2px solid #171019; padding:80px 48px;">
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:40px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <h2 style="font-size:clamp(34px,5.4vw,72px); font-weight:900; letter-spacing:-0.04em; line-height:0.95; margin:0;">Nine people,<br>one shared calendar</h2>
-        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:34ch;">Half of us come from transfusion medicine, half from data infrastructure. Nobody here is a stranger to a 6am fridge log.</div>
+        <h2 style="font-size:clamp(34px,5.4vw,72px); font-weight:900; letter-spacing:-0.04em; line-height:0.95; margin:0;">One builder,<br>one public dataset</h2>
+        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:34ch;">Hemzo is early and small. This is who is behind it.</div>
       </div>
-      <div class="hz-tiles" style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019;">
+      <div class="hz-tiles" style="display:grid; grid-template-columns:minmax(0,340px); gap:2px; background:#171019; border:2px solid #171019; width:max-content; max-width:100%;">
         <div class="hz-tile" data-reveal style="background:#FFF7F3; padding:28px 24px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
-          <div class="hz-face" style="width:64px; height:64px; background:#E3312A; color:#FFF7F3; display:grid; place-items:center; font-size:24px; font-weight:900; letter-spacing:-0.02em; transition:transform .45s cubic-bezier(.16,1,.3,1);">NV</div>
-          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:20px;">Nidhi Vora</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">Transfusion medicine lead</div>
-        </div>
-        <div class="hz-tile" data-reveal data-delay="90" style="background:#FFF7F3; padding:28px 24px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
-          <div class="hz-face" style="width:64px; height:64px; background:#171019; color:#FFF7F3; display:grid; place-items:center; font-size:24px; font-weight:900; letter-spacing:-0.02em; transition:transform .45s cubic-bezier(.16,1,.3,1);">AK</div>
-          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:20px;">Arjun Kalra</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">Forecast modelling</div>
-        </div>
-        <div class="hz-tile" data-reveal data-delay="180" style="background:#FFF7F3; padding:28px 24px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
-          <div class="hz-face" style="width:64px; height:64px; background:#FCD9C8; color:#171019; display:grid; place-items:center; font-size:24px; font-weight:900; letter-spacing:-0.02em; transition:transform .45s cubic-bezier(.16,1,.3,1);">SR</div>
-          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:20px;">Sara Rathod</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">Bank partnerships</div>
-        </div>
-        <div class="hz-tile" data-reveal data-delay="270" style="background:#FFF7F3; padding:28px 24px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
-          <div class="hz-face" style="width:64px; height:64px; background:#E3312A; color:#FFF7F3; display:grid; place-items:center; font-size:24px; font-weight:900; letter-spacing:-0.02em; transition:transform .45s cubic-bezier(.16,1,.3,1);">DM</div>
-          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:20px;">Dev Mehta</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">Data pipeline</div>
+          <div class="hz-face" style="width:64px; height:64px; background:#E3312A; color:#FFF7F3; display:grid; place-items:center; font-size:24px; font-weight:900; letter-spacing:-0.02em; transition:transform .45s cubic-bezier(.16,1,.3,1);">PM</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:20px;">Parth Madlani</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">Builder</div>
         </div>
       </div>
     </div>
@@ -275,17 +255,17 @@
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);">
         <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700; color:#FFD9CF; margin-bottom:30px;">Work with us</div>
-        <h2 style="font-size:clamp(40px,8.4vw,116px); line-height:0.88; letter-spacing:-0.045em; font-weight:900; margin:0; max-width:18ch;">If you run a fridge, we want your log.</h2>
+        <h2 style="font-size:clamp(40px,8.4vw,116px); line-height:0.88; letter-spacing:-0.045em; font-weight:900; margin:0; max-width:18ch;">If you run a blood bank, tell us.</h2>
         <div class="hz-two" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-top:48px;">
-          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(16px,1.9vw,20px); line-height:1.55; margin:0; max-width:40ch; color:#FFF7F3;">Blood banks, district officers and hospital labs — a single nightly export is enough to put your district on the forecast.</p>
+          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(16px,1.9vw,20px); line-height:1.55; margin:0; max-width:40ch; color:#FFF7F3;">Blood banks, district officers and hospital labs: tell us what would help, and which channel you would want flags on. Your district is already on the forecast from public data.</p>
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
-            <a class="hz-btn" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FFF7F3;">Start onboarding</a>
+            <a class="hz-btn" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FFF7F3;">Register interest</a>
             <a class="hz-btn" href="data-sources.html" style="background:transparent; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid rgba(255,247,243,0.5);">Read the methodology</a>
           </div>
         </div>
       </div>
       <div style="border-top:2px solid rgba(255,247,243,0.28); margin-top:80px; padding:18px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#FFD9CF;">
-        <span>Hemzo — Ahmedabad</span>
+        <span>Hemzo — Gujarat</span>
         <span>Forecast Index 01</span>
       </div>
     </div>
@@ -296,6 +276,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   componentDidMount() {
+    window.HemzoData.load().then((data) => this.setState({ data })).catch(() => {});
     this.reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.sync = () => {
       const h = window.innerHeight;
@@ -335,7 +316,20 @@ class Component extends DCLogic {
     };
     requestAnimationFrame(tick);
   }
-  renderVals() { return {}; }
+  state = { data: null };
+  renderVals() {
+    const d = this.state.data, m = d && d.meta;
+    const dash = '\u2014';
+    return {
+      stats: [
+        { value: m ? m.banks_listed : dash, label: 'blood banks listed on the public register in Gujarat', delay: 0 },
+        { value: m ? m.districts : dash, label: 'districts forecast, for red cells and whole blood, by blood group', delay: 120 },
+        { value: m ? Math.round(m.history_days) + ' days' : dash, label: 'of stock history kept so far \u2014 and growing every four hours', delay: 240 },
+      ],
+      todayTitle: m ? m.snapshots + ' snapshots, ' + m.districts + ' districts' : 'Live',
+      todayBody: m ? m.banks_reporting + ' of ' + m.banks_listed + ' banks are publishing stock right now; data through ' + window.HemzoData.stamp(m) + '.' : 'Reading the latest record.',
+    };
+  }
 }
 
 </script>

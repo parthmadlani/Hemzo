@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alerts — Hemzo</title>
+<script src="js/hemzo-data.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -119,14 +120,14 @@
             <span style="position:absolute; inset:0; background:#FCD9C8;"></span>
             <span style="position:absolute; inset:0; border:2px solid #FCD9C8; animation:hzPing 1.8s ease-out infinite;"></span>
           </span>
-          <span>Alert engine — live</span>
+          <span>Risk watch — live</span>
         </div>
         <h1 style="font-size:clamp(38px,7.4vw,128px); line-height:0.86; letter-spacing:-0.05em; font-weight:900; margin:30px 0 0;">
           <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask 1s cubic-bezier(.16,1,.3,1) .1s both;">Seventy-two</span></span>
           <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask 1s cubic-bezier(.16,1,.3,1) .2s both;">hours before</span></span>
           <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; color:#FCD9C8; animation:hzMask 1s cubic-bezier(.16,1,.3,1) .3s both;">the shortage.</span></span>
         </h1>
-        <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,21px); line-height:1.5; max-width:42ch; color:#FFF7F3; margin:34px 0 0; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .5s both;">Every alert names one district, one component, one window — and the bank that can cover it. Sent at 05:40, before the morning round.</p>
+        <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,21px); line-height:1.5; max-width:42ch; color:#FFF7F3; margin:34px 0 0; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .5s both;">Every flag names one district, one blood group and one window &mdash; and the nearest district holding units above its usual level. Rebuilt after every snapshot, about every four hours.</p>
         <div style="display:flex; gap:14px; flex-wrap:wrap; margin:36px 0 0; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .62s both;">
           <a class="hz-btn" href="live-map.html" style="background:#FCD9C8; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FCD9C8;">Open the live map</a>
           <a class="hz-btn" href="data-sources.html" style="background:transparent; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid rgba(255,247,243,0.5);">How we forecast</a>
@@ -138,34 +139,30 @@
           <div style="width:480px; height:480px; border-radius:50%; background:conic-gradient(from 0deg, rgba(255,247,243,.3), rgba(255,247,243,0) 36%); animation:hzSweep 8s linear infinite;"></div>
         </div>
         <div style="position:absolute; top:0; left:0; right:0; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#E3312A; border-bottom:2px solid rgba(255,247,243,0.4); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800; color:#FCD9C8;">
-          <span>Alert feed</span>
-          <span style="display:flex; align-items:center; gap:8px;"><span style="width:7px; height:7px; background:#FCD9C8; animation:hzBlink 1.4s ease-in-out infinite;"></span>streaming</span>
+          <span>Risk feed</span>
+          <span style="display:flex; align-items:center; gap:8px;"><span style="width:7px; height:7px; background:#FCD9C8; animation:hzBlink 1.4s ease-in-out infinite;"></span>{{ feedStamp }}</span>
         </div>
-        <div role="log" aria-label="Recent alerts, updating" style="position:relative; z-index:1; padding:52px 0 0;">
-          <div class="hz-feedtrack" style="animation:hzFeed 24s linear infinite; will-change:transform;">
+        <div role="log" aria-label="Series with the highest shortage risk, updating" style="position:relative; z-index:1; padding:52px 0 0;">
+          <div class="hz-feedtrack" style="animation:hzFeed 28s linear infinite; will-change:transform;">
             <div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · O− · Kutch</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">4 units short in 68h — Bhuj DH can cover 6</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Expiry risk · Platelets · Rajkot</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">3 units at 38h remaining — move or transfuse</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:41</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Surplus match · A+ · Surat</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">18 spare units pair with Navsari's Thursday gap</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:43</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · B+ · Dahod</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Demand spike from scheduled surgeries, 71h out</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:44</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Camp signal · Vadodara</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Two camps overlap Sunday — stagger to avoid glut</span></span></div>
+              <sc-for list="{{ feed }}" as="f" hint-placeholder-count="6">
+                <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">{{ f.time }}</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">{{ f.title }}</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">{{ f.sub }}</span></span></div>
+              </sc-for>
             </div>
             <div aria-hidden="true">
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · O− · Kutch</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">4 units short in 68h — Bhuj DH can cover 6</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Expiry risk · Platelets · Rajkot</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">3 units at 38h remaining — move or transfuse</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:41</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Surplus match · A+ · Surat</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">18 spare units pair with Navsari's Thursday gap</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:43</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · B+ · Dahod</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Demand spike from scheduled surgeries, 71h out</span></span></div>
-              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:44</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Camp signal · Vadodara</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Two camps overlap Sunday — stagger to avoid glut</span></span></div>
+              <sc-for list="{{ feed }}" as="f" hint-placeholder-count="6">
+                <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">{{ f.time }}</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">{{ f.title }}</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">{{ f.sub }}</span></span></div>
+              </sc-for>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div style="border-top:2px solid rgba(255,247,243,0.28); border-bottom:2px solid rgba(255,247,243,0.28); overflow:hidden; margin:80px -48px 0; padding:14px 0;">
+    <div style="border-top:2px solid rgba(255,247,243,0.28); border-bottom:2px solid rgba(255,247,243,0.28); overflow:hidden; margin:80px -48px 0; padding:14px 0; min-height:48px;">
       <div style="display:flex; width:max-content; animation:hzTicker 30s linear infinite;">
-        <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;"><span>4,912 alerts sent</span><span style="color:#FCD9C8;">◆</span><span>91% acknowledged inside 2h</span><span style="color:#FCD9C8;">◆</span><span>3,640 units rerouted</span><span style="color:#FCD9C8;">◆</span><span>No donor data</span><span style="color:#FCD9C8;">◆</span></div>
-        <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;" aria-hidden="true"><span>4,912 alerts sent</span><span style="color:#FCD9C8;">◆</span><span>91% acknowledged inside 2h</span><span style="color:#FCD9C8;">◆</span><span>3,640 units rerouted</span><span style="color:#FCD9C8;">◆</span><span>No donor data</span><span style="color:#FCD9C8;">◆</span></div>
+        <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;"><sc-for list="{{ ticker }}" as="t" hint-placeholder-count="4"><span style="display:flex; gap:40px;"><span>{{ t }}</span><span style="color:#FCD9C8;">&#9670;</span></span></sc-for></div>
+        <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;" aria-hidden="true"><sc-for list="{{ ticker }}" as="t" hint-placeholder-count="4"><span style="display:flex; gap:40px;"><span>{{ t }}</span><span style="color:#FCD9C8;">&#9670;</span></span></sc-for></div>
       </div>
     </div>
   </section>
@@ -173,8 +170,8 @@
   <section style="background:#FFF7F3; color:#171019; padding:88px 48px;">
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:44px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Three things<br>worth waking up for</h2>
-        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A;">Severity classes</div>
+        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Three things<br>worth flagging</h2>
+        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A;">Flag classes</div>
       </div>
       <div class="hz-three" style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019;">
         <div class="hz-sev" data-reveal style="background:#FFF7F3; padding:34px 30px 30px;">
@@ -184,28 +181,28 @@
             <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out .36s infinite;"></span>
             <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out .54s infinite;"></span>
           </div>
-          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 01</div>
+          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 01 &middot; live</div>
           <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Shortfall ahead</div>
-          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">Forecast demand outruns usable stock inside 72 hours. The alert carries the nearest bank with spare units of the same component.</p>
+          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">A blood group sits below 85% of its usual level, or the model gives it a high chance of dropping below 55% within 3 days. The flag carries the nearest district holding spare units of the same group.</p>
         </div>
         <div class="hz-sev" data-reveal data-delay="110" style="background:#FFF7F3; padding:34px 30px 30px;">
-          <div style="position:relative; width:56px; height:56px; margin-bottom:26px;">
-            <span style="position:absolute; inset:0; border:2px solid #E3312A;"></span>
-            <span style="position:absolute; left:50%; top:4px; width:2px; height:24px; background:#E3312A; transform-origin:bottom center; animation:hzSweep 2.8s linear infinite;"></span>
-          </div>
-          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 02</div>
-          <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Expiry risk</div>
-          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">Units will cross shelf life before local demand can absorb them. Platelets trip this at 48 hours, whole blood at seven days.</p>
-        </div>
-        <div class="hz-sev" data-reveal data-delay="220" style="background:#FFF7F3; padding:34px 30px 30px;">
           <div style="display:flex; align-items:center; gap:10px; height:56px; margin-bottom:26px;">
             <span style="width:22px; height:22px; background:#E3312A; animation:hzDrift 2.6s ease-in-out infinite;"></span>
             <span style="flex:1; height:2px; background:rgba(23,16,25,0.2); position:relative; overflow:hidden;"><span style="position:absolute; inset:0; background:#E3312A; transform-origin:left; animation:hzProg 2.6s ease-in-out infinite;"></span></span>
             <span style="width:22px; height:22px; border:2px solid #E3312A; animation:hzDrift 2.6s ease-in-out 1.3s infinite;"></span>
           </div>
-          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 03</div>
+          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 02 &middot; live</div>
           <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Surplus match</div>
-          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">A district's excess lines up with another's forecast gap. Both banks get the same pairing, with the drive time attached.</p>
+          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">One district is well above its usual level while a neighbour is low on the same group. Both show up in the same pairing, with the distance between them.</p>
+        </div>
+        <div class="hz-sev" data-reveal data-delay="220" style="background:#FFF7F3; padding:34px 30px 30px;">
+          <div style="position:relative; width:56px; height:56px; margin-bottom:26px;">
+            <span style="position:absolute; inset:0; border:2px dashed #E3312A;"></span>
+            <span style="position:absolute; left:50%; top:4px; width:2px; height:24px; background:#E3312A; transform-origin:bottom center; animation:hzSweep 2.8s linear infinite;"></span>
+          </div>
+          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 03 &middot; planned</div>
+          <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Expiry risk</div>
+          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">Needs unit-level shelf-life data, which the public register does not publish. We only flag it once a bank shares that data with us.</p>
         </div>
       </div>
     </div>
@@ -214,36 +211,35 @@
   <section style="background:#171019; color:#FFF7F3; padding:88px 48px;">
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="margin-bottom:44px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:18px;">Anatomy of one alert</div>
-        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0; max-width:24ch;">Detected, routed, acknowledged — on a loop</h2>
+        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:18px;">Anatomy of one flag &mdash; a real one</div>
+        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0; max-width:24ch;">From snapshot to flag, on a loop</h2>
       </div>
       <div class="hz-two" style="display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:start;">
         <div data-reveal style="background:#FFF7F3; color:#171019; border:2px solid #FFF7F3; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
           <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px; background:#E3312A; color:#FFF7F3; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800;">
-            <span>Alert HZ-4912</span><span>Priority 01</span>
+            <span>{{ ex.tag }}</span><span>{{ ex.risk }}</span>
           </div>
           <div style="padding:28px 20px 24px;">
-            <div style="font-size:clamp(24px,3vw,38px); font-weight:900; letter-spacing:-0.04em; line-height:1.02;">O− shortfall, Kutch district</div>
-            <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:12px 0 24px; max-width:44ch;">Projected demand 11 units, usable stock 7. Window opens in 68 hours. Bhuj District Hospital holds 6 spare units, 42 minutes away.</div>
+            <div style="font-size:clamp(24px,3vw,38px); font-weight:900; letter-spacing:-0.04em; line-height:1.02;">{{ ex.title }}</div>
+            <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:12px 0 24px; max-width:44ch;">{{ ex.body }}</div>
             <div style="height:6px; background:rgba(23,16,25,0.12); overflow:hidden; margin-bottom:22px;">
               <div style="height:100%; background:#E3312A; transform-origin:left; animation:hzProg 6.4s linear infinite;"></div>
             </div>
             <div style="display:grid; gap:2px; background:#171019; border:2px solid #171019;">
-              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">01</span><span style="font-size:15px; font-weight:800;">Detected by forecast run</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">05:40</span></div>
-              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out 1.6s infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">02</span><span style="font-size:15px; font-weight:800;">Routed to two banks + DBO</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">05:41</span></div>
-              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out 3.2s infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">03</span><span style="font-size:15px; font-weight:800;">Acknowledged by Bhuj DH</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">06:12</span></div>
-              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out 4.8s infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">04</span><span style="font-size:15px; font-weight:800;">6 units in transit, gap closed</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">09:05</span></div>
+              <sc-for list="{{ ex.steps }}" as="st" hint-placeholder-count="4">
+                <div style="{{ st.style }}"><span style="font-size:13px; font-weight:900; color:#E3312A;">{{ st.n }}</span><span style="font-size:15px; font-weight:800;">{{ st.label }}</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">{{ st.time }}</span></div>
+              </sc-for>
             </div>
-            <p style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; line-height:1.5; color:#4A4442; margin:16px 0 0;">Animated illustration: the four stages of alert HZ-4912 cycling in sequence — detection at 05:40 through units in transit by 09:05.</p>
+            <p style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; line-height:1.5; color:#4A4442; margin:16px 0 0;">The highest-risk series in the latest forecast, shown as it stands. The four stages cycle to show how it got here.</p>
           </div>
         </div>
         <div data-reveal data-delay="120" style="transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-          <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:20px;">Every alert answers</div>
+          <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:20px;">Every flag answers</div>
           <div style="border-top:2px solid rgba(255,247,243,0.5);">
-            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">What's short</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Component and blood group, never a vague "low stock"</div></div>
-            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">By when</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">The hour the gap opens, not a day-level guess</div></div>
-            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">Who can cover</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Nearest bank with spare units, plus drive time</div></div>
-            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">Why we think so</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">The source rows and the confidence band behind the call</div></div>
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">What's short</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Component and blood group, never a vague &ldquo;low stock&rdquo;</div></div>
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">By when</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Inside three days &mdash; the window the risk score covers</div></div>
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">Who can cover</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">The nearest district above its usual level, with the distance</div></div>
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">Why we think so</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">The latest snapshot, the usual level, and the 80% band around the forecast</div></div>
           </div>
         </div>
       </div>
@@ -253,36 +249,30 @@
   <section style="background:#FFF7F3; color:#171019; padding:88px 48px;">
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:40px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Wherever the<br>duty phone is</h2>
-        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:32ch;">No new app to install. Alerts land on the channel a bank already checks at 6am, and escalate if nobody does.</div>
+        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Where flags<br>will land</h2>
+        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:34ch;">Today flags live on this site. Messages to the duty phone are planned &mdash; onboarding tells us who wants them, and on which channel.</div>
       </div>
       <div class="hz-four" style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019;">
         <div class="hz-ch" data-reveal style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">01</div>
-          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">SMS</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">160 characters, no link required</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">Dashboard</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;"><b style="color:#0B4A38;">Live now.</b> Map and forecast detail on this site</div>
         </div>
         <div class="hz-ch" data-reveal data-delay="90" style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">02</div>
-          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">WhatsApp</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">One-tap acknowledge, group-ready</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">SMS</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;"><b>Planned.</b> Short text, no link required</div>
         </div>
         <div class="hz-ch" data-reveal data-delay="180" style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">03</div>
-          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">Dashboard</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">Full district view with source rows</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">WhatsApp</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;"><b>Planned.</b> Group-ready, one-tap acknowledge</div>
         </div>
         <div class="hz-ch" data-reveal data-delay="270" style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
           <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">04</div>
           <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">Daily digest</div>
-          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">05:40 email for district officers</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;"><b>Planned.</b> One morning email per district</div>
         </div>
-      </div>
-
-      <div class="hz-ladder" data-reveal style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019; border-top:none; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <div style="background:#FFF7F3; padding:26px 24px; display:flex; gap:16px; align-items:center;"><span style="width:14px; height:14px; background:#E3312A; flex:none; animation:hzBlink 2.1s ease-in-out infinite;"></span><span><b style="font-size:16px; font-weight:800;">0 min — duty officer</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">SMS and WhatsApp together</span></span></div>
-        <div style="background:#FFF7F3; padding:26px 24px; display:flex; gap:16px; align-items:center;"><span style="width:14px; height:14px; background:#E3312A; flex:none; animation:hzBlink 2.1s ease-in-out .7s infinite;"></span><span><b style="font-size:16px; font-weight:800;">90 min — bank lead</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">If nothing is acknowledged</span></span></div>
-        <div style="background:#FFF7F3; padding:26px 24px; display:flex; gap:16px; align-items:center;"><span style="width:14px; height:14px; background:#E3312A; flex:none; animation:hzBlink 2.1s ease-in-out 1.4s infinite;"></span><span><b style="font-size:16px; font-weight:800;">4 h — district officer</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">With both banks copied in</span></span></div>
       </div>
     </div>
   </section>
@@ -291,19 +281,19 @@
     <div style="position:absolute; top:-120px; right:-120px; width:420px; height:420px; border:2px solid rgba(255,247,243,0.28); animation:hzSweep 34s linear infinite;"></div>
     <div style="max-width:1440px; margin:0 auto; position:relative;">
       <div data-reveal style="transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);">
-        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:28px;">Turn it on</div>
-        <h2 style="font-size:clamp(38px,8vw,112px); line-height:0.86; letter-spacing:-0.05em; font-weight:900; margin:0; max-width:17ch;">Your 6am round, three days earlier.</h2>
+        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:28px;">Ask for it</div>
+        <h2 style="font-size:clamp(38px,8vw,112px); line-height:0.86; letter-spacing:-0.05em; font-weight:900; margin:0; max-width:17ch;">Your morning round, three days earlier.</h2>
         <div class="hz-two" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-top:46px;">
-          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(16px,1.9vw,20px); line-height:1.55; margin:0; max-width:40ch;">Send one nightly stock export and pick a phone number. Alerts start the next morning — nothing else changes in your workflow.</p>
+          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(16px,1.9vw,20px); line-height:1.55; margin:0; max-width:40ch;">Tell us which bank you run and which channel you would want. We will get in touch before flags go live in your district.</p>
           <div style="display:flex; gap:14px; flex-wrap:wrap;">
-            <a class="hz-btn" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FFF7F3;">Start onboarding</a>
+            <a class="hz-btn" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FFF7F3;">Register interest</a>
             <a class="hz-btn" href="about.html" style="background:transparent; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid rgba(255,247,243,0.5);">Who we are</a>
           </div>
         </div>
       </div>
       <div style="border-top:2px solid rgba(255,247,243,0.28); margin-top:78px; padding:18px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#FFD9CF;">
-        <span>Hemzo — Ahmedabad</span>
-        <span>Alert engine 01</span>
+        <span>Hemzo &mdash; Gujarat</span>
+        <span>Risk watch</span>
       </div>
     </div>
   </section>
@@ -311,11 +301,18 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+const HD = window.HemzoData;
+const pad = (n) => (n < 10 ? '0' : '') + n;
+const hhmmIST = (iso) => { const m = /T(\d{2}):(\d{2})/.exec(iso); return m ? m[1] + ':' + m[2] : ''; };
+const lowIdle = 'background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center;';
+
 class Component extends DCLogic {
+  state = { data: null };
+
   componentDidMount() {
+    HD.load().then((data) => this.setState({ data })).catch(() => {});
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const els = Array.from(document.querySelectorAll("[data-reveal]"));
-
     let queued = false;
     const run = () => {
       queued = false;
@@ -338,9 +335,70 @@ class Component extends DCLogic {
     window.removeEventListener("scroll", this.sync);
     window.removeEventListener("resize", this.sync);
   }
-  renderVals() { return {}; }
-}
 
+  renderVals() {
+    const d = this.state.data;
+    const empty = { feed: [], ticker: [], feedStamp: 'loading', ex: { tag: 'Flag', risk: '', title: 'Reading the latest record\u2026', body: '', steps: [] } };
+    if (!d) return empty;
+    const meta = d.meta;
+    const comp = meta.components.includes('Packed RBC') ? 'Packed RBC' : meta.components[0];
+    const compLabel = (HD.COMPONENT_LABEL[comp] || comp).toLowerCase();
+    const rows = [];
+    d.districts.forEach(x => meta.groups.forEach(g => {
+      const r = x.components[comp][g];
+      if (r.nodata || r.status === 'sparse') return;
+      rows.push({ x, g, r });
+    }));
+    const flagged = rows.filter(i => i.r.status === 'critical' || i.r.status === 'low')
+      .sort((a, b) => (b.r.risk3 || 0) - (a.r.risk3 || 0) || a.r.cover - b.r.cover);
+    const nCrit = rows.filter(i => i.r.status === 'critical').length;
+    const nLow = rows.filter(i => i.r.status === 'low').length;
+    const stamp = hhmmIST(meta.data_through);
+
+    const feed = flagged.slice(0, 8).map(i => ({
+      time: stamp,
+      title: (i.r.status === 'critical' ? 'Critical' : 'Shortfall') + ' \u00b7 ' + HD.disp(i.g) + ' \u00b7 ' + i.x.name,
+      sub: i.r.units + ' units, ' + Math.round(i.r.cover * 100) + '% of usual' + (i.r.risk3 == null ? '' : ' \u00b7 ' + Math.round(i.r.risk3 * 100) + '% chance of critical in 3 days'),
+    }));
+
+    // pair the most-stocked district with the nearest low one, same group
+    const surplus = rows.filter(i => i.r.status === 'surplus' && i.x.lat != null);
+    for (const s of surplus.sort((a, b) => b.r.cover - a.r.cover)) {
+      const low = flagged.filter(f => f.g === s.g && f.x.name !== s.x.name && f.x.lat != null)
+        .map(f => ({ f, km: HD.haversineKm(s.x, f.x) })).sort((a, b) => a.km - b.km)[0];
+      if (low) { feed.splice(2, 0, { time: stamp, title: 'Surplus match \u00b7 ' + HD.disp(s.g) + ' \u00b7 ' + s.x.name,
+        sub: s.r.units + ' units (' + Math.round(s.r.cover * 100) + '% of usual) sits ' + Math.round(low.km) + ' km from ' + low.f.x.name + ', which is low' }); break; }
+    }
+
+    // the example flag: highest-risk series, with its nearest district above usual level
+    const top = flagged[0] || rows.sort((a, b) => a.r.cover - b.r.cover)[0];
+    const donor = d.districts.filter(o => o.name !== top.x.name && o.lat != null && top.x.lat != null)
+      .map(o => ({ o, y: o.components[comp][top.g], km: HD.haversineKm(top.x, o) }))
+      .filter(z => !z.y.nodata && z.y.units - z.y.ref >= 1).sort((a, b) => a.km - b.km)[0];
+    const gen = new Date(meta.generated_at);
+    const genIST = new Date(gen.getTime() + 330 * 60000);
+    const step = (n, label, time, delay) => ({ n, label, time, style: lowIdle + ' animation:hzStep 6.4s ease-in-out ' + delay + 's infinite;' });
+    const ex = {
+      tag: 'Live example \u00b7 ' + meta.state,
+      risk: top.r.risk3 == null ? top.r.status : Math.round(top.r.risk3 * 100) + '% risk \u00b7 3 days',
+      title: HD.disp(top.g) + ' ' + (top.r.status === 'critical' ? 'critical' : 'shortfall') + ', ' + top.x.name,
+      body: top.r.units + ' units of ' + compLabel + ' on hand against a usual level of ' + Math.round(top.r.ref) + ' (' + Math.round(top.r.cover * 100) + '%). ' +
+        (donor ? donor.o.name + ' holds ' + Math.round(donor.y.units - donor.y.ref) + ' above its usual level, ' + Math.round(donor.km) + ' km away.' : 'No nearby district is above its usual level for this group.'),
+      steps: [
+        step('01', 'Snapshot fetched from eRaktKosh', stamp, 0),
+        step('02', 'Forecast rebuilt from the archive', pad(genIST.getUTCHours()) + ':' + pad(genIST.getUTCMinutes()), 1.6),
+        step('03', 'Shortage risk scored', top.r.risk3 == null ? '\u2014' : Math.round(top.r.risk3 * 100) + '%', 3.2),
+        step('04', 'Published to this site', 'forecast.json', 4.8),
+      ],
+    };
+
+    return {
+      feed, ex,
+      feedStamp: 'through ' + stamp + ' IST',
+      ticker: [nCrit + ' critical', nLow + ' running low', rows.length + ' series watched', meta.banks_reporting + ' banks reporting', 'No donor data'],
+    };
+  }
+}
 </script>
 </body>
 </html>
