@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Onboarding — Hemzo</title>
+<title>Join the waitlist — Hemzo</title>
+<meta name="description" content="Hemzo alerts are not live yet. See what a blood bank would be asked, and ask for access on GitHub.">
+<meta name="theme-color" content="#E3312A">
+<link rel="canonical" href="https://hemzo.vercel.app/onboarding.html">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hemzo">
+<meta property="og:title" content="Join the waitlist — Hemzo">
+<meta property="og:description" content="Hemzo alerts are not live yet. See what a blood bank would be asked, and ask for access on GitHub.">
+<meta property="og:url" content="https://hemzo.vercel.app/onboarding.html">
+<meta property="og:image" content="https://hemzo.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Join the waitlist — Hemzo">
+<meta name="twitter:description" content="Hemzo alerts are not live yet. See what a blood bank would be asked, and ask for access on GitHub.">
+<meta name="twitter:image" content="https://hemzo.vercel.app/assets/og.png">
+<style>
+  .hzc-link, .hzc-cta { display:inline-flex; align-items:center; min-height:32px; }
+  .hz-foot a { display:inline-flex; align-items:center; min-height:32px; }
+</style>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -100,79 +121,45 @@
   <main id="main">
   <section style="background:#E3312A; color:#FFF7F3; padding:80px 32px 72px;">
     <div style="max-width:1440px; margin:0 auto;">
-      <div style="display:flex; align-items:center; gap:14px; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; animation:hzFade .6s ease both;">
+      <div style="display:flex; align-items:center; gap:14px; font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; animation:hzFade .6s ease both;">
         <span style="width:8px; height:8px; background:#FCD9C8; animation:hzBlink 1.6s ease-in-out infinite;"></span>
-        <span>Register interest — two minutes</span>
+        <span>Waitlist — not open yet</span>
       </div>
       <h1 style="font-size:clamp(38px,7vw,110px); line-height:0.88; letter-spacing:-0.05em; font-weight:900; margin:28px 0 0;">
-        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .1s both;">Tell us how</span></span>
-        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; color:#FCD9C8; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .22s both;">you would use it.</span></span>
+        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .1s both;">Alerts are</span></span>
+        <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; color:#FCD9C8; animation:hzMask .9s cubic-bezier(.16,1,.3,1) .22s both;">not live yet.</span></span>
       </h1>
-      <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,20px); line-height:1.5; max-width:46ch; margin:30px 0 0; animation:hzRise .8s cubic-bezier(.16,1,.3,1) .4s both;">Tell us which bank you run and how you would want flags delivered. Message alerts are still being built, and your answers decide what we build first.</p>
+      <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,20px); line-height:1.5; max-width:50ch; margin:30px 0 0; animation:hzRise .8s cubic-bezier(.16,1,.3,1) .4s both;">Today Hemzo shows forecasts on this site only. SMS, WhatsApp and email alerts are planned, and this page does not collect anything: no form, no phone numbers, no sign-up list. To ask for access, say what you would need on GitHub.</p>
     </div>
   </section>
 
   <section style="padding:72px 32px 88px;">
     <div class="hz-two" style="max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:start;">
-      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
-        <div style="border:2px solid #171019; background:#FCD9C8; padding:40px 32px;">
-          <div style="font-size:11px; letter-spacing:0.28em; text-transform:uppercase; font-weight:800; color:#E3312A;">Interest noted</div>
-          <div style="font-size:clamp(26px,3.4vw,44px); font-weight:900; letter-spacing:-0.04em; line-height:1.02; margin:14px 0 16px;">{{ successTitle }}</div>
-          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:16px; line-height:1.55; color:#171019; margin:0 0 28px; max-width:48ch;">Thanks. We'll get in touch once a channel for your district is ready. Nothing is sent to you before then.</p>
-          <a class="hz-btn" href="alerts.html" style="display:inline-block; background:#E3312A; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #E3312A; text-align:left;">See what a flag looks like</a>
+      <div style="border:2px solid #171019; background:#FFF7F3;">
+        <div style="background:#171019; color:#FFF7F3; padding:14px 20px; display:flex; justify-content:space-between; gap:16px; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800;">
+          <span>Waitlist</span><span>Nothing collected here</span>
         </div>
-      </sc-if>
-
-      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
-        <form onSubmit="{{ onSubmit }}" style="border:2px solid #171019; background:#FFF7F3;">
-          <div style="background:#171019; color:#FFF7F3; padding:14px 20px; display:flex; justify-content:space-between; gap:16px; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800;">
-            <span>Interest form</span><span>Form 01</span>
+        <div style="padding:30px 24px 28px; display:grid; gap:22px;">
+          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:16px; line-height:1.55; margin:0; max-width:52ch;">If you run or work with a blood bank, the most useful thing you can tell us is below. Post it as a GitHub issue, so others with the same need can see it and add to it.</p>
+          <div style="border-top:2px solid #171019;">
+            <div style="padding:14px 0; border-bottom:2px solid rgba(23,16,25,0.22); font-size:15px; font-weight:800;">Your district, and the kind of bank (government, charitable, hospital)</div>
+            <div style="padding:14px 0; border-bottom:2px solid rgba(23,16,25,0.22); font-size:15px; font-weight:800;">Which components you track: whole blood, packed red cells, platelets, plasma</div>
+            <div style="padding:14px 0; border-bottom:2px solid rgba(23,16,25,0.22); font-size:15px; font-weight:800;">How you would want a flag delivered: email, dashboard, SMS or WhatsApp</div>
+            <div style="padding:14px 0; border-bottom:2px solid rgba(23,16,25,0.22); font-size:15px; font-weight:800;">The decision a flag would help you make</div>
           </div>
-          <div style="padding:30px 24px 28px; display:grid; gap:24px;">
-            <div class="hz-half" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-              <label style="display:block;"><span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:8px;">Blood bank / hospital</span><input class="hz-in" name="bank" required placeholder="Rajkot District Hospital"></label>
-              <label style="display:block;"><span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:8px;">District</span><input class="hz-in" name="district" required placeholder="Rajkot"></label>
-            </div>
-            <div class="hz-half" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-              <label style="display:block;"><span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:8px;">Contact name</span><input class="hz-in" name="name" required placeholder="Dr. N. Vora"></label>
-              <label style="display:block;"><span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:8px;">Role</span><input class="hz-in" name="role" placeholder="Blood bank officer"></label>
-            </div>
-            <div class="hz-half" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-              <label style="display:block;"><span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:8px;">Mobile for alerts</span><input class="hz-in" name="phone" type="tel" required placeholder="+91 98xxx xxxxx"></label>
-              <label style="display:block;"><span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:8px;">Email</span><input class="hz-in" name="email" type="email" required placeholder="bloodbank@hospital.gov.in"></label>
-            </div>
-            <div>
-              <span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:10px;">How you would want flags</span>
-              <div style="display:grid; gap:2px; background:#171019; border:2px solid #171019;">
-                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="csv" checked><span>Morning email digest</span></label>
-                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="eraktkosh"><span>Dashboard only (this site)</span></label>
-                <label class="hz-opt" style="background:#FFF7F3; border:none;"><input type="radio" name="feed" value="api"><span>SMS or WhatsApp to the duty phone</span></label>
-              </div>
-            </div>
-            <div>
-              <span style="display:block; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; font-weight:800; margin-bottom:10px;">Components you care about</span>
-              <div style="display:flex; flex-wrap:wrap; gap:10px;">
-                <label class="hz-opt"><input type="checkbox" name="component" value="whole" checked><span>Whole blood</span></label>
-                <label class="hz-opt"><input type="checkbox" name="component" value="prbc" checked><span>Packed red cells</span></label>
-                <label class="hz-opt"><input type="checkbox" name="component" value="platelets" checked><span>Platelets</span></label>
-                <label class="hz-opt"><input type="checkbox" name="component" value="plasma"><span>Plasma</span></label>
-              </div>
-            </div>
-            <label class="hz-opt" style="align-items:flex-start; background:#FCD9C8;"><input type="checkbox" name="consent" required style="margin-top:2px;"><span style="font-family:var(--font-body), Arial, sans-serif; font-weight:600; line-height:1.5;">I understand Hemzo only uses aggregate unit counts, never donor or patient identity, and that transfer decisions stay with each bank.</span></label>
-            <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
-              <button class="hz-btn" type="submit" style="background:#E3312A; color:#FFF7F3; font-family:var(--font-heading), Arial, sans-serif; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #E3312A; cursor:pointer; text-align:left;">Register interest</button>
-              <span style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442;">Not connected to anything yet — nothing is sent.</span>
-            </div>
+          <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+            <a class="hz-btn" href="https://github.com/parthmadlani/Hemzo/issues/new" target="_blank" rel="noopener" style="display:inline-block; background:#E3312A; color:#FFF7F3; font-family:var(--font-heading), Arial, sans-serif; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #E3312A; text-align:left;">Ask for access on GitHub</a>
+            <span style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; max-width:34ch;">Issues are public. Leave out phone numbers, emails and anything personal.</span>
           </div>
-        </form>
-      </sc-if>
+        </div>
+      </div>
 
       <div style="display:grid; gap:32px;">
         <div>
-          <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A; margin-bottom:18px;">What happens next</div>
+          <div style="font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A; margin-bottom:18px;">What happens next</div>
           <div style="border-top:2px solid #171019;">
             <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">01</span><span><b style="display:block; font-size:16px; font-weight:800;">Your district is already forecast</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">From the public register, so there is a baseline before you say a word.</span></span></div>
-            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">02</span><span><b style="display:block; font-size:16px; font-weight:800;">We get in touch</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">When a channel you asked for is ready.</span></span></div>
+            <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">02</span><span><b style="display:block; font-size:16px; font-weight:800;">Say what you would need</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">In the open, so what gets built first follows real demand.</span></span></div>
             <div style="display:grid; grid-template-columns:52px 1fr; gap:18px; padding:18px 0; border-bottom:2px solid rgba(23,16,25,0.22);"><span style="font-size:22px; font-weight:900; color:#E3312A;">03</span><span><b style="display:block; font-size:16px; font-weight:800;">Flags when ready</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#4A4442; margin-top:4px;">Shortfall and surplus flags for your district.</span></span></div>
           </div>
         </div>
@@ -187,26 +174,27 @@
   </section>
   </main>
 
+  <footer class="hz-foot" style="background:#171019; color:#FFF7F3; padding:36px 32px;">
+    <div style="max-width:1440px; margin:0 auto; display:flex; flex-wrap:wrap; gap:18px 36px; align-items:center; justify-content:space-between;">
+      <div style="font-size:13px; line-height:1.5; max-width:62ch; color:#FFD9CF;">
+        <b style="color:#FFF7F3; font-weight:900;">Hemzo</b> forecasts blood-stock shortages for Gujarat from public eRaktKosh data. Forecasts are decision support, not medical advice.
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:4px 22px; font-size:13px; font-weight:700;">
+        <a href="live-map.html" style="color:#FFF7F3;">Live map</a>
+        <a href="how-it-works.html" style="color:#FFF7F3;">How it works</a>
+        <a href="data-sources.html" style="color:#FFF7F3;">Data</a>
+        <a href="about.html" style="color:#FFF7F3;">About</a>
+        <a href="https://github.com/parthmadlani/Hemzo" rel="noopener" style="color:#FCD9C8;">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { submitted: false, bank: "" };
-  renderVals() {
-    return {
-      submitted: this.state.submitted,
-      notSubmitted: !this.state.submitted,
-      successTitle: (this.state.bank || "Your bank") + " is on the list",
-      onSubmit: (e) => {
-        e.preventDefault();
-        const fd = new FormData(e.target);
-        this.setState({ submitted: true, bank: (fd.get("bank") || "").toString().trim() });
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    };
-  }
+  renderVals() { return {}; }
 }
-
 </script>
 </body>
 </html>

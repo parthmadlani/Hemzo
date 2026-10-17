@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How It Works — Hemzo</title>
+<meta name="description" content="How Hemzo turns public eRaktKosh snapshots into a seven-day blood-stock forecast, and how it checks itself against a naive baseline.">
+<meta name="theme-color" content="#E3312A">
+<link rel="canonical" href="https://hemzo.vercel.app/how-it-works.html">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hemzo">
+<meta property="og:title" content="How It Works — Hemzo">
+<meta property="og:description" content="How Hemzo turns public eRaktKosh snapshots into a seven-day blood-stock forecast, and how it checks itself against a naive baseline.">
+<meta property="og:url" content="https://hemzo.vercel.app/how-it-works.html">
+<meta property="og:image" content="https://hemzo.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How It Works — Hemzo">
+<meta name="twitter:description" content="How Hemzo turns public eRaktKosh snapshots into a seven-day blood-stock forecast, and how it checks itself against a naive baseline.">
+<meta name="twitter:image" content="https://hemzo.vercel.app/assets/og.png">
+<style>
+  .hzc-link, .hzc-cta { display:inline-flex; align-items:center; min-height:32px; }
+  .hz-foot a { display:inline-flex; align-items:center; min-height:32px; }
+</style>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -140,6 +161,8 @@
     </div>
   </nav>
 
+  <main>
+
   <!-- red poster opening -->
   <header id="main" style="background:#E3312A; color:#FFF7F3; padding:76px 28px 60px;">
     <div style="max-width:1360px; margin:0 auto;">
@@ -152,7 +175,7 @@
         Forecasters don't know tomorrow. They know what yesterday's pattern usually leads to — and they say it early enough to matter. Hemzo does the same with hospital blood stock. Four steps, below.
       </p>
       <div style="display:flex; align-items:center; gap:12px; animation:hwFade 1s ease 1s both;">
-        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#FFD9CF;">Scroll</span>
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#FFD9CF;">Scroll</span>
         <span style="display:inline-block; width:2px; height:34px; background:#FFD9CF; animation:hwBob 2.2s ease-in-out infinite;"></span>
       </div>
     </div>
@@ -162,15 +185,15 @@
   <section style="max-width:1360px; margin:0 auto; padding:0 28px;">
     <div data-reveal="true" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); border-bottom:2px solid #171019;">
       <div data-hover-card="true" style="padding:26px 24px 30px 0; border-right:2px solid #171019;">
-        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">The problem</span>
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">The problem</span>
         <p style="font-size:16px; font-weight:600; line-height:1.5; margin:12px 0 0; text-wrap:pretty;">A hospital usually finds out it is short of a blood group <b>on the day it runs out</b>. By then the only options are emergency appeals and transfers.</p>
       </div>
       <div data-hover-card="true" style="padding:26px 24px 30px; border-right:2px solid #171019;">
-        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">The clue</span>
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">The clue</span>
         <p style="font-size:16px; font-weight:600; line-height:1.5; margin:12px 0 0; text-wrap:pretty;">Shortages are rarely sudden. Stock <b>drifts down for days</b> first, and that drift follows patterns — weekdays, festivals, monsoon, donation camps.</p>
       </div>
       <div data-hover-card="true" style="padding:26px 0 30px 24px;">
-        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">What Hemzo does</span>
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">What Hemzo does</span>
         <p style="font-size:16px; font-weight:600; line-height:1.5; margin:12px 0 0; text-wrap:pretty;">Reads the public record every day, spots the drift, and says <b>"this district runs short in three days"</b> — while there is still time to act.</p>
       </div>
     </div>
@@ -184,14 +207,14 @@
       <div>
         <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
           <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">01</span>
-          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Collect</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Collect</span>
         </div>
         <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">We read the public record, every day.</h2>
         <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">India already publishes blood-bank stock on <b>eRaktKosh</b>, the government's public portal. Nobody has to send us anything — we simply check it on a schedule and keep a copy of what it said, so we have a history nobody else is storing.</p>
         <p style="font-size:14px; font-weight:600; line-height:1.5; color:#7A3A12; background:#FCD9C8; border-left:4px solid #FA8743; padding:12px 14px; margin:0; max-width:52ch;"><b>In one line:</b> the data is already public — we just write down what it says, every single day.</p>
       </div>
       <div data-diagram="true" style="border:2px solid #171019; background:#FCD9C8; padding:22px;">
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Scattered readings → one ordered record</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Scattered readings → one ordered record</span>
         <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto;" aria-label="Scattered data points snapping into an ordered grid">
           <g data-hw-snap-grid="true"></g>
         </svg>
@@ -201,7 +224,7 @@
     <!-- 02 -->
     <div data-step="true" data-reveal="true" data-steprow="true" style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:52px; align-items:center; padding:64px 0; border-bottom:2px solid #171019;">
       <div data-flip="true" data-diagram="true" style="border:2px solid #171019; background:#FFF7F3; padding:22px; order:-1;">
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Ragged entries → a clean daily series</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Ragged entries → a clean daily series</span>
         <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto;" aria-label="Misaligned rows snapping to a shared baseline and gaps being filled">
           <line x1="96" y1="8" x2="96" y2="172" stroke="#171019" stroke-width="2" stroke-dasharray="5 5"></line>
           <g font-family="Archivo Narrow, Archivo, sans-serif" font-size="9" font-weight="700" fill="rgba(23,16,25,.75)" letter-spacing="1" text-anchor="end">
@@ -220,7 +243,7 @@
       <div>
         <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
           <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">02</span>
-          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Tidy up</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Tidy up</span>
         </div>
         <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">Real data is messy. We line it up.</h2>
         <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">Banks report at different times, spell their own names three ways, skip days, and occasionally post a number that can't be right. We match each bank to its district, put every reading on the same daily clock, <b>fill small gaps</b>, and flag the values that look like typing errors rather than real drops.</p>
@@ -233,14 +256,14 @@
       <div>
         <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
           <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">03</span>
-          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Learn the rhythm</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Learn the rhythm</span>
         </div>
         <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">Every day of history teaches it a little more.</h2>
         <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">Lay a district's stock history on top of itself and you can see how far each group usually wanders, and how often it drops well below its normal level. The model measures that from every snapshot we have kept, and is re-tested against a naive guess after each new one. With only weeks of record it can't yet learn weekends or monsoon — it will, as the archive grows.</p>
         <p style="font-size:14px; font-weight:600; line-height:1.5; color:#7A3A12; background:#FCD9C8; border-left:4px solid #FA8743; padding:12px 14px; margin:0; max-width:52ch;"><b>In one line:</b> it isn't guessing the future — it's measuring how stock has behaved before, and saying honestly how sure it is.</p>
       </div>
       <div data-diagram="true" style="border:2px solid #171019; background:#FFF7F3; padding:22px;">
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Past weeks (faint) → the usual pattern (red)</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Past weeks (faint) → the usual pattern (red)</span>
         <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto;" aria-label="Many faint historical curves with one strong learned curve drawn over them">
           <g data-hw-ghost-lines="true"></g>
           <polyline data-draw="true" data-hw-learned="true" points="" fill="none" stroke="#E3312A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:900; animation-delay:.6s;"></polyline>
@@ -251,7 +274,7 @@
     <!-- 04 -->
     <div data-step="true" data-reveal="true" data-steprow="true" style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:52px; align-items:center; padding:64px 0; border-bottom:2px solid #171019;">
       <div data-flip="true" data-diagram="true" style="border:2px solid #171019; background:#FCD9C8; padding:22px; order:-1;">
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">The line crosses the floor → we say so early</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">The line crosses the floor → we say so early</span>
         <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto; overflow:visible;" aria-label="A forecast line crossing below a safety floor, triggering an alert">
           <rect data-flash="true" x="0" y="118" width="320" height="62" fill="#E3312A" opacity="0.18"></rect>
           <line x1="0" y1="118" x2="320" y2="118" stroke="#FA8743" stroke-width="2.5" stroke-dasharray="7 6"></line>
@@ -268,7 +291,7 @@
       <div>
         <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
           <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">04</span>
-          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Warn early</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Warn early</span>
         </div>
         <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">A number is useless. A warning isn't.</h2>
         <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">Every district has a <b>working floor</b> — the level below which routine surgery starts getting postponed. The moment the forecast line is heading under that floor, the district turns red on the map and anyone watching it gets told: <b>short in three days</b>, not short today.</p>
@@ -284,14 +307,14 @@
       <p style="font-size:15px; font-weight:600; color:rgba(23,16,25,0.75); margin:0 0 26px;">Worth being straight about, because a forecast people can't trust is worse than none.</p>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:18px;">
         <div data-hover-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:20px 22px 22px;">
-          <span style="display:inline-block; background:#3ECF8E; color:#0B4A38; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:4px 9px; margin-bottom:14px;">It does</span>
+          <span style="display:inline-block; background:#3ECF8E; color:#0B4A38; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:4px 9px; margin-bottom:14px;">It does</span>
           <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Tells you which districts are trending toward a shortage, three to seven days out.</span></p>
           <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Shows the whole state at once, so you can see where spare units actually are.</span></p>
           <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Publishes its confidence, so a shaky forecast looks shaky.</span></p>
           <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Runs entirely on data that is already public — nothing private, nothing patient-level.</span></p>
         </div>
         <div data-hover-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:20px 22px 22px;">
-          <span style="display:inline-block; background:#171019; color:#FFF7F3; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:4px 9px; margin-bottom:14px;">It doesn't</span>
+          <span style="display:inline-block; background:#171019; color:#FFF7F3; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:4px 9px; margin-bottom:14px;">It doesn't</span>
           <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#E3312A; font-weight:900;">×</span><span>Replace a blood bank&rsquo;s own records — eRaktKosh lags reality by hours.</span></p>
           <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#E3312A; font-weight:900;">×</span><span>Predict a road accident, a disaster, or any single sudden event.</span></p>
           <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#E3312A; font-weight:900;">×</span><span>Know about stock a bank holds but never reported.</span></p>
@@ -315,7 +338,7 @@
   <section style="background:#171019; color:#FFF7F3; margin-top:46px; padding:72px 28px 78px;">
     <div style="max-width:1360px; margin:0 auto; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(260px,0.7fr); gap:40px; align-items:end;">
       <div>
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#FFD9CF; margin-bottom:16px;">That's the whole idea</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#FFD9CF; margin-bottom:16px;">That's the whole idea</span>
         <h2 style="font-size:clamp(30px,4.4vw,66px); font-weight:900; letter-spacing:-0.055em; line-height:0.96; margin:0; max-width:22ch;">Now go look at a district that's about to run short.</h2>
       </div>
       <div style="display:flex; flex-direction:column; gap:12px;">
@@ -324,6 +347,23 @@
       </div>
     </div>
   </section>
+
+  </main>
+
+  <footer class="hz-foot" style="background:#171019; color:#FFF7F3; padding:36px 32px;">
+    <div style="max-width:1440px; margin:0 auto; display:flex; flex-wrap:wrap; gap:18px 36px; align-items:center; justify-content:space-between;">
+      <div style="font-size:13px; line-height:1.5; max-width:62ch; color:#FFD9CF;">
+        <b style="color:#FFF7F3; font-weight:900;">Hemzo</b> forecasts blood-stock shortages for Gujarat from public eRaktKosh data. Forecasts are decision support, not medical advice.
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:4px 22px; font-size:13px; font-weight:700;">
+        <a href="live-map.html" style="color:#FFF7F3;">Live map</a>
+        <a href="how-it-works.html" style="color:#FFF7F3;">How it works</a>
+        <a href="data-sources.html" style="color:#FFF7F3;">Data</a>
+        <a href="about.html" style="color:#FFF7F3;">About</a>
+        <a href="https://github.com/parthmadlani/Hemzo" rel="noopener" style="color:#FCD9C8;">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
 
 </div>
 

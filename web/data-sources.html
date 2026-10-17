@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Data Sources — Hemzo</title>
+<meta name="description" content="Where Hemzo's data comes from, how often it refreshes, and the model's real backtest numbers.">
+<meta name="theme-color" content="#E3312A">
+<link rel="canonical" href="https://hemzo.vercel.app/data-sources.html">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hemzo">
+<meta property="og:title" content="Data Sources — Hemzo">
+<meta property="og:description" content="Where Hemzo's data comes from, how often it refreshes, and the model's real backtest numbers.">
+<meta property="og:url" content="https://hemzo.vercel.app/data-sources.html">
+<meta property="og:image" content="https://hemzo.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Data Sources — Hemzo">
+<meta name="twitter:description" content="Where Hemzo's data comes from, how often it refreshes, and the model's real backtest numbers.">
+<meta name="twitter:image" content="https://hemzo.vercel.app/assets/og.png">
+<style>
+  .hzc-link, .hzc-cta { display:inline-flex; align-items:center; min-height:32px; }
+  .hz-foot a { display:inline-flex; align-items:center; min-height:32px; }
+</style>
 <script src="js/hemzo-data.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -117,6 +138,8 @@
     </div>
   </nav>
 
+  <main>
+
   <header id="main" style="background:#E3312A; color:#FFF7F3; padding:74px 28px 0;">
     <div style="max-width:1360px; margin:0 auto;">
       <h1 style="font-size:clamp(42px, 7vw, 116px); font-weight:900; letter-spacing:-0.06em; line-height:0.88; margin:0 0 26px; max-width:13ch;">
@@ -131,7 +154,7 @@
         <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
           <div style="{{ s.wrap }}">
             <div style="font-size:clamp(28px,3vw,46px); font-weight:900; letter-spacing:-0.05em; line-height:1;"><span>{{ s.value }}</span></div>
-            <span style="display:block; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:#FFD9CF;">{{ s.label }}</span>
+            <span style="display:block; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:#FFD9CF;">{{ s.label }}</span>
           </div>
         </sc-for>
       </div>
@@ -140,10 +163,10 @@
 
   <div style="background:#171019; color:#FFF7F3; overflow:hidden; border-bottom:2px solid #171019;">
     <div style="display:flex; width:max-content; animation:dsMarquee 38s linear infinite;">
-      <div style="display:flex; gap:40px; padding:11px 20px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;">
+      <div style="display:flex; gap:40px; padding:11px 20px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;">
         <span>eRaktKosh public stock register</span><span>·</span><span>GitHub Actions snapshots every ~4 h</span><span>·</span><span>No patient or donor data</span><span>·</span><span>Forecast rebuilt after every snapshot</span><span>·</span>
       </div>
-      <div style="display:flex; gap:40px; padding:11px 20px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;" aria-hidden="true">
+      <div style="display:flex; gap:40px; padding:11px 20px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;" aria-hidden="true">
         <span>eRaktKosh public stock register</span><span>·</span><span>GitHub Actions snapshots every ~4 h</span><span>·</span><span>No patient or donor data</span><span>·</span><span>Forecast rebuilt after every snapshot</span><span>·</span>
       </div>
     </div>
@@ -160,14 +183,14 @@
       <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:62ch; margin:0 0 26px; text-wrap:pretty;">{{ sourcesIntro }}</p>
 
       <div style="border-top:2px solid #171019;">
-        <div style="display:grid; grid-template-columns:minmax(180px,1.5fr) minmax(90px,.7fr) minmax(90px,.7fr) minmax(160px,1.6fr); gap:16px; padding:10px 0; border-bottom:2px solid #171019; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">
+        <div style="display:grid; grid-template-columns:minmax(180px,1.5fr) minmax(90px,.7fr) minmax(90px,.7fr) minmax(160px,1.6fr); gap:16px; padding:10px 0; border-bottom:2px solid #171019; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">
           <span>Source</span><span>Cadence</span><span>Lag</span><span>What we take from it</span>
         </div>
         <sc-for list="{{ sources }}" as="s" hint-placeholder-count="1">
           <div data-row="true" style="display:grid; grid-template-columns:minmax(180px,1.5fr) minmax(90px,.7fr) minmax(90px,.7fr) minmax(160px,1.6fr); gap:16px; padding:14px 0; border-bottom:1px solid rgba(23,16,25,0.22); align-items:start;">
             <div>
               <b style="display:block; font-size:15px; font-weight:800; letter-spacing:-0.02em;">{{ s.name }}</b>
-              <span style="display:block; margin-top:3px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ s.org }}</span>
+              <span style="display:block; margin-top:3px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ s.org }}</span>
             </div>
             <span style="font-size:13px; font-weight:700;">{{ s.cadence }}</span>
             <span style="font-size:13px; font-weight:800; color:{{ s.lagColor }};">{{ s.lag }}</span>
@@ -189,8 +212,8 @@
         <sc-for list="{{ stages }}" as="st" hint-placeholder-count="5">
           <div data-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:16px 16px 18px; position:relative; overflow:hidden;">
             <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:12px;">
-              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">Stage {{ st.n }}</span>
-              <span style="margin-left:auto; font-size:11px; font-weight:800; letter-spacing:-0.01em; background:{{ st.tint }}; color:{{ st.tintInk }}; padding:3px 7px;">{{ st.runtime }}</span>
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">Stage {{ st.n }}</span>
+              <span style="margin-left:auto; font-size:12px; font-weight:800; letter-spacing:-0.01em; background:{{ st.tint }}; color:{{ st.tintInk }}; padding:3px 7px;">{{ st.runtime }}</span>
             </div>
             <b style="display:block; font-size:16px; font-weight:900; letter-spacing:-0.03em; line-height:1.1; margin-bottom:8px;">{{ st.name }}</b>
             <p style="font-size:13px; font-weight:500; line-height:1.45; color:rgba(23,16,25,0.7); margin:0 0 14px; min-height:3.9em;">{{ st.body }}</p>
@@ -199,7 +222,7 @@
             </div>
             <div style="margin-top:10px; display:flex; align-items:center; gap:7px;">
               <span data-stagedot="true" style="{{ st.dot }}"></span>
-              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ st.out }}</span>
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ st.out }}</span>
             </div>
           </div>
         </sc-for>
@@ -216,7 +239,7 @@
         <div style="border-top:2px solid #171019;">
           <sc-for list="{{ modelCard }}" as="m" hint-placeholder-count="8">
             <div data-row="true" style="display:flex; gap:16px; padding:11px 0; border-bottom:1px solid rgba(23,16,25,0.22); align-items:baseline;">
-              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72); min-width:130px;">{{ m.k }}</span>
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72); min-width:130px;">{{ m.k }}</span>
               <span style="font-size:14px; font-weight:600; line-height:1.4;">{{ m.v }}</span>
             </div>
           </sc-for>
@@ -225,8 +248,8 @@
 
       <div data-flip="true" style="border:2px solid #171019; background:#FCD9C8; padding:20px; position:relative; overflow:hidden;">
         <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:14px;">
-          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.75);">Backtest · error by horizon</span>
-          <span style="margin-left:auto; display:flex; gap:12px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.75);">
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.75);">Backtest · error by horizon</span>
+          <span style="margin-left:auto; display:flex; gap:12px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.75);">
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#171019; display:inline-block;"></span>Naive (persistence)</span>
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#E3312A; display:inline-block;"></span>Model</span>
           </span>
@@ -243,7 +266,7 @@
             <rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" fill="{{ b.fill }}" stroke="#171019" stroke-width="1.5"></rect>
           </sc-for>
         </svg>
-        <div style="display:flex; justify-content:space-around; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
+        <div style="display:flex; justify-content:space-around; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
           <span>1 day</span><span>2 days</span><span>3 days</span><span>4 days</span><span>5 days</span><span>6 days</span><span>7 days</span>
         </div>
         <p style="font-size:12.5px; font-weight:500; line-height:1.45; color:rgba(23,16,25,0.8); margin:12px 0 0;">{{ chartNote }}</p>
@@ -251,7 +274,7 @@
           <sc-for list="{{ scores }}" as="sc" hint-placeholder-count="3">
             <div>
               <div style="font-size:26px; font-weight:900; letter-spacing:-0.05em; line-height:1;"><span>{{ sc.value }}</span></div>
-              <span style="display:block; margin-top:6px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.75);">{{ sc.label }}</span>
+              <span style="display:block; margin-top:6px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.75);">{{ sc.label }}</span>
             </div>
           </sc-for>
         </div>
@@ -270,7 +293,7 @@
           <div data-row="true" style="display:grid; grid-template-columns:minmax(150px,1.1fr) minmax(0,2fr) 92px; gap:16px; align-items:center; padding:11px 0; border-bottom:1px solid rgba(23,16,25,0.22);">
             <b style="display:block; font-size:14px; font-weight:800; letter-spacing:-0.02em;">{{ f.name }}</b>
             <span style="display:block; font-size:12.5px; font-weight:600; color:rgba(23,16,25,0.72);">{{ f.note }}</span>
-            <span style="justify-self:end; background:{{ f.tint }}; color:{{ f.tintInk }}; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; padding:3px 8px;">{{ f.tag }}</span>
+            <span style="justify-self:end; background:{{ f.tint }}; color:{{ f.tintInk }}; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; padding:3px 8px;">{{ f.tag }}</span>
           </div>
         </sc-for>
       </div>
@@ -285,7 +308,7 @@
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;">
         <sc-for list="{{ limitCards }}" as="l" hint-placeholder-count="4">
           <div data-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:18px 20px 20px;">
-            <span style="display:inline-block; background:{{ l.tint }}; color:{{ l.tintInk }}; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; padding:4px 9px; margin-bottom:13px; white-space:nowrap;">{{ l.tag }}</span>
+            <span style="display:inline-block; background:{{ l.tint }}; color:{{ l.tintInk }}; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; padding:4px 9px; margin-bottom:13px; white-space:nowrap;">{{ l.tag }}</span>
             <b style="display:block; font-size:16px; font-weight:900; letter-spacing:-0.03em; line-height:1.15; margin-bottom:8px;">{{ l.title }}</b>
             <p style="font-size:13.5px; font-weight:500; line-height:1.5; color:rgba(23,16,25,0.72); margin:0;">{{ l.body }}</p>
           </div>
@@ -298,7 +321,7 @@
   <section style="background:#171019; color:#FFF7F3; margin-top:50px; padding:70px 28px 76px;">
     <div style="max-width:1360px; margin:0 auto; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(250px,0.7fr); gap:40px; align-items:end;">
       <div>
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:#FFD9CF; margin-bottom:16px; white-space:nowrap;">Reproducible by design</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:#FFD9CF; margin-bottom:16px; white-space:nowrap;">Reproducible by design</span>
         <h2 style="font-size:clamp(28px,4vw,60px); font-weight:900; letter-spacing:-0.055em; line-height:0.96; margin:0 0 16px; max-width:24ch;">Same inputs, same forecast, every time.</h2>
         <p style="font-size:16px; font-weight:600; color:#FFD9CF; line-height:1.5; max-width:54ch; margin:0;">Every forecast file is stamped with the snapshot it was built from, the model is seeded, and every raw snapshot is kept in the repository. Any forecast on this site can be regenerated from the record it was built on.</p>
       </div>
@@ -308,6 +331,23 @@
       </div>
     </div>
   </section>
+
+  </main>
+
+  <footer class="hz-foot" style="background:#171019; color:#FFF7F3; padding:36px 32px;">
+    <div style="max-width:1440px; margin:0 auto; display:flex; flex-wrap:wrap; gap:18px 36px; align-items:center; justify-content:space-between;">
+      <div style="font-size:13px; line-height:1.5; max-width:62ch; color:#FFD9CF;">
+        <b style="color:#FFF7F3; font-weight:900;">Hemzo</b> forecasts blood-stock shortages for Gujarat from public eRaktKosh data. Forecasts are decision support, not medical advice.
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:4px 22px; font-size:13px; font-weight:700;">
+        <a href="live-map.html" style="color:#FFF7F3;">Live map</a>
+        <a href="how-it-works.html" style="color:#FFF7F3;">How it works</a>
+        <a href="data-sources.html" style="color:#FFF7F3;">Data</a>
+        <a href="about.html" style="color:#FFF7F3;">About</a>
+        <a href="https://github.com/parthmadlani/Hemzo" rel="noopener" style="color:#FCD9C8;">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
 
 </div>
 

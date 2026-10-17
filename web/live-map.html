@@ -4,6 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hemzo — Live blood-stock map, Gujarat</title>
+<meta name="description" content="A live map of blood stock in all 34 Gujarat districts, by blood group and component, with a three-day outlook for each.">
+<meta name="theme-color" content="#E3312A">
+<link rel="canonical" href="https://hemzo.vercel.app/live-map.html">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hemzo">
+<meta property="og:title" content="Hemzo — Live blood-stock map, Gujarat">
+<meta property="og:description" content="A live map of blood stock in all 34 Gujarat districts, by blood group and component, with a three-day outlook for each.">
+<meta property="og:url" content="https://hemzo.vercel.app/live-map.html">
+<meta property="og:image" content="https://hemzo.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hemzo — Live blood-stock map, Gujarat">
+<meta name="twitter:description" content="A live map of blood stock in all 34 Gujarat districts, by blood group and component, with a three-day outlook for each.">
+<meta name="twitter:image" content="https://hemzo.vercel.app/assets/og.png">
+<style>
+  .hzc-link, .hzc-cta { display:inline-flex; align-items:center; min-height:32px; }
+  .hz-foot a { display:inline-flex; align-items:center; min-height:32px; }
+</style>
 <link rel="stylesheet" href="ds/styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +55,7 @@
   /* ---- type primitives ---- */
   .lbl {
     font-family: "Archivo Narrow", "Archivo", sans-serif;
-    font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+    font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
   }
   .num { font-weight: 800; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
 
@@ -88,7 +109,7 @@
   .chips { display: flex; gap: 6px; }
   .chip {
     background: none; border: var(--rule); cursor: pointer; padding: 6px 10px;
-    font-family: "Archivo Narrow","Archivo",sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    font-family: "Archivo Narrow","Archivo",sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
     display: inline-flex; align-items: center; gap: 7px; transition: background .18s, color .18s;
   }
   .chip i { width: 8px; height: 8px; display: inline-block; }
@@ -120,7 +141,7 @@
   .cell:hover { transform: translateY(-3px); box-shadow: 4px 4px 0 var(--ink); }
   .cell[aria-current="true"] { box-shadow: 4px 4px 0 var(--red); transform: translateY(-3px); }
   .cell b { font-family:"Archivo Narrow","Archivo",sans-serif; font-size: 12px; font-weight: 700; letter-spacing: -.01em; line-height: 1.1; }
-  .cell .rk { font-size: 9px; letter-spacing: .16em; color: rgba(23,16,25,.72); line-height: 1; }
+  .cell .rk { font-size: 12px; letter-spacing: .16em; color: rgba(23,16,25,.72); line-height: 1; }
   .cell[aria-current="true"] .rk { color: var(--red); }
   .cell .u { font-size: 19px; margin-top: 2px; }
   .cell .bar { height: 6px; background: rgba(23,16,25,.12); }
@@ -140,7 +161,7 @@
   /* panel */
   .panel { animation: panel .45s cubic-bezier(.16,1,.3,1) both; padding-bottom: 10px; }
   .panel h2 { font-size: clamp(22px, 1.8vw, 30px); font-weight: 900; letter-spacing: -.05em; line-height: .98; margin: 0 0 3px; }
-  .status { display:inline-flex; align-items:center; gap:7px; padding: 6px 11px; font-family:"Archivo Narrow","Archivo",sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 12px 0 12px; }
+  .status { display:inline-flex; align-items:center; gap:7px; padding: 6px 11px; font-family:"Archivo Narrow","Archivo",sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 12px 0 12px; }
   .read { font-size: 13px; font-weight: 500; line-height: 1.45; color: rgba(23,16,25,.75); margin: 0; text-wrap: pretty; }
   .read b { font-weight: 800; color: var(--ink); }
   .spark { margin: 14px 0 4px; border: var(--rule); padding: 10px; background: var(--cream); }

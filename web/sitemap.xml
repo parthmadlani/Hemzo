@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://hemzo.vercel.app/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://hemzo.vercel.app/live-map.html</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://hemzo.vercel.app/forecast-detail.html</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://hemzo.vercel.app/alerts.html</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://hemzo.vercel.app/how-it-works.html</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://hemzo.vercel.app/data-sources.html</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://hemzo.vercel.app/about.html</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://hemzo.vercel.app/onboarding.html</loc><changefreq>monthly</changefreq></url>
+</urlset>

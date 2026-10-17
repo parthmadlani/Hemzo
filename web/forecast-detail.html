@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Forecast Detail — Hemzo</title>
+<meta name="description" content="Seven-day blood-stock forecast for any Gujarat district, with an 80% uncertainty band and the three-day shortage risk.">
+<meta name="theme-color" content="#E3312A">
+<link rel="canonical" href="https://hemzo.vercel.app/forecast-detail.html">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hemzo">
+<meta property="og:title" content="Forecast Detail — Hemzo">
+<meta property="og:description" content="Seven-day blood-stock forecast for any Gujarat district, with an 80% uncertainty band and the three-day shortage risk.">
+<meta property="og:url" content="https://hemzo.vercel.app/forecast-detail.html">
+<meta property="og:image" content="https://hemzo.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Forecast Detail — Hemzo">
+<meta name="twitter:description" content="Seven-day blood-stock forecast for any Gujarat district, with an 80% uncertainty band and the three-day shortage risk.">
+<meta name="twitter:image" content="https://hemzo.vercel.app/assets/og.png">
+<style>
+  .hzc-link, .hzc-cta { display:inline-flex; align-items:center; min-height:32px; }
+  .hz-foot a { display:inline-flex; align-items:center; min-height:32px; }
+</style>
 <script src="js/hemzo-data.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -113,9 +134,9 @@
     </div>
   </nav>
 
-  <div id="main" style="max-width:1560px; margin:0 auto; padding:0 28px;">
+  <main id="main" style="max-width:1560px; margin:0 auto; padding:0 28px;">
 
-    <div style="display:flex; align-items:center; gap:10px; padding:20px 0 0; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); animation:fdFade .6s ease both;">
+    <div style="display:flex; align-items:center; gap:10px; padding:20px 0 0; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); animation:fdFade .6s ease both;">
       <a href="live-map.html" style="color:rgba(23,16,25,0.72);">Live map</a>
       <span>→</span>
       <span>{{ hubName }}</span>
@@ -127,7 +148,7 @@
       <div>
         <div style="display:inline-flex; align-items:center; gap:8px; background:#E3312A; color:#FFF7F3; padding:5px 11px; margin-bottom:12px; animation:fdRise .6s cubic-bezier(.16,1,.3,1) .05s both;">
           <span style="{{ liveDotStyle }}"></span>
-          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;">{{ horizonLabel }}</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;">{{ horizonLabel }}</span>
         </div>
         <h1 style="font-size:clamp(34px, 4.4vw, 68px); font-weight:900; letter-spacing:-0.055em; line-height:0.9; margin:0;">
           <span style="display:block; overflow:hidden; padding-bottom:0.08em; margin-bottom:-0.08em;">
@@ -141,7 +162,7 @@
 
       <div style="display:flex; flex-direction:column; gap:14px; animation:fdRise .7s cubic-bezier(.16,1,.3,1) .4s both;">
         <div>
-          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">Component</span>
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">Component</span>
           <div style="display:flex; border:2px solid #171019;">
             <sc-for list="{{ compOptions }}" as="c" hint-placeholder-count="2">
               <button type="button" data-fd-seg="true" onClick="{{ c.onSelect }}" aria-pressed="{{ c.active }}" style="{{ c.style }}">{{ c.label }}</button>
@@ -149,7 +170,7 @@
           </div>
         </div>
         <div>
-          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">Blood group</span>
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">Blood group</span>
           <div style="display:flex; border:2px solid #171019;">
             <sc-for list="{{ groupOptions }}" as="g" hint-placeholder-count="8">
               <button type="button" data-fd-seg="true" onClick="{{ g.onSelect }}" aria-pressed="{{ g.active }}" style="{{ g.style }}">{{ g.label }}</button>
@@ -157,12 +178,12 @@
           </div>
         </div>
         <div>
-          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">District</span>
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">District</span>
           <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
             <sc-for list="{{ hubOptions }}" as="h" hint-placeholder-count="5">
               <button type="button" data-fd-chip="true" onClick="{{ h.onSelect }}" aria-pressed="{{ h.active }}" style="{{ h.style }}">{{ h.label }}</button>
             </sc-for>
-            <select aria-label="Choose any district" onChange="{{ onHubPick }}" value="{{ hubValue }}" style="background:transparent; border:2px solid #171019; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:6px 8px; color:#171019; cursor:pointer;">
+            <select aria-label="Choose any district" onChange="{{ onHubPick }}" value="{{ hubValue }}" style="background:transparent; border:2px solid #171019; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:6px 8px; color:#171019; cursor:pointer;">
               <sc-for list="{{ hubChoices }}" as="o" hint-placeholder-count="5">
                 <option value="{{ o.value }}">{{ o.label }}</option>
               </sc-for>
@@ -175,7 +196,7 @@
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); border-bottom:2px solid #171019;">
       <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
         <div data-fd-kpi="true" style="{{ k.wrapStyle }}">
-          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">{{ k.label }}</span>
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">{{ k.label }}</span>
           <div style="display:flex; align-items:baseline; gap:8px; margin-top:8px;">
             <span class="fd-v" style="font-size:40px; font-weight:900; letter-spacing:-0.05em; line-height:1;">{{ k.value }}</span>
             <span style="font-size:13px; font-weight:700; color:rgba(23,16,25,0.72);">{{ k.unit }}</span>
@@ -189,8 +210,8 @@
 
       <div style="padding:22px 26px 26px 0; border-right:2px solid #171019; min-width:0;">
         <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:6px;">
-          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">Units of {{ group }} · 14 days observed, {{ axisEnd }} forecast</span>
-          <span style="margin-left:auto; display:flex; gap:14px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">Units of {{ group }} · 14 days observed, {{ axisEnd }} forecast</span>
+          <span style="margin-left:auto; display:flex; gap:14px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#171019; display:inline-block;"></span>Observed</span>
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#E3312A; display:inline-block;"></span>Forecast</span>
             <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:10px; background:#FCD9C8; border:1px solid rgba(23,16,25,.3); display:inline-block;"></span>80% band</span>
@@ -217,7 +238,7 @@
             <circle cx="{{ lastX }}" cy="{{ lastY }}" r="6" fill="#E3312A" stroke="#FFF7F3" stroke-width="3" style="animation:fdBlip 2.4s ease-in-out infinite;"></circle>
             <circle data-fd-scan="true" r="5" cx="0" cy="0" fill="#171019" opacity="0"></circle>
           </svg>
-          <div style="display:flex; justify-content:space-between; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
+          <div style="display:flex; justify-content:space-between; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
             <span>−14d</span><span>−7d</span><span>Today</span><span>{{ axisMid }}</span><span>{{ axisEnd }}</span>
           </div>
         </div>
@@ -226,7 +247,7 @@
       </div>
 
       <aside data-reveal="true" style="padding:22px 0 26px 26px; min-width:0;">
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:12px;">What the record shows</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:12px;">What the record shows</span>
         <div style="border-top:2px solid #171019;">
           <sc-for list="{{ drivers }}" as="d" hint-placeholder-count="4">
             <div data-fd-row="true" style="padding:11px 0; border-bottom:1px solid rgba(23,16,25,0.22);">
@@ -237,18 +258,18 @@
               <div style="height:6px; background:rgba(23,16,25,0.12); margin:8px 0 6px;">
                 <i style="{{ d.barStyle }}"></i>
               </div>
-              <span style="font-size:11.5px; font-weight:600; color:rgba(23,16,25,0.75);">{{ d.note }}</span>
+              <span style="font-size:12px; font-weight:600; color:rgba(23,16,25,0.75);">{{ d.note }}</span>
             </div>
           </sc-for>
         </div>
 
-        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin:22px 0 12px;">Nearest districts above their usual level</span>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin:22px 0 12px;">Nearest districts above their usual level</span>
         <div style="border-top:2px solid #171019;">
           <sc-for list="{{ donors }}" as="t" hint-placeholder-count="3">
             <div data-fd-row="true" style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(23,16,25,0.22);">
               <b style="font-size:13px; font-weight:800; letter-spacing:-0.01em; min-width:92px;">{{ t.name }}</b>
-              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ t.km }}</span>
-              <span style="margin-left:auto; padding:4px 9px; background:#3ECF8E; color:#0B4A38; font-size:11px; font-weight:800; letter-spacing:-0.01em;">+{{ t.spare }} above usual</span>
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ t.km }}</span>
+              <span style="margin-left:auto; padding:4px 9px; background:#3ECF8E; color:#0B4A38; font-size:12px; font-weight:800; letter-spacing:-0.01em;">+{{ t.spare }} above usual</span>
             </div>
           </sc-for>
         </div>
@@ -260,20 +281,20 @@
     </section>
 
     <section data-reveal="true" style="padding:22px 0 46px;">
-      <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:12px;">All groups at {{ hubName }} · {{ compLabel }}</span>
+      <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:12px;">All groups at {{ hubName }} · {{ compLabel }}</span>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:8px;">
         <sc-for list="{{ allGroups }}" as="g" hint-placeholder-count="8">
           <button type="button" data-fd-card="true" onClick="{{ g.onSelect }}" style="{{ g.cardStyle }}">
             <div style="display:flex; align-items:baseline; gap:8px;">
               <b style="font-size:16px; font-weight:900; letter-spacing:-0.04em;">{{ g.label }}</b>
-              <span style="margin-left:auto; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:{{ g.statusInk }}; background:{{ g.statusColor }}; padding:3px 7px;">{{ g.status }}</span>
+              <span style="margin-left:auto; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:{{ g.statusInk }}; background:{{ g.statusColor }}; padding:3px 7px;">{{ g.status }}</span>
             </div>
             <div style="height:7px; background:rgba(23,16,25,0.12); margin:12px 0 10px;">
               <i style="{{ g.barStyle }}"></i>
             </div>
             <div style="display:flex; align-items:baseline; gap:6px;">
               <span style="font-size:26px; font-weight:900; letter-spacing:-0.05em; line-height:1;">{{ g.units }}</span>
-              <span style="font-size:11px; font-weight:700; color:rgba(23,16,25,0.72);">units · {{ g.delta }}</span>
+              <span style="font-size:12px; font-weight:700; color:rgba(23,16,25,0.72);">units · {{ g.delta }}</span>
             </div>
           </button>
         </sc-for>
@@ -281,11 +302,11 @@
     </section>
 
     <footer style="border-top:2px solid #171019; padding:18px 0 40px; display:flex; flex-wrap:wrap; gap:16px; align-items:baseline;">
-      <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">{{ footnote }}</span>
+      <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">{{ footnote }}</span>
       <a href="data-sources.html" data-fd-arrow="true" style="margin-left:auto; font-size:13px; font-weight:800; color:#E3312A;">Methodology →</a>
     </footer>
 
-  </div>
+  </main>
 
 </div>
 
@@ -351,7 +372,7 @@ class Component extends DCLogic {
     const s = this.state;
     const live = { width: '6px', height: '6px', borderRadius: '50%', background: '#3ECF8E', color: '#3ECF8E', display: 'inline-block', animation: 'fdPulse 1.7s ease-out infinite' };
     const segBase = 'background:transparent; border:none; border-right:2px solid #171019; cursor:pointer; font-family:Archivo, sans-serif; font-size:12px; font-weight:800; letter-spacing:-0.02em; padding:7px 4px; color:#171019; flex:1 1 0; min-width:0; text-align:center;';
-    const chipBase = 'background:transparent; border:2px solid #171019; cursor:pointer; font-family:"Archivo Narrow", Archivo, sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:6px 10px; color:#171019;';
+    const chipBase = 'background:transparent; border:2px solid #171019; cursor:pointer; font-family:"Archivo Narrow", Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:6px 10px; color:#171019;';
 
     if (!s.data) {
       return Object.assign(this.shell(EMPTY, '—'), {

@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alerts — Hemzo</title>
+<meta name="description" content="The districts and blood groups running low right now in Gujarat, worked out from live stock data. Message alerts are planned.">
+<meta name="theme-color" content="#E3312A">
+<link rel="canonical" href="https://hemzo.vercel.app/alerts.html">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hemzo">
+<meta property="og:title" content="Alerts — Hemzo">
+<meta property="og:description" content="The districts and blood groups running low right now in Gujarat, worked out from live stock data. Message alerts are planned.">
+<meta property="og:url" content="https://hemzo.vercel.app/alerts.html">
+<meta property="og:image" content="https://hemzo.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alerts — Hemzo">
+<meta name="twitter:description" content="The districts and blood groups running low right now in Gujarat, worked out from live stock data. Message alerts are planned.">
+<meta name="twitter:image" content="https://hemzo.vercel.app/assets/og.png">
+<style>
+  .hzc-link, .hzc-cta { display:inline-flex; align-items:center; min-height:32px; }
+  .hz-foot a { display:inline-flex; align-items:center; min-height:32px; }
+</style>
 <script src="js/hemzo-data.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -112,10 +133,12 @@
     </div>
   </nav>
 
+  <main>
+
   <section id="main" style="background:#E3312A; color:#FFF7F3; padding:88px 48px 0; position:relative;">
     <div class="hz-two" style="max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1.15fr .85fr; gap:64px; align-items:center;">
       <div>
-        <div style="display:flex; align-items:center; gap:14px; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700; color:#FCD9C8; animation:hzFade .7s ease both;">
+        <div style="display:flex; align-items:center; gap:14px; font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700; color:#FCD9C8; animation:hzFade .7s ease both;">
           <span style="position:relative; width:10px; height:10px; display:inline-block;">
             <span style="position:absolute; inset:0; background:#FCD9C8;"></span>
             <span style="position:absolute; inset:0; border:2px solid #FCD9C8; animation:hzPing 1.8s ease-out infinite;"></span>
@@ -138,7 +161,7 @@
         <div style="position:absolute; inset:0; display:grid; place-items:center; overflow:hidden; opacity:.55;">
           <div style="width:480px; height:480px; border-radius:50%; background:conic-gradient(from 0deg, rgba(255,247,243,.3), rgba(255,247,243,0) 36%); animation:hzSweep 8s linear infinite;"></div>
         </div>
-        <div style="position:absolute; top:0; left:0; right:0; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#E3312A; border-bottom:2px solid rgba(255,247,243,0.4); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800; color:#FCD9C8;">
+        <div style="position:absolute; top:0; left:0; right:0; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#E3312A; border-bottom:2px solid rgba(255,247,243,0.4); font-size:12px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800; color:#FCD9C8;">
           <span>Risk feed</span>
           <span style="display:flex; align-items:center; gap:8px;"><span style="width:7px; height:7px; background:#FCD9C8; animation:hzBlink 1.4s ease-in-out infinite;"></span>{{ feedStamp }}</span>
         </div>
@@ -146,12 +169,12 @@
           <div class="hz-feedtrack" style="animation:hzFeed 28s linear infinite; will-change:transform;">
             <div>
               <sc-for list="{{ feed }}" as="f" hint-placeholder-count="6">
-                <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">{{ f.time }}</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">{{ f.title }}</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">{{ f.sub }}</span></span></div>
+                <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:12px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">{{ f.time }}</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">{{ f.title }}</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">{{ f.sub }}</span></span></div>
               </sc-for>
             </div>
             <div aria-hidden="true">
               <sc-for list="{{ feed }}" as="f" hint-placeholder-count="6">
-                <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">{{ f.time }}</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">{{ f.title }}</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">{{ f.sub }}</span></span></div>
+                <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:12px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">{{ f.time }}</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">{{ f.title }}</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">{{ f.sub }}</span></span></div>
               </sc-for>
             </div>
           </div>
@@ -171,7 +194,7 @@
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:44px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
         <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Three things<br>worth flagging</h2>
-        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A;">Flag classes</div>
+        <div style="font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A;">Flag classes</div>
       </div>
       <div class="hz-three" style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019;">
         <div class="hz-sev" data-reveal style="background:#FFF7F3; padding:34px 30px 30px;">
@@ -181,7 +204,7 @@
             <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out .36s infinite;"></span>
             <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out .54s infinite;"></span>
           </div>
-          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 01 &middot; live</div>
+          <div style="font-size:12px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 01 &middot; live</div>
           <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Shortfall ahead</div>
           <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">A blood group sits below 85% of its usual level, or the model gives it a high chance of dropping below 55% within 3 days. The flag carries the nearest district holding spare units of the same group.</p>
         </div>
@@ -191,7 +214,7 @@
             <span style="flex:1; height:2px; background:rgba(23,16,25,0.2); position:relative; overflow:hidden;"><span style="position:absolute; inset:0; background:#E3312A; transform-origin:left; animation:hzProg 2.6s ease-in-out infinite;"></span></span>
             <span style="width:22px; height:22px; border:2px solid #E3312A; animation:hzDrift 2.6s ease-in-out 1.3s infinite;"></span>
           </div>
-          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 02 &middot; live</div>
+          <div style="font-size:12px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 02 &middot; live</div>
           <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Surplus match</div>
           <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">One district is well above its usual level while a neighbour is low on the same group. Both show up in the same pairing, with the distance between them.</p>
         </div>
@@ -200,7 +223,7 @@
             <span style="position:absolute; inset:0; border:2px dashed #E3312A;"></span>
             <span style="position:absolute; left:50%; top:4px; width:2px; height:24px; background:#E3312A; transform-origin:bottom center; animation:hzSweep 2.8s linear infinite;"></span>
           </div>
-          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 03 &middot; planned</div>
+          <div style="font-size:12px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 03 &middot; planned</div>
           <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Expiry risk</div>
           <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">Needs unit-level shelf-life data, which the public register does not publish. We only flag it once a bank shares that data with us.</p>
         </div>
@@ -211,12 +234,12 @@
   <section style="background:#171019; color:#FFF7F3; padding:88px 48px;">
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="margin-bottom:44px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:18px;">Anatomy of one flag &mdash; a real one</div>
+        <div style="font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:18px;">Anatomy of one flag &mdash; a real one</div>
         <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0; max-width:24ch;">From snapshot to flag, on a loop</h2>
       </div>
       <div class="hz-two" style="display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:start;">
         <div data-reveal style="background:#FFF7F3; color:#171019; border:2px solid #FFF7F3; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px; background:#E3312A; color:#FFF7F3; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px; background:#E3312A; color:#FFF7F3; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800;">
             <span>{{ ex.tag }}</span><span>{{ ex.risk }}</span>
           </div>
           <div style="padding:28px 20px 24px;">
@@ -234,7 +257,7 @@
           </div>
         </div>
         <div data-reveal data-delay="120" style="transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
-          <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:20px;">Every flag answers</div>
+          <div style="font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:20px;">Every flag answers</div>
           <div style="border-top:2px solid rgba(255,247,243,0.5);">
             <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">What's short</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Component and blood group, never a vague &ldquo;low stock&rdquo;</div></div>
             <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">By when</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Inside three days &mdash; the window the risk score covers</div></div>
@@ -281,7 +304,7 @@
     <div style="position:absolute; top:-120px; right:-120px; width:420px; height:420px; border:2px solid rgba(255,247,243,0.28); animation:hzSweep 34s linear infinite;"></div>
     <div style="max-width:1440px; margin:0 auto; position:relative;">
       <div data-reveal style="transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);">
-        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:28px;">Ask for it</div>
+        <div style="font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:28px;">Ask for it</div>
         <h2 style="font-size:clamp(38px,8vw,112px); line-height:0.86; letter-spacing:-0.05em; font-weight:900; margin:0; max-width:17ch;">Your morning round, three days earlier.</h2>
         <div class="hz-two" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-top:46px;">
           <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(16px,1.9vw,20px); line-height:1.55; margin:0; max-width:40ch;">Tell us which bank you run and which channel you would want. We will get in touch before flags go live in your district.</p>
@@ -297,6 +320,23 @@
       </div>
     </div>
   </section>
+
+  </main>
+
+  <footer class="hz-foot" style="background:#171019; color:#FFF7F3; padding:36px 32px;">
+    <div style="max-width:1440px; margin:0 auto; display:flex; flex-wrap:wrap; gap:18px 36px; align-items:center; justify-content:space-between;">
+      <div style="font-size:13px; line-height:1.5; max-width:62ch; color:#FFD9CF;">
+        <b style="color:#FFF7F3; font-weight:900;">Hemzo</b> forecasts blood-stock shortages for Gujarat from public eRaktKosh data. Forecasts are decision support, not medical advice.
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:4px 22px; font-size:13px; font-weight:700;">
+        <a href="live-map.html" style="color:#FFF7F3;">Live map</a>
+        <a href="how-it-works.html" style="color:#FFF7F3;">How it works</a>
+        <a href="data-sources.html" style="color:#FFF7F3;">Data</a>
+        <a href="about.html" style="color:#FFF7F3;">About</a>
+        <a href="https://github.com/parthmadlani/Hemzo" rel="noopener" style="color:#FCD9C8;">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
 
 </div>
 </x-dc>
