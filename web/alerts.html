@@ -150,7 +150,7 @@
 
   <main>
 
-  <section id="main" style="background:#E3312A; color:#FFF7F3; padding:88px 48px 0; position:relative;">
+  <section id="main" class="hz-hero" style="background:#E3312A; color:#FFF7F3; padding:88px 48px 0; position:relative;">
     <div class="hz-two" style="max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1.15fr .85fr; gap:64px; align-items:center;">
       <div>
         <div style="display:flex; align-items:center; gap:14px; font-size:12px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700; color:#FCD9C8; animation:hzFade .7s ease both;">
@@ -170,6 +170,14 @@
           <a class="hz-btn" href="live-map.html" style="background:#FCD9C8; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FCD9C8;">Open the live map</a>
           <a class="hz-btn" href="data-sources.html" style="background:transparent; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid rgba(255,247,243,0.5);">How we forecast</a>
         </div>
+        <details class="gloss" style="margin-top:22px;">
+          <summary>What do these numbers mean?</summary>
+          <dl>
+            <sc-for list="{{ glossary }}" as="gl" hint-placeholder-count="5">
+              <div><dt>{{ gl.t }}</dt><dd>{{ gl.d }}</dd></div>
+            </sc-for>
+          </dl>
+        </details>
       </div>
 
       <div class="hz-feedwrap" style="position:relative; border:2px solid rgba(255,247,243,0.4); height:460px; overflow:hidden; animation:hzRise 1s cubic-bezier(.16,1,.3,1) .4s both;">
@@ -394,7 +402,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const d = this.state.data;
-    const empty = { feed: [], ticker: [], feedStamp: 'loading', ex: { tag: 'Flag', risk: '', title: 'Reading the latest record\u2026', body: '', steps: [] } };
+    const empty = { glossary: HD.GLOSSARY, feed: [], ticker: [], feedStamp: 'loading', ex: { tag: 'Flag', risk: '', title: 'Reading the latest record\u2026', body: '', steps: [] } };
     if (!d) return empty;
     const meta = d.meta;
     const comp = meta.components.includes('Packed RBC') ? 'Packed RBC' : meta.components[0];
@@ -413,8 +421,8 @@ class Component extends DCLogic {
 
     const feed = flagged.slice(0, 8).map(i => ({
       time: stamp,
-      title: (i.r.status === 'critical' ? 'Critical' : 'Shortfall') + ' \u00b7 ' + HD.disp(i.g) + ' \u00b7 ' + i.x.name,
-      sub: i.r.units + ' units, ' + Math.round(i.r.cover * 100) + '% of usual' + (i.r.risk3 == null ? '' : ' \u00b7 ' + Math.round(i.r.risk3 * 100) + '% chance of critical in 3 days'),
+      title: (i.r.units === 0 ? 'No stock reported' : i.r.status === 'critical' ? 'Critical' : 'Shortfall') + ' \u00b7 ' + HD.disp(i.g) + ' \u00b7 ' + i.x.name,
+      sub: (i.r.units === 0 ? '0 units published \u2014 may mean no bank here reports this group' : i.r.units + ' units, ' + HD.usual(i.r)) + (i.r.risk3 == null ? '' : ' \u00b7 ' + Math.round(i.r.risk3 * 100) + '% chance of critical in 3 days'),
     }));
 
     // pair the most-stocked district with the nearest low one, same group
@@ -423,7 +431,7 @@ class Component extends DCLogic {
       const low = flagged.filter(f => f.g === s.g && f.x.name !== s.x.name && f.x.lat != null)
         .map(f => ({ f, km: HD.haversineKm(s.x, f.x) })).sort((a, b) => a.km - b.km)[0];
       if (low) { feed.splice(2, 0, { time: stamp, title: 'Surplus match \u00b7 ' + HD.disp(s.g) + ' \u00b7 ' + s.x.name,
-        sub: s.r.units + ' units (' + Math.round(s.r.cover * 100) + '% of usual) sits ' + Math.round(low.km) + ' km from ' + low.f.x.name + ', which is low' }); break; }
+        sub: s.r.units + ' units (' + HD.usual(s.r) + ') sits ' + Math.round(low.km) + ' km from ' + low.f.x.name + ', which is low' }); break; }
     }
 
     // the example flag: highest-risk series, with its nearest district above usual level
@@ -438,7 +446,7 @@ class Component extends DCLogic {
       tag: 'Live example \u00b7 ' + meta.state,
       risk: top.r.risk3 == null ? top.r.status : Math.round(top.r.risk3 * 100) + '% risk \u00b7 3 days',
       title: HD.disp(top.g) + ' ' + (top.r.status === 'critical' ? 'critical' : 'shortfall') + ', ' + top.x.name,
-      body: top.r.units + ' units of ' + compLabel + ' on hand against a usual level of ' + Math.round(top.r.ref) + ' (' + Math.round(top.r.cover * 100) + '%). ' +
+      body: top.r.units + ' units of ' + compLabel + ' on hand against a usual level of ' + Math.round(top.r.ref) + ' (' + HD.usual(top.r) + '). ' +
         (donor ? donor.o.name + ' holds ' + Math.round(donor.y.units - donor.y.ref) + ' above its usual level, ' + Math.round(donor.km) + ' km away.' : 'No nearby district is above its usual level for this group.'),
       steps: [
         step('01', 'Snapshot fetched from eRaktKosh', stamp, 0),
@@ -449,7 +457,7 @@ class Component extends DCLogic {
     };
 
     return {
-      feed, ex,
+      glossary: HD.GLOSSARY, feed, ex,
       feedStamp: 'through ' + stamp + ' IST',
       ticker: [nCrit + ' critical', nLow + ' running low', rows.length + ' series watched', meta.banks_reporting + ' banks reporting', 'No donor data'],
     };

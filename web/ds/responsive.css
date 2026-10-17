@@ -42,3 +42,26 @@
   .hz-ctas { flex-direction: column; align-items: stretch !important; }
   .hz-ctas > * { width: 100%; text-align: center; justify-content: center; }
 }
+
+/* "What do these numbers mean?" disclosure, used on the data pages */
+.gloss { margin-top: 14px; max-width: 64ch; }
+.gloss summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; min-height: 44px;
+  font: 700 12px/1.2 "Archivo Narrow", Archivo, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.gloss summary::-webkit-details-marker { display: none; }
+.gloss summary::before { content: "?"; display: inline-grid; place-items: center; width: 22px; height: 22px; border: 2px solid currentColor;
+  border-radius: 50%; font-size: 12px; letter-spacing: 0; flex: none; }
+.gloss[open] summary::before { content: "\00d7"; }
+.gloss dl { margin: 4px 0 6px; display: grid; gap: 12px; }
+.gloss dt { font-weight: 800; font-size: 13px; }
+.gloss dd { margin: 2px 0 0; font-size: 13px; line-height: 1.5; opacity: .88; font-weight: 500; }
+
+/* page-hero spacing on phones */
+@media (max-width: 640px) {
+  .hz-hero { padding-top: 56px !important; padding-left: 24px !important; padding-right: 24px !important; }
+}
+
+/* home explainer columns and cards */
+.hz-card { transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s; }
+.hz-card:hover { transform: translateY(-3px); box-shadow: 5px 5px 0 #171019; }
+@media (max-width: 900px) { .hz-three { grid-template-columns: 1fr !important; } #what { padding: 64px 20px 16px !important; } }
+@media (max-width: 900px) { #what ~ section { padding: 40px 20px 72px !important; } }

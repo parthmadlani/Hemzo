@@ -221,6 +221,15 @@
       </sc-for>
     </div>
 
+    <details class="gloss" style="padding:6px 0 10px;">
+      <summary>What do these numbers mean?</summary>
+      <dl>
+        <sc-for list="{{ glossary }}" as="gl" hint-placeholder-count="5">
+          <div><dt>{{ gl.t }}</dt><dd>{{ gl.d }}</dd></div>
+        </sc-for>
+      </dl>
+    </details>
+
     <section class="fd-split" style="display:grid; grid-template-columns:minmax(0,1.62fr) minmax(280px,0.9fr); border-bottom:2px solid #171019;">
 
       <div class="fd-chartcol" style="padding:22px 26px 26px 0; border-right:2px solid #171019; min-width:0;">
@@ -234,7 +243,8 @@
         </div>
 
         <div style="border:2px solid #171019; background:#FFF7F3; padding:16px 14px 10px;">
-          <svg viewBox="0 0 720 300" preserveAspectRatio="none" style="display:block; width:100%; height:clamp(240px, 32vh, 330px);" aria-label="Forecast chart">
+          <div class="fd-plot" onPointerMove="{{ onChartMove }}" onPointerDown="{{ onChartMove }}" onPointerLeave="{{ onChartLeave }}" style="position:relative; touch-action:pan-y;">
+          <svg viewBox="0 0 720 300" preserveAspectRatio="none" style="display:block; width:100%; height:clamp(240px, 32vh, 330px);" aria-label="Forecast chart: units over the last 14 days and the next 7">
             <g stroke="rgba(23,16,25,0.14)" stroke-width="1">
               <line x1="0" y1="0" x2="720" y2="0"></line>
               <line x1="0" y1="75" x2="720" y2="75"></line>
@@ -252,7 +262,18 @@
             <circle cx="{{ lastX }}" cy="{{ lastY }}" r="12" fill="none" stroke="#E3312A" stroke-width="2" opacity="0.5" style="animation:fdOrbit 8s linear infinite; transform-origin:{{ lastX }}px {{ lastY }}px; stroke-dasharray:4 7;"></circle>
             <circle cx="{{ lastX }}" cy="{{ lastY }}" r="6" fill="#E3312A" stroke="#FFF7F3" stroke-width="3" style="animation:fdBlip 2.4s ease-in-out infinite;"></circle>
             <circle data-fd-scan="true" r="5" cx="0" cy="0" fill="#171019" opacity="0"></circle>
+            <sc-if value="{{ hoverOn }}" hint-placeholder-val="{{ false }}">
+              <line x1="{{ hoverX }}" y1="0" x2="{{ hoverX }}" y2="300" stroke="#171019" stroke-width="1.5" stroke-dasharray="3 4"></line>
+              <circle cx="{{ hoverX }}" cy="{{ hoverY }}" r="5" fill="#171019" stroke="#FFF7F3" stroke-width="2"></circle>
+            </sc-if>
           </svg>
+          <sc-for list="{{ yTicks }}" as="yt" hint-placeholder-count="3">
+            <span style="{{ yt.style }}">{{ yt.label }}</span>
+          </sc-for>
+          <sc-if value="{{ hoverOn }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ tipStyle }}">{{ tipText }}</div>
+          </sc-if>
+        </div>
           <div style="display:flex; justify-content:space-between; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
             <span>−14d</span><span>−7d</span><span>Today</span><span>{{ axisMid }}</span><span>{{ axisEnd }}</span>
           </div>
@@ -334,7 +355,7 @@ const EMPTY = { units: 0, ref: 0, floor: 0, cover: 0, status: null, obs: Array(1
   lo: Array(8).fill(0), hi: Array(8).fill(0), delta: 0, risk3: null, days_to_floor: null };
 
 class Component extends DCLogic {
-  state = { data: null, error: null, hub: null, group: 'O+', comp: 'Packed RBC' };
+  state = { data: null, error: null, hub: null, group: 'O+', comp: 'Packed RBC', hoverI: null };
 
   componentDidMount() {
     HD.load().then((data) => {
@@ -430,7 +451,7 @@ class Component extends DCLogic {
         'The record shows ' + sign(d7) + ' units over the last week. The forecast holds the latest level and widens its 80% band to ' + g.lo[7] + '–' + g.hi[7] +
         ' units by day 7, sized from how wrong a naive forecast has been out-of-sample. ' +
         (g.risk3 == null ? '' : 'Chance of dropping below 55% of usual within 3 days: ' + pct(g.risk3) + '%.') +
-        (g.low_volume ? ' This is a low-volume series, so small counts swing a lot.' : '');
+        (g.units === 0 ? ' ' + HD.ZERO_NOTE : '') + (g.low_volume ? ' This is a low-volume series, so small counts swing a lot.' : '');
 
     // districts with this component/group above their own usual level, nearest first
     const donors = data.districts
@@ -516,7 +537,43 @@ class Component extends DCLogic {
     const line = (vals, off) => vals.map((v, i) => X(i + off).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
     const top = g.hi.map((v, i) => X(13 + i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' L ');
     const bot = g.lo.slice().reverse().map((v, i) => X(20 - i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' L ');
+    // y-axis numbers, and the critical line named so the dashed orange line means something
+    const real = g.obs.some(v => v > 0) || g.fc.some(v => v > 0);
+    const ink = 'rgba(23,16,25,0.72)';
+    const tickStyle = (v, color, up) => ({ position: 'absolute', left: '6px', top: (Y(v) / H * 100).toFixed(1) + '%', transform: up ? 'translateY(-100%)' : 'none',
+      font: '700 12px/1.2 "Archivo Narrow", Archivo, sans-serif', letterSpacing: '0.04em', color, background: 'rgba(255,247,243,0.88)', padding: '0 4px', pointerEvents: 'none' });
+    const yTicks = [];
+    if (real) {
+      const fl = Y(g.floor);
+      [[max, false], [max / 2, true], [0, true]].forEach(([v, up]) => {
+        if (Math.abs(Y(v) - fl) > 26) yTicks.push({ label: Math.round(v).toLocaleString('en-IN') + ' units', style: tickStyle(v, ink, up) });
+      });
+      yTicks.push({ label: 'critical line · ' + Math.round(g.floor), style: tickStyle(g.floor, '#B8470A', true) });
+    }
+    // hover read-out
+    const hi = this.state.hoverI;
+    let hoverOn = false, hoverX = 0, hoverY = 0, tipText = '', tipStyle = {};
+    if (real && hi != null) {
+      const fc = hi > 13, k = hi - 13, v = fc ? g.fc[k] : g.obs[hi];
+      if (v != null) {
+        hoverOn = true; hoverX = X(hi).toFixed(1); hoverY = Y(v).toFixed(1);
+        const day = hi === 13 ? 'Today' : (k > 0 ? '+' + k + 'd' : '\u2212' + (-k) + 'd');
+        tipText = day + ' \u00b7 ' + v + ' units' + (fc ? ' \u00b7 80% range ' + g.lo[k] + '\u2013' + g.hi[k] : '');
+        const pctX = X(hi) / W * 100;
+        tipStyle = { position: 'absolute', top: '6px', left: pctX.toFixed(1) + '%', transform: pctX > 55 ? 'translateX(calc(-100% - 8px))' : 'translateX(8px)',
+          background: '#171019', color: '#FFF7F3', padding: '6px 10px', font: '700 12px/1.3 Archivo, sans-serif', whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: 2 };
+      }
+    }
+    const onChartMove = (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      const f = (e.clientX - r.left) / r.width;
+      const i = Math.max(0, Math.min(N - 1, Math.round((f * W - PAD) / ((W - PAD * 2) / (N - 1)))));
+      if (this.state.hoverI !== i) this.setState({ hoverI: i });
+    };
+    const onChartLeave = () => { if (this.state.hoverI != null) this.setState({ hoverI: null }); };
     return {
+      yTicks, hoverOn, hoverX, hoverY, tipText, tipStyle, onChartMove, onChartLeave,
+      glossary: HD.GLOSSARY,
       showBand: true, axisMid: '+4d', axisEnd: '+7d',
       obsPoints: line(g.obs, 0), fcPoints: line(g.fc, 13),
       bandPath: 'M ' + top + ' L ' + bot + ' Z',

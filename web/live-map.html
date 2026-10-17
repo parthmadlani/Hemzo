@@ -220,6 +220,17 @@
     .stamp { margin-left: 0; text-align: left; white-space: normal; }
     .cells > .cell { flex: 1 1 calc(33.333% - 6px); max-width: none; min-height: 64px; }
     .panel { scroll-margin-top: 72px; }
+    .col > .lbl { order: -3; }
+    .col > .maphint { order: -2; }
+    .col > .legend { order: -1; padding: 0 0 10px; }
+    .more-cells { margin-top: 12px; }
+    #sorts { width: 100%; }
+    #sorts button { flex: 1; min-height: 44px; }
+  }
+  .maphint { display: none; margin: 0 0 8px; }
+  @media (pointer: coarse) {
+    .maphint { display: block; }
+    #map.leaflet-container { touch-action: pan-y !important; }
   }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
@@ -288,6 +299,7 @@
         <span class="l"><span>Every district,</span></span>
         <span class="l"><span>three days ahead.</span></span>
       </h1>
+      <details class="gloss" id="gloss"><summary>What do these numbers mean?</summary><dl id="glossBody"></dl></details>
     </div>
     <div class="controls">
       <div class="fld">
@@ -304,6 +316,10 @@
         <div class="chips" id="statuses"></div>
       </div>
       <div class="fld more">
+        <span class="lbl">Sort districts by</span>
+        <div class="seg" id="sorts"></div>
+      </div>
+      <div class="fld more">
         <span class="lbl">Find district</span>
         <input class="search" id="search" type="search" placeholder="Ahmedabad…" autocomplete="off">
       </div>
@@ -313,15 +329,17 @@
 
   <main>
     <section class="col">
-      <div class="lbl">District grid · <span id="count">…</span> shown · ranked by units</div>
+      <div class="lbl">District grid · <span id="count">…</span> shown · ranked by <span id="rankBy">risk</span></div>
       <div class="scroll">
         <div class="cells" id="cells"></div>
         <p id="empty" class="lbl" style="display:none; margin:14px 0 0;">No district matches that filter.</p>
+        <button type="button" id="moreCells" class="mf-toggle more-cells" style="display:none"></button>
       </div>
     </section>
 
     <section class="col">
       <div class="lbl">Geographic view</div>
+      <div class="lbl maphint">Swipe sideways to pan the map · pinch to zoom</div>
       <div id="map"></div>
       <div class="legend lbl">
         <span><i style="background:var(--red)"></i>Critical</span>
@@ -348,7 +366,9 @@
 <script>
 const HD = window.HemzoData;
 let META, GROUPS, DATA = [];
-let state = { component: 'Packed RBC', group: 'O+', status: 'all', query: '', selected: null };
+let state = { component: 'Packed RBC', group: 'O+', status: 'all', query: '', sort: 'risk', showAll: false, selected: null };
+const PHONE = window.matchMedia('(max-width: 760px)');
+const CAP = 12;
 const $ = s => document.querySelector(s);
 const cellsEl = $('#cells'), panelEl = $('#panel');
 let map, markers = {};
@@ -375,6 +395,9 @@ function buildControls() {
   pick($('#components'), 'c', 'component');
   pick($('#groups'), 'g', 'group');
   pick($('#statuses'), 's', 'status');
+  $('#sorts').innerHTML = [['risk', 'Most at risk'], ['units', 'Most units']].map(([k, l]) =>
+    `<button type="button" data-o="${k}" aria-pressed="${k === state.sort}">${l}</button>`).join('');
+  pick($('#sorts'), 'o', 'sort');
   $('#search').addEventListener('input', e => { state.query = e.target.value.trim().toLowerCase(); render(); });
 
   $('#kick').textContent = `Live · ${META.state} · ${DATA.length} districts`;
@@ -392,6 +415,9 @@ function buildControls() {
     const c = $('.controls'), open = !c.classList.contains('open');
     c.classList.toggle('open', open); $('#mfToggle').setAttribute('aria-expanded', String(open)); updateFilterToggle();
   });
+  $('#moreCells').addEventListener('click', () => { state.showAll = !state.showAll; render(); });
+  PHONE.addEventListener('change', render);
+  $('#glossBody').innerHTML = HD.GLOSSARY.map(g => `<div><dt>${esc(g.t)}</dt><dd>${esc(g.d)}</dd></div>`).join('');
   cellsEl.addEventListener('click', e => {
     const c = e.target.closest('.cell'); if (!c) return;
     select(c.dataset.name, true);
@@ -413,7 +439,10 @@ function updateFilterToggle() {
 function render() {
   updateFilterToggle();
   let shown = 0;
-  const ranked = DATA.filter(visible).sort((a, b) => (grp(b).units || 0) - (grp(a).units || 0));
+  const byRisk = (a, b) => HD.riskScore(grp(b)) - HD.riskScore(grp(a)) || (grp(b).units || 0) - (grp(a).units || 0);
+  const byUnits = (a, b) => (grp(b).units || 0) - (grp(a).units || 0);
+  const ranked = DATA.filter(visible).sort(state.sort === 'risk' ? byRisk : byUnits);
+  const cap = PHONE.matches && !state.showAll ? CAP : Infinity;
   const rank = new Map(ranked.map((d, i) => [d.name, i]));
   if (ranked.length && !rank.has(state.selected)) state.selected = ranked[0].name;
   const outOfFilter = !ranked.length;
@@ -422,7 +451,7 @@ function render() {
     const cell = cellsEl.querySelector(`[data-name="${CSS.escape(d.name)}"]`);
     const g = grp(d), s = st(g), vis = visible(d);
     if (vis) shown++;
-    cell.style.display = vis ? '' : 'none';
+    cell.style.display = vis && rank.get(d.name) < cap ? '' : 'none';
     cell.style.order = vis ? rank.get(d.name) : 999;
     const r = cell.querySelector('[data-rank]');
     if (r) r.textContent = vis ? String(rank.get(d.name) + 1).padStart(2, '0') : '';
@@ -451,6 +480,10 @@ function render() {
     }
   });
   $('#count').textContent = shown;
+  $('#rankBy').textContent = state.sort === 'risk' ? 'risk' : 'units';
+  const more = $('#moreCells');
+  more.style.display = PHONE.matches && shown > CAP ? 'flex' : 'none';
+  more.innerHTML = state.showAll ? '<span>Show top 12 only</span><span aria-hidden="true">▴</span>' : `<span>Show all ${shown} districts</span><span aria-hidden="true">▾</span>`;
   $('#empty').style.display = shown ? 'none' : 'block';
   drawPanel(outOfFilter);
 }
@@ -506,7 +539,7 @@ function drawPanel(outOfFilter) {
   } else {
     const risk = g.risk3 == null ? '' : ` Chance of falling below 55% of usual within 3 days: <b>${Math.round(g.risk3 * 100)}%</b>.`;
     const days = g.days_to_floor == null ? '' : g.days_to_floor === 0 ? ' It is already under the critical line.' : ` Forecast median reaches the critical line in <b>${g.days_to_floor} days</b>.`;
-    body = `<p class="read"><b>${g.units.toLocaleString('en-IN')} units</b> on hand against a usual level of ${Math.round(g.ref).toLocaleString('en-IN')} — ${s.note}.${risk}${days}${g.low_volume ? ' Small counts swing a lot, so treat this one as rough.' : ''}</p>
+    body = `<p class="read"><b>${g.units.toLocaleString('en-IN')} units</b> on hand against a usual level of ${Math.round(g.ref).toLocaleString('en-IN')} — ${s.note}.${risk}${days}${g.units === 0 ? ' ' + esc(HD.ZERO_NOTE) : ''}${g.low_volume ? ' Small counts swing a lot, so treat this one as rough.' : ''}</p>
     <div class="spark">
       <span class="lbl">14 days observed → 7 days forecast · ${HD.disp(state.group)}</span>
       ${sparkline(g)}
