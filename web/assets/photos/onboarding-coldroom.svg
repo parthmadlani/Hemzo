@@ -1,22 +1,114 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" role="img" aria-label="Illustration of shelves of blood bags in a cold room">
-  <rect width="1000" height="700" fill="#FFF7F3"/>
-  <rect width="1000" height="90" fill="#E3312A"/>
-  <g font-family="Archivo,Arial,sans-serif" font-weight="800" fill="#FFF7F3"><text x="40" y="58" font-size="34">COLD ROOM</text><text x="800" y="58" font-size="34">2 - 6 &#176;C</text></g>
-  <g stroke="#171019" stroke-width="6" stroke-linecap="round"><path d="M60 270 H940 M60 450 H940 M60 630 H940"/><path d="M60 120 V660 M940 120 V660"/></g>
-  <g stroke="#171019" stroke-width="4" stroke-linejoin="round">
-    <g fill="#E3312A">
-      <path d="M90 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M190 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M290 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
-      <path d="M390 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M490 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
-      <path d="M90 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M190 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M290 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
-      <path d="M690 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M790 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
-      <path d="M90 550 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M190 550 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/>
-    </g>
-    <g fill="#FFC845"><path d="M690 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M790 190 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M590 550 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/></g>
-    <g fill="#FCD9C8"><path d="M390 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M490 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/><path d="M590 370 q0 -10 10 -10 h56 q10 0 10 10 v70 h-76 z"/></g>
-    <g fill="#171019" stroke="none" font-family="Archivo,Arial,sans-serif" font-weight="800" font-size="22" text-anchor="middle">
-      <text x="128" y="232" fill="#FFF7F3">O+</text><text x="228" y="232" fill="#FFF7F3">A+</text><text x="328" y="232" fill="#FFF7F3">B+</text><text x="428" y="232" fill="#FFF7F3">B+</text><text x="528" y="232" fill="#FFF7F3">O+</text>
-      <text x="728" y="232">AB</text><text x="828" y="232">AB</text>
-    </g>
-  </g>
-  <rect x="860" y="540" width="80" height="100" fill="#171019"/><g fill="#FFF7F3" font-family="Archivo,Arial,sans-serif" font-weight="800" font-size="20" text-anchor="middle"><text x="900" y="580">LOG</text><text x="900" y="610">05:30</text></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<defs>
+<g id="b">
+<path d="M-24 -40 H24 V40 H-24 Z" stroke="#171019" stroke-width="5" stroke-linejoin="round"></path>
+<rect x="-15" y="-6" width="30" height="24" fill="#FFF7F3" stroke="#171019" stroke-width="4"></rect>
+<path d="M-9 4 H9" stroke="#171019" stroke-width="4"></path>
+<rect x="-9" y="-54" width="18" height="14" fill="#FFF7F3" stroke="#171019" stroke-width="4"></rect>
+</g>
+<g id="flake" stroke="#4FC3F7" stroke-width="5" stroke-linecap="round">
+<path d="M0 -16 V16 M-14 -8 L14 8 M-14 8 L14 -8"></path>
+</g>
+</defs>
+
+<rect width="1200" height="800" fill="#FFF7F3"></rect>
+<rect x="0" y="0" width="1200" height="60" fill="#FCD9C8" stroke="#171019" stroke-width="6"></rect>
+<rect x="300" y="22" width="600" height="18" fill="#FFC845" stroke="#171019" stroke-width="5"></rect>
+<g stroke="#171019" stroke-width="3" opacity="0.14">
+<path d="M0 160 H1200 M0 280 H1200 M0 400 H1200 M0 520 H1200 M200 60 V640 M400 60 V640 M600 60 V640 M800 60 V640 M1000 60 V640"></path>
+</g>
+<path d="M0 640 H1200 V800 H0 Z" fill="#FCD9C8" stroke="#171019" stroke-width="6"></path>
+<g stroke="#171019" stroke-width="4" opacity="0.3">
+<path d="M0 700 H1200 M0 760 H1200 M120 640 L60 800 M320 640 L290 800 M520 640 L510 800 M720 640 L740 800 M920 640 L970 800 M1120 640 L1200 760"></path>
+</g>
+
+<g>
+<rect x="70" y="100" width="20" height="560" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<rect x="680" y="100" width="20" height="560" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<rect x="375" y="100" width="20" height="560" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<path d="M78 110 V650 M383 110 V650 M688 110 V650" stroke="#4FC3F7" stroke-width="4"></path>
+
+<g>
+<use href="#b" fill="#E3312A" x="130" y="196"></use><use href="#b" fill="#E3312A" x="186" y="196"></use><use href="#b" fill="#E3312A" x="242" y="196"></use><use href="#b" fill="#FA8743" x="298" y="196"></use><use href="#b" fill="#E3312A" x="346" y="196"></use>
+<use href="#b" fill="#FFC845" x="432" y="196"></use><use href="#b" fill="#FFC845" x="488" y="196"></use><use href="#b" fill="#E3312A" x="544" y="196"></use><use href="#b" fill="#E3312A" x="600" y="196"></use><use href="#b" fill="#E3312A" x="650" y="196"></use>
+</g>
+<rect x="62" y="236" width="646" height="22" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<g>
+<use href="#b" fill="#E3312A" x="130" y="326"></use><use href="#b" fill="#FA8743" x="186" y="326"></use><use href="#b" fill="#FA8743" x="242" y="326"></use><use href="#b" fill="#E3312A" x="298" y="326"></use>
+<use href="#b" fill="#E3312A" x="432" y="326"></use><use href="#b" fill="#E3312A" x="488" y="326"></use><use href="#b" fill="#E3312A" x="544" y="326"></use><use href="#b" fill="#FFC845" x="600" y="326"></use><use href="#b" fill="#FFC845" x="650" y="326"></use>
+</g>
+<rect x="62" y="366" width="646" height="22" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<g>
+<use href="#b" fill="#FFC845" x="130" y="456"></use><use href="#b" fill="#E3312A" x="186" y="456"></use><use href="#b" fill="#E3312A" x="242" y="456"></use><use href="#b" fill="#E3312A" x="298" y="456"></use><use href="#b" fill="#E3312A" x="346" y="456"></use>
+<use href="#b" fill="#E3312A" x="432" y="456"></use><use href="#b" fill="#FA8743" x="488" y="456"></use><use href="#b" fill="#E3312A" x="544" y="456"></use>
+</g>
+<rect x="62" y="496" width="646" height="22" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<g>
+<rect x="110" y="556" width="120" height="70" fill="#4FC3F7" stroke="#171019" stroke-width="6"></rect>
+<path d="M110 578 H230" stroke="#171019" stroke-width="5"></path>
+<rect x="250" y="566" width="100" height="60" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<use href="#flake" x="300" y="598"></use>
+<rect x="420" y="560" width="140" height="66" fill="#A78BFA" stroke="#171019" stroke-width="6"></rect>
+<path d="M420 582 H560" stroke="#171019" stroke-width="5"></path>
+</g>
+<rect x="62" y="626" width="646" height="22" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<g stroke="#171019" stroke-width="5">
+<circle cx="210" cy="247" r="5" fill="#171019"></circle><circle cx="540" cy="247" r="5" fill="#171019"></circle>
+<circle cx="210" cy="377" r="5" fill="#171019"></circle><circle cx="540" cy="377" r="5" fill="#171019"></circle>
+</g>
+</g>
+
+<g transform="translate(790 110)">
+<rect x="-8" y="-8" width="92" height="330" fill="#171019"></rect>
+<rect x="-16" y="-16" width="92" height="330" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<rect x="18" y="8" width="24" height="240" fill="#FFF7F3" stroke="#171019" stroke-width="5"></rect>
+<rect x="18" y="150" width="24" height="98" fill="#4FC3F7" stroke="#171019" stroke-width="5"></rect>
+<circle cx="30" cy="272" r="26" fill="#4FC3F7" stroke="#171019" stroke-width="6"></circle>
+<g stroke="#171019" stroke-width="4">
+<path d="M50 24 h14 M50 54 h8 M50 84 h14 M50 114 h8 M50 144 h14 M50 174 h8 M50 204 h14 M50 234 h8"></path>
+<path d="M-4 24 h12 M-4 84 h12 M-4 144 h12 M-4 204 h12"></path>
+</g>
+<rect x="-4" y="160" width="12" height="44" fill="#3ECF8E" stroke="#171019" stroke-width="3"></rect>
+</g>
+<use href="#flake" x="940" y="140"></use>
+<use href="#flake" x="760" y="460"></use>
+<use href="#flake" x="1130" y="420"></use>
+<use href="#flake" x="40" y="80"></use>
+
+<g>
+<rect x="980" y="90" width="200" height="550" fill="#FCD9C8" stroke="#171019" stroke-width="6"></rect>
+<rect x="1000" y="110" width="160" height="200" fill="#FFF7F3" stroke="#171019" stroke-width="5"></rect>
+<g stroke="#4FC3F7" stroke-width="5"><path d="M1012 140 h136 M1012 170 h136 M1012 200 h136 M1012 230 h136 M1012 260 h136"></path></g>
+<rect x="1000" y="330" width="28" height="120" fill="#171019"></rect>
+<rect x="1012" y="372" width="60" height="18" fill="#FFF7F3" stroke="#171019" stroke-width="5"></rect>
+<rect x="1084" y="520" width="80" height="48" fill="#E3312A" stroke="#171019" stroke-width="5"></rect>
+<path d="M1100 544 h48" stroke="#FFF7F3" stroke-width="6" stroke-linecap="square"></path>
+</g>
+
+<g>
+<rect x="740" y="738" width="20" height="20" fill="#171019"></rect>
+<path d="M760 520 V720 M1080 520 V720" stroke="#171019" stroke-width="10"></path>
+<rect x="730" y="508" width="380" height="24" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<rect x="740" y="652" width="360" height="20" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect>
+<rect x="790" y="600" width="110" height="52" fill="#E3312A" stroke="#171019" stroke-width="6"></rect>
+<path d="M790 620 H900" stroke="#171019" stroke-width="5"></path>
+<rect x="920" y="612" width="80" height="40" fill="#4FC3F7" stroke="#171019" stroke-width="6"></rect>
+<path d="M1080 508 L1130 440" stroke="#171019" stroke-width="10" stroke-linecap="round"></path>
+<circle cx="772" cy="738" r="22" fill="#171019"></circle><circle cx="772" cy="738" r="8" fill="#FFF7F3"></circle>
+<circle cx="1068" cy="738" r="22" fill="#171019"></circle><circle cx="1068" cy="738" r="8" fill="#FFF7F3"></circle>
+
+<g transform="rotate(-8 920 430)">
+<rect x="806" y="352" width="248" height="166" fill="#171019"></rect>
+<rect x="796" y="340" width="248" height="166" fill="#171019" stroke="#171019" stroke-width="6"></rect>
+<rect x="812" y="356" width="216" height="134" fill="#FFF7F3"></rect>
+<path d="M828 470 H1012" stroke="#171019" stroke-width="5"></path>
+<rect x="840" y="420" width="22" height="50" fill="#E3312A" stroke="#171019" stroke-width="4"></rect>
+<rect x="874" y="396" width="22" height="74" fill="#E3312A" stroke="#171019" stroke-width="4"></rect>
+<rect x="908" y="436" width="22" height="34" fill="#FFC845" stroke="#171019" stroke-width="4"></rect>
+<rect x="942" y="380" width="22" height="90" fill="#3ECF8E" stroke="#171019" stroke-width="4"></rect>
+<rect x="976" y="408" width="22" height="62" fill="#A78BFA" stroke="#171019" stroke-width="4"></rect>
+<path d="M836 404 L880 384 L918 410 L960 366 L1004 384" fill="none" stroke="#171019" stroke-width="4" stroke-dasharray="8 6"></path>
+<circle cx="920" cy="498" r="4" fill="#FFF7F3"></circle>
+</g>
+</g>
 </svg>

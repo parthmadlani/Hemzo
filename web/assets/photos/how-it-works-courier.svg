@@ -1,24 +1,96 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" role="img" aria-label="Illustration of a courier van carrying a cold box toward a hospital">
-  <rect width="1600" height="640" fill="#FCD9C8"/>
-  <circle cx="1250" cy="130" r="70" fill="#FFF7F3" stroke="#171019" stroke-width="6"/>
-  <rect y="470" width="1600" height="170" fill="#171019"/>
-  <path d="M0 555 H1600" stroke="#FFF7F3" stroke-width="8" stroke-dasharray="60 46"/>
-  <g stroke="#171019" stroke-width="6" stroke-linejoin="round">
-    <rect x="1180" y="190" width="360" height="280" fill="#FFF7F3"/>
-    <rect x="1230" y="240" width="60" height="60" fill="#FCD9C8"/><rect x="1330" y="240" width="60" height="60" fill="#FCD9C8"/><rect x="1430" y="240" width="60" height="60" fill="#FCD9C8"/>
-    <rect x="1330" y="370" width="60" height="100" fill="#E3312A"/>
-    <circle cx="1360" cy="150" r="46" fill="#E3312A"/>
-  </g>
-  <path d="M1360 125 V175 M1335 150 H1385" stroke="#FFF7F3" stroke-width="12" stroke-linecap="round"/>
-  <g stroke="#171019" stroke-width="6" stroke-linejoin="round">
-    <path d="M180 470 V280 H610 V470 Z" fill="#FFF7F3"/>
-    <path d="M610 470 V340 L700 340 L780 400 V470 Z" fill="#E3312A"/>
-    <path d="M640 355 L690 355 L745 400 H640 Z" fill="#FCD9C8"/>
-    <circle cx="290" cy="480" r="46" fill="#171019"/><circle cx="660" cy="480" r="46" fill="#171019"/>
-    <rect x="260" y="330" width="210" height="110" fill="#E3312A"/>
-  </g>
-  <circle cx="290" cy="480" r="16" fill="#FFF7F3"/><circle cx="660" cy="480" r="16" fill="#FFF7F3"/>
-  <g stroke="#FFF7F3" stroke-width="10" stroke-linecap="round"><path d="M365 360 V410 M340 385 H390"/></g>
-  <path d="M800 420 C 900 330, 1000 330, 1170 420" fill="none" stroke="#171019" stroke-width="6" stroke-dasharray="14 14"/>
-  <g font-family="Archivo,Arial,sans-serif" font-weight="800" font-size="30" fill="#171019"><text x="860" y="300">3 days earlier</text></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<defs>
+<g id="tree">
+<rect x="-4" y="0" width="8" height="22" fill="#171019"></rect>
+<circle cx="0" cy="-6" r="18" fill="#3ECF8E" stroke="#171019" stroke-width="5"></circle>
+</g>
+<g id="hosp">
+<rect x="-82" y="-62" width="180" height="140" fill="#171019"></rect>
+<rect x="-90" y="-70" width="180" height="140" fill="#FFF7F3" stroke="#171019" stroke-width="7"></rect>
+<rect x="-90" y="-70" width="180" height="30" fill="#E3312A" stroke="#171019" stroke-width="7"></rect>
+<rect x="-26" y="-112" width="52" height="52" fill="#E3312A" stroke="#171019" stroke-width="7"></rect>
+<path d="M0 -100 V-72 M-14 -86 H14" stroke="#FFF7F3" stroke-width="9"></path>
+<g fill="#4FC3F7" stroke="#171019" stroke-width="5">
+<rect x="-70" y="-24" width="30" height="26"></rect><rect x="40" y="-24" width="30" height="26"></rect>
+<rect x="-70" y="20" width="30" height="26"></rect><rect x="40" y="20" width="30" height="26"></rect>
+</g>
+<rect x="-20" y="10" width="40" height="60" fill="#FCD9C8" stroke="#171019" stroke-width="6"></rect>
+</g>
+</defs>
+
+<rect width="1200" height="800" fill="#4FC3F7"></rect>
+<g stroke="#FFF7F3" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.7">
+<path d="M40 520 q20 -12 40 0 t40 0 M80 640 q20 -12 40 0 t40 0 M60 120 q20 -12 40 0 t40 0 M260 730 q20 -12 40 0 t40 0 M1080 740 q20 -12 40 0 t40 0"></path>
+</g>
+
+<path d="M150 70 L520 40 L700 0 H1200 V800 H520 L470 720 L540 640 L470 600 L380 640 L250 610 L170 520 L130 420 L190 330 L300 290 L380 300 L420 250 L330 220 L200 230 L130 170 Z" fill="#FCD9C8" stroke="#171019" stroke-width="8" stroke-linejoin="round"></path>
+<path d="M560 40 L640 120 L620 220 L700 300 L660 420 L720 540 L700 660 L760 800" fill="none" stroke="#171019" stroke-width="3" stroke-dasharray="4 10" opacity="0.4"></path>
+
+<g fill="#FFF7F3" stroke="#171019" stroke-width="4" opacity="0.9">
+<rect x="820" y="420" width="70" height="50"></rect><rect x="890" y="420" width="70" height="50"></rect><rect x="820" y="470" width="70" height="50"></rect>
+<rect x="980" y="560" width="80" height="56"></rect><rect x="1060" y="560" width="80" height="56"></rect><rect x="1060" y="616" width="80" height="56"></rect>
+<rect x="240" y="440" width="64" height="46"></rect><rect x="304" y="440" width="64" height="46"></rect>
+</g>
+<g stroke="#3ECF8E" stroke-width="4" opacity="0.9">
+<path d="M830 440 h50 M830 455 h50 M900 440 h50 M900 455 h50 M990 580 h60 M990 596 h60 M1070 636 h60 M1070 652 h60 M250 458 h44 M250 472 h44"></path>
+</g>
+
+<path d="M1200 180 C1060 220 1000 300 900 330 C780 366 760 470 640 520 C560 552 520 640 470 720" fill="none" stroke="#171019" stroke-width="30" stroke-linecap="round"></path>
+<path d="M1200 180 C1060 220 1000 300 900 330 C780 366 760 470 640 520 C560 552 520 640 470 720" fill="none" stroke="#4FC3F7" stroke-width="18" stroke-linecap="round"></path>
+<path d="M1200 180 C1060 220 1000 300 900 330 C780 366 760 470 640 520" fill="none" stroke="#FFF7F3" stroke-width="3" stroke-dasharray="14 22" stroke-linecap="round"></path>
+
+<use href="#tree" x="220" y="380"></use><use href="#tree" x="262" y="396"></use><use href="#tree" x="410" y="560"></use>
+<use href="#tree" x="1040" y="120"></use><use href="#tree" x="1082" y="140"></use><use href="#tree" x="1120" y="110"></use>
+<use href="#tree" x="760" y="640"></use><use href="#tree" x="800" y="664"></use><use href="#tree" x="1120" y="470"></use>
+<use href="#tree" x="660" y="120"></use><use href="#tree" x="420" y="120"></use>
+
+<path d="M300 560 C400 600 480 560 560 520 C660 470 760 470 840 420 C900 384 930 360 960 330" fill="none" stroke="#171019" stroke-width="7" stroke-dasharray="20 14" stroke-linecap="round"></path>
+<g transform="rotate(-28 722 470)"><rect x="690" y="452" width="64" height="36" fill="#FFF7F3" stroke="#171019" stroke-width="6"></rect><path d="M690 452 h64 M690 488 h64" stroke="#171019" stroke-width="9"></path></g>
+
+<use href="#hosp" transform="translate(300 480) scale(0.9)"></use>
+<use href="#hosp" transform="translate(960 250) scale(0.9)"></use>
+
+<g transform="translate(560 385) rotate(-14) scale(0.72)">
+<g stroke="#171019" stroke-width="7" stroke-linecap="round">
+<path d="M-150 30 h-60 M-130 60 h-90 M-150 90 h-50"></path>
+</g>
+<ellipse cx="20" cy="158" rx="150" ry="14" fill="#171019" opacity="0.25"></ellipse>
+
+<rect x="-150" y="-20" width="110" height="96" fill="#FFF7F3" stroke="#171019" stroke-width="7"></rect>
+<rect x="-150" y="6" width="110" height="22" fill="#4FC3F7" stroke="#171019" stroke-width="6"></rect>
+<g stroke="#171019" stroke-width="5" stroke-linecap="round"><path d="M-95 38 V68 M-108 46 L-82 60 M-108 60 L-82 46"></path></g>
+<path d="M-130 -20 V-34 H-60 V-20" fill="none" stroke="#171019" stroke-width="7"></path>
+
+<circle cx="-80" cy="130" r="44" fill="#171019"></circle>
+<circle cx="-80" cy="130" r="18" fill="#FFF7F3" stroke="#171019" stroke-width="5"></circle>
+<circle cx="130" cy="130" r="44" fill="#171019"></circle>
+<circle cx="130" cy="130" r="18" fill="#FFF7F3" stroke="#171019" stroke-width="5"></circle>
+
+<path d="M-140 96 C-140 64 -110 56 -70 60 L40 64 L70 20 L100 20 L120 96 C150 96 170 108 172 124 L-40 124 C-60 96 -110 96 -140 120 Z" fill="#E3312A" stroke="#171019" stroke-width="7" stroke-linejoin="round"></path>
+<path d="M70 20 L50 -50" stroke="#171019" stroke-width="9" stroke-linecap="round"></path>
+<path d="M30 -56 H74" stroke="#171019" stroke-width="10" stroke-linecap="round"></path>
+<path d="M78 34 L104 30 L110 52 L84 56 Z" fill="#FFC845" stroke="#171019" stroke-width="5"></path>
+<rect x="-120" y="44" width="110" height="20" fill="#171019"></rect>
+
+<path d="M-40 54 L10 54 L30 116 L50 116" fill="none" stroke="#171019" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M-40 54 L10 54 L30 116" fill="none" stroke="#A78BFA" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"></path>
+<rect x="34" y="106" width="34" height="18" fill="#171019"></rect>
+<path d="M-62 56 L-36 -48 L14 -40 L-6 56 Z" fill="#FA8743" stroke="#171019" stroke-width="7" stroke-linejoin="round"></path>
+<path d="M-44 -6 L18 -2" stroke="#FFF7F3" stroke-width="6"></path>
+<path d="M0 -34 L46 -52" stroke="#171019" stroke-width="20" stroke-linecap="round"></path>
+<path d="M0 -34 L46 -52" stroke="#FA8743" stroke-width="10" stroke-linecap="round"></path>
+<circle cx="-20" cy="-82" r="32" fill="#FCD9C8" stroke="#171019" stroke-width="7"></circle>
+<path d="M-54 -84 A34 34 0 0 1 14 -88 L14 -76 L-54 -74 Z" fill="#171019"></path>
+<rect x="-4" y="-90" width="24" height="16" fill="#4FC3F7" stroke="#171019" stroke-width="4"></rect>
+</g>
+
+<g transform="translate(1110 700)">
+<circle r="46" fill="#FFF7F3" stroke="#171019" stroke-width="6"></circle>
+<path d="M0 -36 L12 0 L0 36 L-12 0 Z" fill="#171019"></path>
+<path d="M0 -36 L12 0 L-12 0 Z" fill="#E3312A"></path>
+<path d="M-36 0 H-24 M24 0 H36" stroke="#171019" stroke-width="5"></path>
+</g>
+<g fill="#E3312A" stroke="#171019" stroke-width="5">
+<circle cx="300" cy="560" r="14"></circle><circle cx="960" cy="330" r="14"></circle>
+</g>
 </svg>

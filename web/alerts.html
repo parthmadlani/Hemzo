@@ -7,6 +7,7 @@
 <meta name="description" content="The districts and blood groups running low right now in Gujarat, worked out from live stock data. Message alerts are planned.">
 <style id="boot">
   html{background:#E3312A}
+  html:has(#dc-root:not(:empty)){background:transparent}
   x-dc{display:none!important}
   #boot-splash{position:fixed;inset:0;z-index:2147483000;background:#E3312A;color:#FFF7F3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;font:800 15px/1.3 Archivo,Arial,sans-serif;letter-spacing:.02em;text-align:center;padding:24px}
   #boot-splash img{width:64px;height:64px;animation:hzBoot 1.2s ease-in-out infinite}
@@ -126,7 +127,7 @@
         <a class="hzc-link" href="how-it-works.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">How it works</a>
         <a class="hzc-link" href="data-sources.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Data</a>
         <a class="hzc-link" href="about.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">About</a>
-        <a class="hzc-cta" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-size:13px; font-weight:800; padding:10px 16px; text-align:left; white-space:nowrap;">Get alerts</a>
+        <a class="hzc-cta" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-size:13px; font-weight:800; padding:10px 16px; text-align:left; white-space:nowrap;">Join waitlist</a>
       </div>
       <details class="hzc-burger hzc-drawer" style="position:relative;">
         <summary aria-label="Open menu" style="list-style:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:8px 4px;">
@@ -141,7 +142,7 @@
           <a href="how-it-works.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">How it works</a>
           <a href="data-sources.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Data</a>
           <a href="about.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">About</a>
-          <a href="onboarding.html" style="font-size:15px; font-weight:800; color:#171019; background:#FCD9C8; padding:14px 18px;">Get alerts</a>
+          <a href="onboarding.html" style="font-size:15px; font-weight:800; color:#171019; background:#FCD9C8; padding:14px 18px;">Join waitlist</a>
         </div>
       </details>
     </div>
@@ -287,7 +288,7 @@
     <div style="max-width:1440px; margin:0 auto;">
       <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:40px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
         <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Where flags<br>will land</h2>
-        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:34ch;">Today flags live on this site. Messages to the duty phone are planned &mdash; onboarding tells us who wants them, and on which channel.</div>
+        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:34ch;">Today flags live on this site. Messages to the duty phone are planned &mdash; the waitlist tells us who wants them, and on which channel.</div>
       </div>
       <div class="hz-four" style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019;">
         <div class="hz-ch" data-reveal style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
