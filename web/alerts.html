@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alerts — Hemzo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="ds/styles.css">
+  <script src="ds/ds-bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&display=swap">
+  <style>
+    body { margin: 0; background: #E3312A; }
+    a { color: #FFF7F3; text-decoration: none; }
+    a:hover { color: #FCD9C8; }
+    @keyframes hzMask { from { transform: translateY(115%) rotate(3deg); } to { transform: translateY(0) rotate(0); } }
+    @keyframes hzFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes hzRise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes hzBlink { 0%, 100% { opacity: 1; } 50% { opacity: .22; } }
+    @keyframes hzPing { 0% { transform: scale(.35); opacity: .9; } 80% { transform: scale(1.9); opacity: 0; } 100% { opacity: 0; } }
+    @keyframes hzSweep { to { transform: rotate(360deg); } }
+    @keyframes hzFeed { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+    @keyframes hzTicker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes hzBar { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+    @keyframes hzProg { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+    @keyframes hzDrift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes hzStep {
+      0%, 8% { background: #FFF7F3; box-shadow: inset 0 0 0 0 #E3312A; }
+      14%, 23% { background: #FCD9C8; box-shadow: inset 5px 0 0 0 #E3312A; }
+      34%, 100% { background: #FFF7F3; box-shadow: inset 0 0 0 0 #E3312A; }
+    }
+    .hz-link { position: relative; }
+    .hz-link::after { content: ''; position: absolute; left: 0; bottom: -5px; height: 2px; width: 100%; background: #FCD9C8; transform: scaleX(0); transform-origin: left; transition: transform .38s cubic-bezier(.16,1,.3,1); }
+    .hz-link:hover::after { transform: scaleX(1); }
+    .hz-btn { transition: transform .3s cubic-bezier(.16,1,.3,1), background-color .25s ease, color .25s ease; }
+    .hz-btn:hover { transform: translateY(-3px); }
+    .hz-sev { transition: background-color .35s ease, color .35s ease; }
+    .hz-sev:hover { background: #E3312A !important; color: #FFF7F3 !important; }
+    .hz-sev:hover .hz-sevmeta { color: #FFD9CF !important; }
+    .hz-ch:hover .hz-chnum { transform: translateY(-6px) rotate(-7deg); }
+    .hz-feedwrap:hover .hz-feedtrack { animation-play-state: paused; }
+    @media (max-width: 1000px) {
+      .hz-nav-links { display: none !important; }
+      .hz-two { grid-template-columns: 1fr !important; }
+      .hz-three { grid-template-columns: 1fr !important; }
+      .hz-four { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+      .hz-ladder { grid-template-columns: 1fr !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    @keyframes hzcRise { from { transform: translateY(24px); } to { transform: none; } }
+    .hzc-skip { position: absolute; left: -9999px; top: 0; z-index: 999; background: #171019; color: #FFF7F3; padding: 10px 16px; font-size: 13px; font-weight: 800; }
+    .hzc-skip:focus { left: 8px; top: 8px; }
+    :focus-visible { outline: 2px solid #E3312A; outline-offset: 2px; }
+    nav :focus-visible, footer :focus-visible { outline-color: #FCD9C8; }
+    .hzc-link { position: relative; }
+    .hzc-link::after { content: ''; position: absolute; left: 0; bottom: -5px; height: 2px; width: 100%; background: #FCD9C8; transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+    .hzc-link:hover::after, .hzc-link[aria-current="page"]::after { transform: scaleX(1); }
+    .hzc-burger { display: none; }
+    .hzc-drawer summary::-webkit-details-marker { display: none; }
+    .hzc-cta { transition: transform .28s cubic-bezier(.16,1,.3,1); }
+    .hzc-cta:hover { transform: translateY(-2px); }
+    @media (max-width: 1180px) { .hzc-desk { display: none !important; } .hzc-burger { display: block !important; } }
+    @media (max-width: 1000px) { .hzc-fgrid { grid-template-columns: 1fr 1fr !important; } }
+    @media (max-width: 640px) { .hzc-fgrid { grid-template-columns: 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="font-family: var(--font-heading), Arial, sans-serif; background:#FFF7F3; color:#171019; overflow-x:hidden;">
+
+  <a class="hzc-skip" href="#main">Skip to content</a>
+
+  <nav style="position:sticky; top:0; z-index:900; background:#E3312A; color:#FFF7F3; border-bottom:2px solid rgba(255,247,243,0.28);">
+    <div style="display:flex; align-items:center; gap:24px; max-width:1440px; margin:0 auto; padding:14px 48px;">
+      <a href="index.html" style="display:flex; align-items:center; gap:10px; margin-right:auto; color:#FFF7F3;">
+        <img src="assets/logo-transparent.png" alt="Hemzo" style="width:34px; height:34px; object-fit:contain; display:block; flex:none;">
+        <span style="font-size:20px; font-weight:900; letter-spacing:-0.04em;">Hemzo</span>
+      </a>
+      <div class="hzc-desk" style="display:flex; align-items:center; gap:22px;">
+        <a class="hzc-link" href="live-map.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Live map</a>
+        <a class="hzc-link" href="forecast-detail.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Forecast</a>
+        <a class="hzc-link" href="alerts.html" aria-current="page" style="font-size:14px; font-weight:700; color:#FFF7F3; white-space:nowrap;">Alerts</a>
+        <a class="hzc-link" href="how-it-works.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">How it works</a>
+        <a class="hzc-link" href="data-sources.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Data</a>
+        <a class="hzc-link" href="about.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">About</a>
+        <a class="hzc-cta" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-size:13px; font-weight:800; padding:10px 16px; text-align:left; white-space:nowrap;">Get alerts</a>
+      </div>
+      <details class="hzc-burger hzc-drawer" style="position:relative;">
+        <summary aria-label="Open menu" style="list-style:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:8px 4px;">
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+        </summary>
+        <div style="position:absolute; right:0; top:calc(100% + 14px); background:#171019; border:2px solid #FFF7F3; min-width:248px; display:flex; flex-direction:column; z-index:950;">
+          <a href="live-map.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Live map</a>
+          <a href="forecast-detail.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Forecast</a>
+          <a href="alerts.html" aria-current="page" style="font-size:15px; font-weight:700; color:#FCD9C8; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Alerts</a>
+          <a href="how-it-works.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">How it works</a>
+          <a href="data-sources.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Data</a>
+          <a href="about.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">About</a>
+          <a href="onboarding.html" style="font-size:15px; font-weight:800; color:#171019; background:#FCD9C8; padding:14px 18px;">Get alerts</a>
+        </div>
+      </details>
+    </div>
+  </nav>
+
+  <section id="main" style="background:#E3312A; color:#FFF7F3; padding:88px 48px 0; position:relative;">
+    <div class="hz-two" style="max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1.15fr .85fr; gap:64px; align-items:center;">
+      <div>
+        <div style="display:flex; align-items:center; gap:14px; font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:700; color:#FCD9C8; animation:hzFade .7s ease both;">
+          <span style="position:relative; width:10px; height:10px; display:inline-block;">
+            <span style="position:absolute; inset:0; background:#FCD9C8;"></span>
+            <span style="position:absolute; inset:0; border:2px solid #FCD9C8; animation:hzPing 1.8s ease-out infinite;"></span>
+          </span>
+          <span>Alert engine — live</span>
+        </div>
+        <h1 style="font-size:clamp(38px,7.4vw,128px); line-height:0.86; letter-spacing:-0.05em; font-weight:900; margin:30px 0 0;">
+          <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask 1s cubic-bezier(.16,1,.3,1) .1s both;">Seventy-two</span></span>
+          <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; animation:hzMask 1s cubic-bezier(.16,1,.3,1) .2s both;">hours before</span></span>
+          <span style="display:block; overflow:hidden; padding-bottom:0.05em;"><span style="display:inline-block; white-space:nowrap; color:#FCD9C8; animation:hzMask 1s cubic-bezier(.16,1,.3,1) .3s both;">the shortage.</span></span>
+        </h1>
+        <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(17px,2vw,21px); line-height:1.5; max-width:42ch; color:#FFF7F3; margin:34px 0 0; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .5s both;">Every alert names one district, one component, one window — and the bank that can cover it. Sent at 05:40, before the morning round.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; margin:36px 0 0; animation:hzRise .9s cubic-bezier(.16,1,.3,1) .62s both;">
+          <a class="hz-btn" href="live-map.html" style="background:#FCD9C8; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FCD9C8;">Open the live map</a>
+          <a class="hz-btn" href="data-sources.html" style="background:transparent; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid rgba(255,247,243,0.5);">How we forecast</a>
+        </div>
+      </div>
+
+      <div class="hz-feedwrap" style="position:relative; border:2px solid rgba(255,247,243,0.4); height:460px; overflow:hidden; animation:hzRise 1s cubic-bezier(.16,1,.3,1) .4s both;">
+        <div style="position:absolute; inset:0; display:grid; place-items:center; overflow:hidden; opacity:.55;">
+          <div style="width:480px; height:480px; border-radius:50%; background:conic-gradient(from 0deg, rgba(255,247,243,.3), rgba(255,247,243,0) 36%); animation:hzSweep 8s linear infinite;"></div>
+        </div>
+        <div style="position:absolute; top:0; left:0; right:0; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#E3312A; border-bottom:2px solid rgba(255,247,243,0.4); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800; color:#FCD9C8;">
+          <span>Alert feed</span>
+          <span style="display:flex; align-items:center; gap:8px;"><span style="width:7px; height:7px; background:#FCD9C8; animation:hzBlink 1.4s ease-in-out infinite;"></span>streaming</span>
+        </div>
+        <div role="log" aria-label="Recent alerts, updating" style="position:relative; z-index:1; padding:52px 0 0;">
+          <div class="hz-feedtrack" style="animation:hzFeed 24s linear infinite; will-change:transform;">
+            <div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · O− · Kutch</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">4 units short in 68h — Bhuj DH can cover 6</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Expiry risk · Platelets · Rajkot</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">3 units at 38h remaining — move or transfuse</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:41</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Surplus match · A+ · Surat</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">18 spare units pair with Navsari's Thursday gap</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:43</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · B+ · Dahod</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Demand spike from scheduled surgeries, 71h out</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:44</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Camp signal · Vadodara</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Two camps overlap Sunday — stagger to avoid glut</span></span></div>
+            </div>
+            <div aria-hidden="true">
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · O− · Kutch</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">4 units short in 68h — Bhuj DH can cover 6</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:40</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Expiry risk · Platelets · Rajkot</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">3 units at 38h remaining — move or transfuse</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:41</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Surplus match · A+ · Surat</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">18 spare units pair with Navsari's Thursday gap</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:43</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Shortfall · B+ · Dahod</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Demand spike from scheduled surgeries, 71h out</span></span></div>
+              <div style="padding:16px; border-bottom:2px solid rgba(255,247,243,0.22); display:grid; grid-template-columns:54px 1fr; gap:14px; align-items:start;"><span style="font-size:11px; font-weight:800; color:#FCD9C8; letter-spacing:0.06em;">05:44</span><span><b style="font-size:15px; font-weight:800; letter-spacing:-0.01em;">Camp signal · Vadodara</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#FFD9CF; margin-top:3px;">Two camps overlap Sunday — stagger to avoid glut</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-top:2px solid rgba(255,247,243,0.28); border-bottom:2px solid rgba(255,247,243,0.28); overflow:hidden; margin:80px -48px 0; padding:14px 0;">
+      <div style="display:flex; width:max-content; animation:hzTicker 30s linear infinite;">
+        <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;"><span>4,912 alerts sent</span><span style="color:#FCD9C8;">◆</span><span>91% acknowledged inside 2h</span><span style="color:#FCD9C8;">◆</span><span>3,640 units rerouted</span><span style="color:#FCD9C8;">◆</span><span>No donor data</span><span style="color:#FCD9C8;">◆</span></div>
+        <div style="display:flex; gap:40px; padding-right:40px; font-size:13px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:#FFD9CF; white-space:nowrap;" aria-hidden="true"><span>4,912 alerts sent</span><span style="color:#FCD9C8;">◆</span><span>91% acknowledged inside 2h</span><span style="color:#FCD9C8;">◆</span><span>3,640 units rerouted</span><span style="color:#FCD9C8;">◆</span><span>No donor data</span><span style="color:#FCD9C8;">◆</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#FFF7F3; color:#171019; padding:88px 48px;">
+    <div style="max-width:1440px; margin:0 auto;">
+      <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:44px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
+        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Three things<br>worth waking up for</h2>
+        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#E3312A;">Severity classes</div>
+      </div>
+      <div class="hz-three" style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019;">
+        <div class="hz-sev" data-reveal style="background:#FFF7F3; padding:34px 30px 30px;">
+          <div style="display:flex; align-items:flex-end; gap:5px; height:56px; margin-bottom:26px;">
+            <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out infinite;"></span>
+            <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out .18s infinite;"></span>
+            <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out .36s infinite;"></span>
+            <span style="width:9px; height:100%; background:#E3312A; transform-origin:bottom; animation:hzBar 1.4s ease-in-out .54s infinite;"></span>
+          </div>
+          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 01</div>
+          <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Shortfall ahead</div>
+          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">Forecast demand outruns usable stock inside 72 hours. The alert carries the nearest bank with spare units of the same component.</p>
+        </div>
+        <div class="hz-sev" data-reveal data-delay="110" style="background:#FFF7F3; padding:34px 30px 30px;">
+          <div style="position:relative; width:56px; height:56px; margin-bottom:26px;">
+            <span style="position:absolute; inset:0; border:2px solid #E3312A;"></span>
+            <span style="position:absolute; left:50%; top:4px; width:2px; height:24px; background:#E3312A; transform-origin:bottom center; animation:hzSweep 2.8s linear infinite;"></span>
+          </div>
+          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 02</div>
+          <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Expiry risk</div>
+          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">Units will cross shelf life before local demand can absorb them. Platelets trip this at 48 hours, whole blood at seven days.</p>
+        </div>
+        <div class="hz-sev" data-reveal data-delay="220" style="background:#FFF7F3; padding:34px 30px 30px;">
+          <div style="display:flex; align-items:center; gap:10px; height:56px; margin-bottom:26px;">
+            <span style="width:22px; height:22px; background:#E3312A; animation:hzDrift 2.6s ease-in-out infinite;"></span>
+            <span style="flex:1; height:2px; background:rgba(23,16,25,0.2); position:relative; overflow:hidden;"><span style="position:absolute; inset:0; background:#E3312A; transform-origin:left; animation:hzProg 2.6s ease-in-out infinite;"></span></span>
+            <span style="width:22px; height:22px; border:2px solid #E3312A; animation:hzDrift 2.6s ease-in-out 1.3s infinite;"></span>
+          </div>
+          <div style="font-size:11px; letter-spacing:0.26em; text-transform:uppercase; font-weight:800;">Class 03</div>
+          <div style="font-size:clamp(23px,2.6vw,32px); font-weight:900; letter-spacing:-0.035em; margin:10px 0 12px;">Surplus match</div>
+          <p class="hz-sevmeta" style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:0;">A district's excess lines up with another's forecast gap. Both banks get the same pairing, with the drive time attached.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#171019; color:#FFF7F3; padding:88px 48px;">
+    <div style="max-width:1440px; margin:0 auto;">
+      <div data-reveal style="margin-bottom:44px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
+        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:18px;">Anatomy of one alert</div>
+        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0; max-width:24ch;">Detected, routed, acknowledged — on a loop</h2>
+      </div>
+      <div class="hz-two" style="display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:start;">
+        <div data-reveal style="background:#FFF7F3; color:#171019; border:2px solid #FFF7F3; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px; background:#E3312A; color:#FFF7F3; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; font-weight:800;">
+            <span>Alert HZ-4912</span><span>Priority 01</span>
+          </div>
+          <div style="padding:28px 20px 24px;">
+            <div style="font-size:clamp(24px,3vw,38px); font-weight:900; letter-spacing:-0.04em; line-height:1.02;">O− shortfall, Kutch district</div>
+            <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; margin:12px 0 24px; max-width:44ch;">Projected demand 11 units, usable stock 7. Window opens in 68 hours. Bhuj District Hospital holds 6 spare units, 42 minutes away.</div>
+            <div style="height:6px; background:rgba(23,16,25,0.12); overflow:hidden; margin-bottom:22px;">
+              <div style="height:100%; background:#E3312A; transform-origin:left; animation:hzProg 6.4s linear infinite;"></div>
+            </div>
+            <div style="display:grid; gap:2px; background:#171019; border:2px solid #171019;">
+              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">01</span><span style="font-size:15px; font-weight:800;">Detected by forecast run</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">05:40</span></div>
+              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out 1.6s infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">02</span><span style="font-size:15px; font-weight:800;">Routed to two banks + DBO</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">05:41</span></div>
+              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out 3.2s infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">03</span><span style="font-size:15px; font-weight:800;">Acknowledged by Bhuj DH</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">06:12</span></div>
+              <div style="background:#FFF7F3; padding:14px 16px; display:grid; grid-template-columns:40px 1fr auto; gap:14px; align-items:center; animation:hzStep 6.4s ease-in-out 4.8s infinite;"><span style="font-size:13px; font-weight:900; color:#E3312A;">04</span><span style="font-size:15px; font-weight:800;">6 units in transit, gap closed</span><span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; color:#4A4442;">09:05</span></div>
+            </div>
+            <p style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; line-height:1.5; color:#4A4442; margin:16px 0 0;">Animated illustration: the four stages of alert HZ-4912 cycling in sequence — detection at 05:40 through units in transit by 09:05.</p>
+          </div>
+        </div>
+        <div data-reveal data-delay="120" style="transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
+          <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:20px;">Every alert answers</div>
+          <div style="border-top:2px solid rgba(255,247,243,0.5);">
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">What's short</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Component and blood group, never a vague "low stock"</div></div>
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">By when</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">The hour the gap opens, not a day-level guess</div></div>
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">Who can cover</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">Nearest bank with spare units, plus drive time</div></div>
+            <div style="padding:20px 0; border-bottom:2px solid rgba(255,247,243,0.28); display:grid; grid-template-columns:150px 1fr; gap:20px;"><div style="font-size:15px; font-weight:800;">Why we think so</div><div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.5; color:#FFD9CF;">The source rows and the confidence band behind the call</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#FFF7F3; color:#171019; padding:88px 48px;">
+    <div style="max-width:1440px; margin:0 auto;">
+      <div data-reveal style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:40px; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
+        <h2 style="font-size:clamp(32px,5.2vw,68px); font-weight:900; letter-spacing:-0.045em; line-height:0.92; margin:0;">Wherever the<br>duty phone is</h2>
+        <div style="font-family:var(--font-body), Arial, sans-serif; font-size:15px; line-height:1.55; color:#4A4442; max-width:32ch;">No new app to install. Alerts land on the channel a bank already checks at 6am, and escalate if nobody does.</div>
+      </div>
+      <div class="hz-four" style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019;">
+        <div class="hz-ch" data-reveal style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
+          <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">01</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">SMS</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">160 characters, no link required</div>
+        </div>
+        <div class="hz-ch" data-reveal data-delay="90" style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
+          <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">02</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">WhatsApp</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">One-tap acknowledge, group-ready</div>
+        </div>
+        <div class="hz-ch" data-reveal data-delay="180" style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
+          <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">03</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">Dashboard</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">Full district view with source rows</div>
+        </div>
+        <div class="hz-ch" data-reveal data-delay="270" style="background:#FFF7F3; padding:30px 24px; transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);">
+          <div class="hz-chnum" style="font-size:40px; font-weight:900; color:#E3312A; letter-spacing:-0.05em; transition:transform .4s cubic-bezier(.16,1,.3,1);">04</div>
+          <div style="font-size:19px; font-weight:800; letter-spacing:-0.02em; margin-top:18px;">Daily digest</div>
+          <div style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:6px;">05:40 email for district officers</div>
+        </div>
+      </div>
+
+      <div class="hz-ladder" data-reveal style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; background:#171019; border:2px solid #171019; border-top:none; transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);">
+        <div style="background:#FFF7F3; padding:26px 24px; display:flex; gap:16px; align-items:center;"><span style="width:14px; height:14px; background:#E3312A; flex:none; animation:hzBlink 2.1s ease-in-out infinite;"></span><span><b style="font-size:16px; font-weight:800;">0 min — duty officer</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">SMS and WhatsApp together</span></span></div>
+        <div style="background:#FFF7F3; padding:26px 24px; display:flex; gap:16px; align-items:center;"><span style="width:14px; height:14px; background:#E3312A; flex:none; animation:hzBlink 2.1s ease-in-out .7s infinite;"></span><span><b style="font-size:16px; font-weight:800;">90 min — bank lead</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">If nothing is acknowledged</span></span></div>
+        <div style="background:#FFF7F3; padding:26px 24px; display:flex; gap:16px; align-items:center;"><span style="width:14px; height:14px; background:#E3312A; flex:none; animation:hzBlink 2.1s ease-in-out 1.4s infinite;"></span><span><b style="font-size:16px; font-weight:800;">4 h — district officer</b><span style="display:block; font-family:var(--font-body), Arial, sans-serif; font-size:14px; color:#4A4442; margin-top:4px;">With both banks copied in</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#E3312A; color:#FFF7F3; padding:104px 48px 0; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:-120px; right:-120px; width:420px; height:420px; border:2px solid rgba(255,247,243,0.28); animation:hzSweep 34s linear infinite;"></div>
+    <div style="max-width:1440px; margin:0 auto; position:relative;">
+      <div data-reveal style="transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);">
+        <div style="font-size:11px; letter-spacing:0.3em; text-transform:uppercase; font-weight:800; color:#FCD9C8; margin-bottom:28px;">Turn it on</div>
+        <h2 style="font-size:clamp(38px,8vw,112px); line-height:0.86; letter-spacing:-0.05em; font-weight:900; margin:0; max-width:17ch;">Your 6am round, three days earlier.</h2>
+        <div class="hz-two" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-top:46px;">
+          <p style="font-family:var(--font-body), Arial, sans-serif; font-size:clamp(16px,1.9vw,20px); line-height:1.55; margin:0; max-width:40ch;">Send one nightly stock export and pick a phone number. Alerts start the next morning — nothing else changes in your workflow.</p>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <a class="hz-btn" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid #FFF7F3;">Start onboarding</a>
+            <a class="hz-btn" href="about.html" style="background:transparent; color:#FFF7F3; font-weight:800; font-size:15px; padding:16px 28px; border:2px solid rgba(255,247,243,0.5);">Who we are</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:2px solid rgba(255,247,243,0.28); margin-top:78px; padding:18px 0; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#FFD9CF;">
+        <span>Hemzo — Ahmedabad</span>
+        <span>Alert engine 01</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const els = Array.from(document.querySelectorAll("[data-reveal]"));
+
+    let queued = false;
+    const run = () => {
+      queued = false;
+      const h = window.innerHeight;
+      for (const el of els) {
+        if (el.dataset.shown) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top > h * 0.94) continue;
+        el.dataset.shown = "1";
+        if (r.bottom < 0) continue;
+        setTimeout(() => { el.style.animation = "hzcRise .7s cubic-bezier(.16,1,.3,1)"; }, parseInt(el.dataset.delay || "0", 10));
+      }
+    };
+    this.sync = () => { if (!queued) { queued = true; requestAnimationFrame(run); } };
+    requestAnimationFrame(run);
+    window.addEventListener("scroll", this.sync, { passive: true });
+    window.addEventListener("resize", this.sync);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.sync);
+    window.removeEventListener("resize", this.sync);
+  }
+  renderVals() { return {}; }
+}
+
+</script>
+</body>
+</html>

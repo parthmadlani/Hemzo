@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hemzo — Live blood-stock map, Gujarat</title>
+<link rel="stylesheet" href="ds/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --red:#E3312A; --cream:#FCD9C8; --paper:#FFF7F3; --ink:#171019;
+    --mint:#3ECF8E; --yellow:#FFC845; --sky:#4FC3F7; --violet:#A78BFA; --orange:#FA8743;
+    --rule:2px solid var(--ink);
+    --muted: rgba(23,16,25,.72);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink); overflow: hidden;
+    font-family: "Archivo", Arial, sans-serif;
+    font-feature-settings: "tnum" 1, "cv05" 1; font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--red); }
+  button, input { font-family: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+  ::selection { background: rgba(227,49,42,.25); }
+
+  /* ---- type primitives ---- */
+  .lbl {
+    font-family: "Archivo Narrow", "Archivo", sans-serif;
+    font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+  }
+  .num { font-weight: 800; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+
+  @keyframes rise { from { opacity:0; transform:translateY(16px);} to { opacity:1; transform:none; } }
+  @keyframes mask { from { transform: translateY(110%);} to { transform: none; } }
+  @keyframes fade { from { opacity:0 } to { opacity:1 } }
+  @keyframes cell { from { opacity:0; transform:translateY(10px);} to { opacity:1; transform:none; } }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 currentColor} 70%{box-shadow:0 0 0 8px rgba(0,0,0,0)} 100%{box-shadow:0 0 0 0 rgba(0,0,0,0)} }
+  @keyframes panel { from { opacity:0; transform:translateY(10px);} to { opacity:1; transform:none; } }
+  @keyframes draw { from { stroke-dashoffset: 420 } to { stroke-dashoffset: 0 } }
+
+  /* ---- shell: one screen, no page scroll ---- */
+  .shell { height: 100vh; display: grid; grid-template-rows: auto auto 1fr; }
+
+  nav {
+    background: var(--red); color: var(--paper); border-bottom: 2px solid rgba(255,247,243,.28);
+    padding: 12px 28px; animation: fade .5s ease both;
+  }
+  .nav-in { display: flex; align-items: baseline; gap: 28px; max-width: 1760px; margin: 0 auto; }
+  .brand { font-size: 19px; font-weight: 900; letter-spacing: -.045em; color: var(--paper); margin-right: auto; }
+  nav a { color: #FFD9CF; font-size: 13px; font-weight: 600; letter-spacing: -.005em; position: relative; white-space: nowrap; }
+  nav a:hover, nav a[aria-current="page"] { color: var(--paper); }
+  nav a::after { content:''; position:absolute; left:0; bottom:-4px; height:2px; width:100%; background: var(--cream); transform: scaleX(0); transform-origin:left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+  nav a:hover::after, nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+  /* ---- header band: title left, controls right, one row ---- */
+  .band {
+    display: grid; grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.6fr);
+    gap: 36px; align-items: end; padding: 20px 28px 16px; border-bottom: var(--rule);
+    max-width: 1760px; margin: 0 auto; width: 100%;
+  }
+  .kick { display:inline-flex; align-items:center; gap:8px; white-space:nowrap; background: var(--red); color: var(--paper); padding:5px 11px; margin-bottom: 12px; animation: rise .6s cubic-bezier(.16,1,.3,1) .05s both; }
+  .kick .lbl { color: var(--paper); }
+  .kick i { width:6px; height:6px; border-radius:50%; background: var(--mint); color: var(--mint); animation: pulse 1.7s ease-out infinite; }
+  h1 { font-size: clamp(30px, 3.1vw, 50px); font-weight: 900; letter-spacing: -.055em; line-height: .92; margin: 0; }
+  h1 .l { display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; }
+  h1 .l > span { display:block; animation: mask .9s cubic-bezier(.16,1,.3,1) .15s both; }
+  h1 .l:nth-child(2) > span { animation-delay: .28s; color: var(--red); }
+
+  .controls { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 22px; animation: rise .7s cubic-bezier(.16,1,.3,1) .4s both; }
+  .fld > .lbl { display: block; margin-bottom: 6px; }
+  .seg { display: flex; border: var(--rule); }
+  .seg button {
+    background: none; border: none; border-right: var(--rule); cursor: pointer;
+    font-size: 12px; font-weight: 800; letter-spacing: -.01em; padding: 7px 11px; transition: background .18s, color .18s;
+  }
+  .seg button:last-child { border-right: none; }
+  .seg button:hover { background: rgba(227,49,42,.1); }
+  .seg button[aria-pressed="true"] { background: var(--red); color: var(--paper); }
+  .cell.dim { pointer-events: none; }
+  .chips { display: flex; gap: 6px; }
+  .chip {
+    background: none; border: var(--rule); cursor: pointer; padding: 6px 10px;
+    font-family: "Archivo Narrow","Archivo",sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 7px; transition: background .18s, color .18s;
+  }
+  .chip i { width: 8px; height: 8px; display: inline-block; }
+  .chip:hover { background: rgba(23,16,25,.07); }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .search { border: none; border-bottom: var(--rule); background: none; padding: 6px 2px; font-size: 13px; font-weight: 600; width: 150px; }
+  .search::placeholder { color: rgba(23,16,25,.38); }
+  .stamp { margin-left: auto; text-align: right; white-space: nowrap; }
+
+  /* ---- body: three columns filling remaining height ---- */
+  main { display: grid; grid-template-columns: minmax(230px, .78fr) minmax(0, 1.5fr) minmax(268px, .82fr); min-height: 0; max-width: 1760px; margin: 0 auto; width: 100%; }
+  .col { min-height: 0; display: flex; flex-direction: column; padding: 14px 20px; border-right: var(--rule); }
+  .col:first-child { padding-left: 28px; }
+  .col:last-child { border-right: none; padding-right: 28px; }
+  .col > .lbl { margin-bottom: 10px; flex: none; }
+  .scroll { overflow: auto; min-height: 0; scrollbar-width: thin; }
+  .scroll::-webkit-scrollbar { width: 6px; }
+  .scroll::-webkit-scrollbar-thumb { background: rgba(23,16,25,.25); }
+
+  /* district list */
+  .cells { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 8px; align-content: flex-start; }
+  .cells > .cell { flex: 1 1 96px; max-width: 160px; }
+  .cell {
+    border: var(--rule); background: var(--paper); cursor: pointer; text-align: left;
+    padding: 7px 8px 8px; display: flex; flex-direction: column; gap: 5px;
+    transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s;
+    animation: cell .5s cubic-bezier(.16,1,.3,1) both;
+  }
+  .cell:hover { transform: translateY(-3px); box-shadow: 4px 4px 0 var(--ink); }
+  .cell[aria-current="true"] { box-shadow: 4px 4px 0 var(--red); transform: translateY(-3px); }
+  .cell b { font-family:"Archivo Narrow","Archivo",sans-serif; font-size: 12px; font-weight: 700; letter-spacing: -.01em; line-height: 1.1; }
+  .cell .rk { font-size: 9px; letter-spacing: .16em; color: rgba(23,16,25,.72); line-height: 1; }
+  .cell[aria-current="true"] .rk { color: var(--red); }
+  .cell .u { font-size: 19px; margin-top: 2px; }
+  .cell .bar { height: 6px; background: rgba(23,16,25,.12); }
+  .cell .bar > i { display: block; height: 100%; transition: width .6s cubic-bezier(.16,1,.3,1); }
+  .cell.dim { opacity: .28; }
+
+  /* map */
+  #map { flex: 1; min-height: 0; border: var(--rule); background: #e8e4e1; }
+  #map .leaflet-tile-pane { filter: saturate(.2) contrast(1.04); }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; padding-top: 10px; flex: none; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; display: inline-block; }
+  .mk { width: 14px; height: 14px; border: 2px solid var(--ink); }
+  .mk.crit { animation: pulse 1.6s ease-out infinite; }
+  .leaflet-container { font-family: "Archivo", sans-serif; }
+
+  /* panel */
+  .panel { animation: panel .45s cubic-bezier(.16,1,.3,1) both; padding-bottom: 10px; }
+  .panel h2 { font-size: clamp(22px, 1.8vw, 30px); font-weight: 900; letter-spacing: -.05em; line-height: .98; margin: 0 0 3px; }
+  .status { display:inline-flex; align-items:center; gap:7px; padding: 6px 11px; font-family:"Archivo Narrow","Archivo",sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 12px 0 12px; }
+  .read { font-size: 13px; font-weight: 500; line-height: 1.45; color: rgba(23,16,25,.75); margin: 0; text-wrap: pretty; }
+  .read b { font-weight: 800; color: var(--ink); }
+  .spark { margin: 14px 0 4px; border: var(--rule); padding: 10px; background: var(--cream); }
+  .spark svg { display: block; width: 100%; height: 58px; overflow: visible; }
+  .spark polyline { animation: draw 1.2s cubic-bezier(.16,1,.3,1) both; }
+  .rows { border-top: var(--rule); margin-top: 6px; }
+  .row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid rgba(23,16,25,.22); font-size: 12px; }
+  .row b { font-weight: 800; width: 34px; letter-spacing: -.02em; }
+  .row .t { flex: 1; height: 6px; background: rgba(23,16,25,.12); }
+  .row .t > i { display: block; height: 100%; transition: width .55s cubic-bezier(.16,1,.3,1); }
+  .row .v { width: 40px; text-align: right; font-weight: 800; letter-spacing: -.03em; }
+  .cta {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: var(--red); color: var(--paper); border: none; cursor: pointer;
+    font-size: 13px; font-weight: 800; letter-spacing: -.01em; padding: 13px 16px; margin-top: 14px; width: 100%;
+    transition: transform .25s cubic-bezier(.16,1,.3,1), background .2s;
+  }
+  .cta:hover { transform: translateY(-3px); background: #c9271f; color: var(--paper); }
+
+  @media (max-width: 1240px) {
+    body { overflow: auto; }
+    .shell { height: auto; min-height: 100vh; }
+    .band { grid-template-columns: 1fr; align-items: start; gap: 18px; }
+    main { grid-template-columns: 1fr 1fr; }
+    .col { border-right: none; border-top: var(--rule); padding: 16px 28px; }
+    .col:nth-child(1) { border-right: var(--rule); }
+    .col:nth-child(3) { grid-column: 1 / -1; }
+    .scroll { overflow: visible; }
+    #map { height: 460px; flex: none; }
+  }
+  @media (max-width: 760px) {
+    nav .links { display: none; }
+    main { grid-template-columns: 1fr; }
+    .col, .col:nth-child(1) { border-right: none; padding: 16px 20px; }
+    .band { padding: 16px 20px; }
+    #map { height: 340px; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+    @keyframes hzcRise { from { transform: translateY(24px); } to { transform: none; } }
+    .hzc-skip { position: absolute; left: -9999px; top: 0; z-index: 999; background: #171019; color: #FFF7F3; padding: 10px 16px; font-size: 13px; font-weight: 800; }
+    .hzc-skip:focus { left: 8px; top: 8px; }
+    :focus-visible { outline: 2px solid #E3312A; outline-offset: 2px; }
+    nav :focus-visible, footer :focus-visible { outline-color: #FCD9C8; }
+    .hzc-link { position: relative; }
+    .hzc-link::after { content: ''; position: absolute; left: 0; bottom: -5px; height: 2px; width: 100%; background: #FCD9C8; transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+    .hzc-link:hover::after, .hzc-link[aria-current="page"]::after { transform: scaleX(1); }
+    .hzc-burger { display: none; }
+    .hzc-drawer summary::-webkit-details-marker { display: none; }
+    .hzc-cta { transition: transform .28s cubic-bezier(.16,1,.3,1); }
+    .hzc-cta:hover { transform: translateY(-2px); }
+    @media (max-width: 1180px) { .hzc-desk { display: none !important; } .hzc-burger { display: block !important; } }
+    @media (max-width: 1000px) { .hzc-fgrid { grid-template-columns: 1fr 1fr !important; } }
+    @media (max-width: 640px) { .hzc-fgrid { grid-template-columns: 1fr !important; } }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <a class="hzc-skip" href="#main">Skip to content</a>
+
+  <nav style="position:sticky; top:0; z-index:900; background:#E3312A; color:#FFF7F3; border-bottom:2px solid rgba(255,247,243,0.28);">
+    <div style="display:flex; align-items:center; gap:24px; max-width:1760px; margin:0 auto; padding:14px 28px;">
+      <a href="index.html" style="display:flex; align-items:center; gap:10px; margin-right:auto; color:#FFF7F3;">
+        <img src="assets/logo-transparent.png" alt="Hemzo" style="width:34px; height:34px; object-fit:contain; display:block; flex:none;">
+        <span style="font-size:20px; font-weight:900; letter-spacing:-0.04em;">Hemzo</span>
+      </a>
+      <div class="hzc-desk" style="display:flex; align-items:center; gap:22px;">
+        <a class="hzc-link" href="live-map.html" aria-current="page" style="font-size:14px; font-weight:700; color:#FFF7F3; white-space:nowrap;">Live map</a>
+        <a class="hzc-link" href="forecast-detail.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Forecast</a>
+        <a class="hzc-link" href="alerts.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Alerts</a>
+        <a class="hzc-link" href="how-it-works.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">How it works</a>
+        <a class="hzc-link" href="data-sources.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Data</a>
+        <a class="hzc-link" href="about.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">About</a>
+        <a class="hzc-cta" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-size:13px; font-weight:800; padding:10px 16px; text-align:left; white-space:nowrap;">Get alerts</a>
+      </div>
+      <details class="hzc-burger hzc-drawer" style="position:relative;">
+        <summary aria-label="Open menu" style="list-style:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:8px 4px;">
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+        </summary>
+        <div style="position:absolute; right:0; top:calc(100% + 14px); background:#171019; border:2px solid #FFF7F3; min-width:248px; display:flex; flex-direction:column; z-index:950;">
+          <a href="live-map.html" aria-current="page" style="font-size:15px; font-weight:700; color:#FCD9C8; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Live map</a>
+          <a href="forecast-detail.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Forecast</a>
+          <a href="alerts.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Alerts</a>
+          <a href="how-it-works.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">How it works</a>
+          <a href="data-sources.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Data</a>
+          <a href="about.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">About</a>
+          <a href="onboarding.html" style="font-size:15px; font-weight:800; color:#171019; background:#FCD9C8; padding:14px 18px;">Get alerts</a>
+        </div>
+      </details>
+    </div>
+  </nav>
+
+  <div id="main">
+
+  <div class="band">
+    <div>
+      <div class="kick"><i></i><span class="lbl" id="kick">Live · Gujarat</span></div>
+      <h1>
+        <span class="l"><span>Every district,</span></span>
+        <span class="l"><span>three days ahead.</span></span>
+      </h1>
+    </div>
+    <div class="controls">
+      <div class="fld">
+        <span class="lbl">Component</span>
+        <div class="seg" id="components"></div>
+      </div>
+      <div class="fld">
+        <span class="lbl">Blood group</span>
+        <div class="seg" id="groups"></div>
+      </div>
+      <div class="fld">
+        <span class="lbl">Status</span>
+        <div class="chips" id="statuses"></div>
+      </div>
+      <div class="fld">
+        <span class="lbl">Find district</span>
+        <input class="search" id="search" type="search" placeholder="Ahmedabad…" autocomplete="off">
+      </div>
+      <div class="stamp"><span class="lbl" id="stamp">Loading…</span></div>
+    </div>
+  </div>
+
+  <main>
+    <section class="col">
+      <div class="lbl">District grid · <span id="count">…</span> shown · ranked by units</div>
+      <div class="scroll">
+        <div class="cells" id="cells"></div>
+        <p id="empty" class="lbl" style="display:none; margin:14px 0 0;">No district matches that filter.</p>
+      </div>
+    </section>
+
+    <section class="col">
+      <div class="lbl">Geographic view</div>
+      <div id="map"></div>
+      <div class="legend lbl">
+        <span><i style="background:var(--red)"></i>Critical</span>
+        <span><i style="background:var(--yellow)"></i>Low</span>
+        <span><i style="background:var(--sky)"></i>Steady</span>
+        <span><i style="background:var(--mint)"></i>Surplus</span>
+      </div>
+    </section>
+
+    <aside class="col">
+      <div class="lbl">Selected hub</div>
+      <div class="scroll" id="panel"></div>
+    </aside>
+  </main>
+
+  </div>
+
+
+</div>
+
+<script src="js/hemzo-data.js"></script>
+<script>
+const HD = window.HemzoData;
+let META, GROUPS, DATA = [];
+let state = { component: 'Packed RBC', group: 'O+', status: 'all', query: '', selected: null };
+const $ = s => document.querySelector(s);
+const cellsEl = $('#cells'), panelEl = $('#panel');
+let map, markers = {};
+
+const st = g => g.nodata ? HD.NODATA : HD.STATUS[g.status];
+const grp = d => d.components[state.component][state.group];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+function buildControls() {
+  $('#components').innerHTML = META.components.map(c =>
+    `<button type="button" data-c="${c}" aria-pressed="${c === state.component}">${HD.COMPONENT_LABEL[c] || c}</button>`).join('');
+  $('#groups').innerHTML = GROUPS.map(g =>
+    `<button type="button" data-g="${g}" aria-pressed="${g === state.group}">${HD.disp(g)}</button>`).join('');
+  $('#statuses').innerHTML = ['all', 'critical', 'low', 'steady', 'surplus'].map(s => {
+    const x = HD.STATUS[s];
+    return `<button type="button" class="chip" data-s="${s}" aria-pressed="${s === state.status}">${x ? `<i style="background:${x.color}"></i>${x.label}` : 'All'}</button>`;
+  }).join('');
+  const pick = (box, attr, key) => box.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state[key] = b.dataset[attr];
+    box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    render();
+  });
+  pick($('#components'), 'c', 'component');
+  pick($('#groups'), 'g', 'group');
+  pick($('#statuses'), 's', 'status');
+  $('#search').addEventListener('input', e => { state.query = e.target.value.trim().toLowerCase(); render(); });
+
+  $('#kick').textContent = `Live · ${META.state} · ${DATA.length} districts`;
+  $('#stamp').textContent = `Data through ${HD.stamp(META)} · ${HD.ago(META)}`;
+  $('#count').textContent = DATA.length;
+
+  cellsEl.innerHTML = DATA.map((d, i) => `
+    <button type="button" class="cell" data-name="${esc(d.name)}" style="animation-delay:${Math.min(.5 + i * .02, 1.1).toFixed(2)}s">
+      <span class="rk lbl" data-rank></span>
+      <b>${esc(d.name)}</b>
+      <div class="bar"><i data-bar></i></div>
+      <div class="u num" data-u></div>
+    </button>`).join('');
+  cellsEl.addEventListener('click', e => {
+    const c = e.target.closest('.cell'); if (!c) return;
+    select(c.dataset.name, true);
+  });
+}
+
+const visible = d => {
+  const g = grp(d);
+  if (state.status !== 'all' && (g.nodata || g.status !== state.status)) return false;
+  if (state.query && !d.name.toLowerCase().includes(state.query)) return false;
+  return true;
+};
+
+function render() {
+  let shown = 0;
+  const ranked = DATA.filter(visible).sort((a, b) => (grp(b).units || 0) - (grp(a).units || 0));
+  const rank = new Map(ranked.map((d, i) => [d.name, i]));
+  if (ranked.length && !rank.has(state.selected)) state.selected = ranked[0].name;
+  const outOfFilter = !ranked.length;
+
+  DATA.forEach(d => {
+    const cell = cellsEl.querySelector(`[data-name="${CSS.escape(d.name)}"]`);
+    const g = grp(d), s = st(g), vis = visible(d);
+    if (vis) shown++;
+    cell.style.display = vis ? '' : 'none';
+    cell.style.order = vis ? rank.get(d.name) : 999;
+    const r = cell.querySelector('[data-rank]');
+    if (r) r.textContent = vis ? String(rank.get(d.name) + 1).padStart(2, '0') : '';
+    cell.classList.toggle('dim', !vis);
+    cell.setAttribute('aria-current', String(d.name === state.selected));
+    cell.querySelector('[data-u]').textContent = g.nodata ? '—' : g.units.toLocaleString('en-IN');
+    const bar = cell.querySelector('[data-bar]');
+    bar.style.width = g.nodata ? '0%' : Math.min(100, Math.round(g.cover * 62)) + '%';
+    bar.style.background = s.color;
+
+    const m = markers[d.name];
+    if (m) {
+      const el = m.getElement();
+      if (el) {
+        const dot = el.querySelector('.mk');
+        if (dot) {
+          dot.style.background = s.color; dot.style.color = s.color;
+          dot.classList.toggle('crit', g.status === 'critical');
+          dot.style.opacity = vis ? '1' : '.22';
+          const size = 11 + Math.round(Math.min(1.6, g.nodata ? 0.2 : g.cover) * 7);
+          dot.style.width = dot.style.height = size + 'px';
+        }
+        el.style.pointerEvents = vis ? 'auto' : 'none';
+      }
+      m.setTooltipContent(`${d.name} · ${g.nodata ? 'no reports' : g.units.toLocaleString('en-IN') + ' ' + HD.disp(state.group)}`);
+    }
+  });
+  $('#count').textContent = shown;
+  $('#empty').style.display = shown ? 'none' : 'block';
+  drawPanel(outOfFilter);
+}
+
+function select(name, fly) {
+  state.selected = name;
+  if (fly && map) { const d = DATA.find(x => x.name === name); map.flyTo([d.lat, d.lon], 8.3, { duration: .85 }); }
+  render();
+}
+
+function sparkline(g) {
+  const w = 240, h = 52, all = g.obs.concat(g.fc.slice(1), g.hi.slice(1));
+  const max = Math.max(...all), min = Math.min(...g.obs, ...g.lo.slice(1));
+  const n = g.obs.length + g.fc.length - 1;
+  const X = i => (i / (n - 1)) * w, Y = v => h - ((v - min) / Math.max(1, max - min)) * h;
+  const line = (vals, off) => vals.map((v, i) => `${X(i + off).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">
+    <polyline points="${line(g.obs, 0)}" fill="none" stroke="#171019" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:420"></polyline>
+    <polyline points="${line(g.fc, g.obs.length - 1)}" fill="none" stroke="#E3312A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:420"></polyline></svg>`;
+}
+
+function drawPanel(outOfFilter) {
+  if (outOfFilter) {
+    panelEl.innerHTML = `<div class="panel">
+      <h2 style="color:rgba(23,16,25,.32)">No hub</h2>
+      <span class="lbl">Nothing matches this filter</span>
+      <p class="read" style="margin-top:14px">No district is reading <b>${HD.STATUS[state.status] ? HD.STATUS[state.status].label.toLowerCase() : 'that status'}</b> for <b>${HD.disp(state.group)}</b> right now. Widen the status filter or pick another blood group.</p>
+      <button class="cta" type="button" data-reset>Clear filters <span>↺</span></button>
+    </div>`;
+    const b = panelEl.querySelector('[data-reset]');
+    if (b) b.addEventListener('click', () => {
+      state.status = 'all'; state.query = ''; $('#search').value = '';
+      $('#statuses').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.s === 'all')));
+      render();
+    });
+    return;
+  }
+  const d = DATA.find(x => x.name === state.selected);
+  const g = grp(d), s = st(g);
+  const comp = d.components[state.component];
+  const rows = GROUPS.map(gr => {
+    const gg = comp[gr], x = st(gg);
+    return `<div class="row"><b>${HD.disp(gr)}</b><div class="t"><i style="width:${gg.nodata ? 0 : Math.min(100, Math.round(gg.cover * 62))}%; background:${x.color}"></i></div><div class="v">${gg.nodata ? '—' : gg.units.toLocaleString('en-IN')}</div></div>`;
+  }).join('');
+  const href = `forecast-detail.html?d=${encodeURIComponent(d.name)}&g=${encodeURIComponent(state.group)}&c=${encodeURIComponent(state.component)}`;
+  let body;
+  if (g.nodata) {
+    body = `<p class="read">No bank in ${esc(d.name)} has published a ${HD.disp(state.group)} count for ${(HD.COMPONENT_LABEL[state.component] || state.component).toLowerCase()} in the record so far.</p>`;
+  } else {
+    const risk = g.risk3 == null ? '' : ` Chance of falling below 55% of usual within 3 days: <b>${Math.round(g.risk3 * 100)}%</b>.`;
+    const days = g.days_to_floor == null ? '' : g.days_to_floor === 0 ? ' It is already under the critical line.' : ` Forecast median reaches the critical line in <b>${g.days_to_floor} days</b>.`;
+    body = `<p class="read"><b>${g.units.toLocaleString('en-IN')} units</b> on hand against a usual level of ${Math.round(g.ref).toLocaleString('en-IN')} — ${s.note}.${risk}${days}${g.low_volume ? ' Small counts swing a lot, so treat this one as rough.' : ''}</p>
+    <div class="spark">
+      <span class="lbl">14 days observed → 7 days forecast · ${HD.disp(state.group)}</span>
+      ${sparkline(g)}
+    </div>`;
+  }
+  panelEl.innerHTML = `<div class="panel">
+    <h2>${esc(d.name)}</h2>
+    <span class="lbl">${d.lat.toFixed(2)}°N · ${d.lon.toFixed(2)}°E · ${d.banks} banks</span>
+    <div class="status" style="background:${s.color}; color:${s.ink}">${HD.disp(state.group)} · ${s.label}</div>
+    ${body}
+    <div class="lbl" style="margin-top:16px">All groups</div>
+    <div class="rows">${rows}</div>
+    <a class="cta" href="${href}">Open forecast detail <span>→</span></a>
+  </div>`;
+}
+
+function buildMap() {
+  map = L.map('map', { scrollWheelZoom: false, attributionControl: true }).setView([22.4, 71.6], 7);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap', maxZoom: 18 }).addTo(map);
+  DATA.forEach(d => {
+    const icon = L.divIcon({ className: '', html: '<div class="mk"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });
+    const m = L.marker([d.lat, d.lon], { icon, title: d.name }).addTo(map);
+    m.bindTooltip(d.name, { direction: 'top', offset: [0, -8] });
+    m.on('click', () => select(d.name, false));
+    markers[d.name] = m;
+  });
+  new ResizeObserver(() => map.invalidateSize()).observe(document.getElementById('map'));
+}
+
+panelEl.innerHTML = '<p class="read">Loading the latest forecast…</p>';
+HD.load().then(json => {
+  META = json.meta; GROUPS = META.groups;
+  DATA = json.districts.filter(d => d.lat != null);
+  state.component = META.components.includes('Packed RBC') ? 'Packed RBC' : META.components[0];
+  const q = new URLSearchParams(location.search);
+  if (GROUPS.includes(q.get('g'))) state.group = q.get('g');
+  if (META.components.includes(q.get('c'))) state.component = q.get('c');
+  if (DATA.some(d => d.name === q.get('d'))) state.selected = q.get('d');
+  buildControls();
+  if (window.L) buildMap();
+  render();
+}).catch(err => {
+  panelEl.innerHTML = `<p class="read"><b>Couldn't load the forecast.</b> ${esc(err.message)}. If you opened this file directly from disk, serve the web/ folder over http instead.</p>`;
+});
+</script>
+</body>
+</html>

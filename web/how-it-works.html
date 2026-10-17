@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How It Works — Hemzo</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="ds/styles.css">
+  <script src="ds/ds-bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@600;700&display=swap">
+  <style>
+    body { margin: 0; background: #FFF7F3; }
+    a { color: #171019; text-decoration: none; }
+    a:hover { color: #E3312A; }
+    @keyframes hwMask { from { transform: translateY(110%) } to { transform: none } }
+    @keyframes hwFade { from { opacity:0 } to { opacity:1 } }
+    @keyframes hwRise { from { opacity:0; transform:translateY(20px) } to { opacity:1; transform:none } }
+    @keyframes hwPulse { 0%{box-shadow:0 0 0 0 currentColor} 70%{box-shadow:0 0 0 9px rgba(0,0,0,0)} 100%{box-shadow:0 0 0 0 rgba(0,0,0,0)} }
+    @keyframes hwBob { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(7px) } }
+    @keyframes hwGrow { from { transform:scaleX(0) } to { transform:none } }
+    @keyframes hwDrift { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } }
+    @keyframes hwShimmer { 0%,100%{ opacity:.55 } 50%{ opacity:1 } }
+    [data-step].hw-in [data-diagram] { animation: hwDrift 9s ease-in-out infinite; }
+    [data-step]:nth-of-type(even).hw-in [data-diagram] { animation-duration: 11s; animation-delay: -3s; }
+    [data-stepnum] { animation: hwShimmer 5s ease-in-out infinite; }
+
+    /* scroll reveal */
+    [data-reveal] { }
+    [data-reveal].hw-in { animation: hzcRise .8s cubic-bezier(.16,1,.3,1); }
+
+    /* step 1 — scattered records snapping into an ordered grid */
+    @keyframes hwSnap {
+      0% { transform: translate(var(--dx), var(--dy)) scale(.5); opacity:.2 }
+      22% { transform: none; opacity:1 }
+      72% { transform: none; opacity:1 }
+      100% { transform: translate(var(--dx), var(--dy)) scale(.5); opacity:.2 }
+    }
+    [data-step].hw-in [data-snap] { animation: hwSnap 5.4s cubic-bezier(.16,1,.3,1) infinite both; }
+
+    /* step 2 — ragged rows aligning to a common baseline */
+    @keyframes hwAlign {
+      0% { transform: translateX(var(--off)); opacity:.28 }
+      24% { transform: none; opacity:1 }
+      74% { transform: none; opacity:1 }
+      100% { transform: translateX(var(--off)); opacity:.28 }
+    }
+    [data-step].hw-in [data-align] { animation: hwAlign 5.4s cubic-bezier(.16,1,.3,1) infinite both; }
+    @keyframes hwFill { 0%{ transform:scaleY(0) } 20%{ transform:none } 76%{ transform:none } 100%{ transform:scaleY(0) } }
+    [data-step].hw-in [data-fill] { animation: hwFill 5.4s cubic-bezier(.16,1,.3,1) infinite both; transform-origin: bottom; }
+
+    /* step 3 — ghost cycles fading in, then the learned curve drawing */
+    @keyframes hwGhost { 0%{ opacity:.06 } 30%{ opacity:.34 } 70%{ opacity:.34 } 100%{ opacity:.06 } }
+    [data-step].hw-in [data-ghost] { animation: hwGhost 6s ease-in-out infinite both; }
+    @keyframes hwDraw { 0%{ stroke-dashoffset:900 } 34%{ stroke-dashoffset:0 } 80%{ stroke-dashoffset:0 } 100%{ stroke-dashoffset:900 } }
+    [data-step].hw-in [data-draw] { animation: hwDraw 6s cubic-bezier(.16,1,.3,1) infinite both; }
+
+    /* step 4 — forecast crossing the floor, alert firing */
+    @keyframes hwAlert {
+      0%,28% { opacity:0; transform:translateY(10px) scale(.85) }
+      40% { opacity:1; transform:none }
+      80% { opacity:1; transform:none }
+      92%,100% { opacity:0; transform:translateY(10px) scale(.85) }
+    }
+    [data-step].hw-in [data-alert] { animation: hwAlert 6s cubic-bezier(.16,1,.3,1) infinite both; }
+    @keyframes hwFlash { 0%,100%{ opacity:.18 } 50%{ opacity:.42 } }
+    [data-step].hw-in [data-flash] { animation: hwFlash 2.2s ease-in-out 1.6s infinite both; }
+
+    [data-hover-card] { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease; }
+    [data-hover-card]:hover { transform: translateY(-5px); box-shadow: 5px 5px 0 #171019; }
+    [data-cta] { transition: transform .28s cubic-bezier(.16,1,.3,1), background .22s ease; }
+    [data-cta]:hover { transform: translateY(-3px); }
+    nav a { position: relative; transition: color .22s ease; }
+    nav a::after { content:''; position:absolute; left:0; bottom:-4px; height:2px; width:100%; background:#FCD9C8; transform:scaleX(0); transform-origin:left; transition:transform .36s cubic-bezier(.16,1,.3,1); }
+    nav a:hover::after, nav a[aria-current="page"]::after { transform: scaleX(1); }
+    @media (max-width: 900px) {
+      [data-steprow] { grid-template-columns: 1fr !important; }
+      [data-flip] { order: 0 !important; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } [data-reveal] { opacity:1 !important; transform:none !important; } }
+
+    @keyframes hzcRise { from { transform: translateY(24px); } to { transform: none; } }
+    .hzc-skip { position: absolute; left: -9999px; top: 0; z-index: 999; background: #171019; color: #FFF7F3; padding: 10px 16px; font-size: 13px; font-weight: 800; }
+    .hzc-skip:focus { left: 8px; top: 8px; }
+    :focus-visible { outline: 2px solid #E3312A; outline-offset: 2px; }
+    nav :focus-visible, footer :focus-visible { outline-color: #FCD9C8; }
+    .hzc-link { position: relative; }
+    .hzc-link::after { content: ''; position: absolute; left: 0; bottom: -5px; height: 2px; width: 100%; background: #FCD9C8; transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+    .hzc-link:hover::after, .hzc-link[aria-current="page"]::after { transform: scaleX(1); }
+    .hzc-burger { display: none; }
+    .hzc-drawer summary::-webkit-details-marker { display: none; }
+    .hzc-cta { transition: transform .28s cubic-bezier(.16,1,.3,1); }
+    .hzc-cta:hover { transform: translateY(-2px); }
+    @media (max-width: 1180px) { .hzc-desk { display: none !important; } .hzc-burger { display: block !important; } }
+    @media (max-width: 1000px) { .hzc-fgrid { grid-template-columns: 1fr 1fr !important; } }
+    @media (max-width: 640px) { .hzc-fgrid { grid-template-columns: 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="font-family:Archivo, Arial, sans-serif; color:#171019; background:#FFF7F3; font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased;">
+
+  <a class="hzc-skip" href="#main">Skip to content</a>
+
+  <nav style="position:sticky; top:0; z-index:900; background:#E3312A; color:#FFF7F3; border-bottom:2px solid rgba(255,247,243,0.28);">
+    <div style="display:flex; align-items:center; gap:24px; max-width:1360px; margin:0 auto; padding:14px 28px;">
+      <a href="index.html" style="display:flex; align-items:center; gap:10px; margin-right:auto; color:#FFF7F3;">
+        <img src="assets/logo-transparent.png" alt="Hemzo" style="width:34px; height:34px; object-fit:contain; display:block; flex:none;">
+        <span style="font-size:20px; font-weight:900; letter-spacing:-0.04em;">Hemzo</span>
+      </a>
+      <div class="hzc-desk" style="display:flex; align-items:center; gap:22px;">
+        <a class="hzc-link" href="live-map.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Live map</a>
+        <a class="hzc-link" href="forecast-detail.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Forecast</a>
+        <a class="hzc-link" href="alerts.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Alerts</a>
+        <a class="hzc-link" href="how-it-works.html" aria-current="page" style="font-size:14px; font-weight:700; color:#FFF7F3; white-space:nowrap;">How it works</a>
+        <a class="hzc-link" href="data-sources.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Data</a>
+        <a class="hzc-link" href="about.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">About</a>
+        <a class="hzc-cta" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-size:13px; font-weight:800; padding:10px 16px; text-align:left; white-space:nowrap;">Get alerts</a>
+      </div>
+      <details class="hzc-burger hzc-drawer" style="position:relative;">
+        <summary aria-label="Open menu" style="list-style:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:8px 4px;">
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+        </summary>
+        <div style="position:absolute; right:0; top:calc(100% + 14px); background:#171019; border:2px solid #FFF7F3; min-width:248px; display:flex; flex-direction:column; z-index:950;">
+          <a href="live-map.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Live map</a>
+          <a href="forecast-detail.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Forecast</a>
+          <a href="alerts.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Alerts</a>
+          <a href="how-it-works.html" aria-current="page" style="font-size:15px; font-weight:700; color:#FCD9C8; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">How it works</a>
+          <a href="data-sources.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Data</a>
+          <a href="about.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">About</a>
+          <a href="onboarding.html" style="font-size:15px; font-weight:800; color:#171019; background:#FCD9C8; padding:14px 18px;">Get alerts</a>
+        </div>
+      </details>
+    </div>
+  </nav>
+
+  <!-- red poster opening -->
+  <header id="main" style="background:#E3312A; color:#FFF7F3; padding:76px 28px 60px;">
+    <div style="max-width:1360px; margin:0 auto;">
+      <h1 style="font-size:clamp(40px, 6.4vw, 104px); font-weight:900; letter-spacing:-0.055em; line-height:0.92; margin:0 0 26px; max-width:15ch;">
+        <span style="display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em;"><span style="display:block; animation:hwMask 1s cubic-bezier(.16,1,.3,1) .15s both;">It's a weather</span></span>
+        <span style="display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em;"><span style="display:block; animation:hwMask 1s cubic-bezier(.16,1,.3,1) .28s both;">forecast — for</span></span>
+        <span style="display:block; overflow:hidden; padding-bottom:.12em; margin-bottom:-.12em;"><span style="display:block; color:transparent; -webkit-text-stroke:2px #FFF7F3; animation:hwMask 1s cubic-bezier(.16,1,.3,1) .41s both;">blood supply.</span></span>
+      </h1>
+      <p style="font-size:clamp(17px,1.5vw,21px); font-weight:600; color:#FFD9CF; line-height:1.5; max-width:56ch; margin:0 0 34px; text-wrap:pretty; animation:hwRise .9s cubic-bezier(.16,1,.3,1) .6s both;">
+        Forecasters don't know tomorrow. They know what yesterday's pattern usually leads to — and they say it early enough to matter. Hemzo does the same with hospital blood stock. Four steps, below.
+      </p>
+      <div style="display:flex; align-items:center; gap:12px; animation:hwFade 1s ease 1s both;">
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#FFD9CF;">Scroll</span>
+        <span style="display:inline-block; width:2px; height:34px; background:#FFD9CF; animation:hwBob 2.2s ease-in-out infinite;"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- the analogy, three plain cards -->
+  <section style="max-width:1360px; margin:0 auto; padding:0 28px;">
+    <div data-reveal="true" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); border-bottom:2px solid #171019;">
+      <div data-hover-card="true" style="padding:26px 24px 30px 0; border-right:2px solid #171019;">
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">The problem</span>
+        <p style="font-size:16px; font-weight:600; line-height:1.5; margin:12px 0 0; text-wrap:pretty;">A hospital usually finds out it is short of a blood group <b>on the day it runs out</b>. By then the only options are emergency appeals and transfers.</p>
+      </div>
+      <div data-hover-card="true" style="padding:26px 24px 30px; border-right:2px solid #171019;">
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">The clue</span>
+        <p style="font-size:16px; font-weight:600; line-height:1.5; margin:12px 0 0; text-wrap:pretty;">Shortages are rarely sudden. Stock <b>drifts down for days</b> first, and that drift follows patterns — weekdays, festivals, monsoon, donation camps.</p>
+      </div>
+      <div data-hover-card="true" style="padding:26px 0 30px 24px;">
+        <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72);">What Hemzo does</span>
+        <p style="font-size:16px; font-weight:600; line-height:1.5; margin:12px 0 0; text-wrap:pretty;">Reads the public record every day, spots the drift, and says <b>"this district runs short in three days"</b> — while there is still time to act.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- four steps -->
+  <section style="max-width:1360px; margin:0 auto; padding:0 28px;">
+
+    <!-- 01 -->
+    <div data-step="true" data-reveal="true" data-steprow="true" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:52px; align-items:center; padding:64px 0; border-bottom:2px solid #171019;">
+      <div>
+        <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
+          <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">01</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Collect</span>
+        </div>
+        <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">We read the public record, every day.</h2>
+        <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">India already publishes blood-bank stock on <b>eRaktKosh</b>, the government's public portal. Nobody has to send us anything — we simply check it on a schedule and keep a copy of what it said, so we have a history nobody else is storing.</p>
+        <p style="font-size:14px; font-weight:600; line-height:1.5; color:#7A3A12; background:#FCD9C8; border-left:4px solid #FA8743; padding:12px 14px; margin:0; max-width:52ch;"><b>In one line:</b> the data is already public — we just write down what it says, every single day.</p>
+      </div>
+      <div data-diagram="true" style="border:2px solid #171019; background:#FCD9C8; padding:22px;">
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Scattered readings → one ordered record</span>
+        <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto;" aria-label="Scattered data points snapping into an ordered grid">
+          <g data-hw-snap-grid="true"></g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div data-step="true" data-reveal="true" data-steprow="true" style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:52px; align-items:center; padding:64px 0; border-bottom:2px solid #171019;">
+      <div data-flip="true" data-diagram="true" style="border:2px solid #171019; background:#FFF7F3; padding:22px; order:-1;">
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Ragged entries → a clean daily series</span>
+        <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto;" aria-label="Misaligned rows snapping to a shared baseline and gaps being filled">
+          <line x1="96" y1="8" x2="96" y2="172" stroke="#171019" stroke-width="2" stroke-dasharray="5 5"></line>
+          <g font-family="Archivo Narrow, Archivo, sans-serif" font-size="9" font-weight="700" fill="rgba(23,16,25,.75)" letter-spacing="1" text-anchor="end">
+            <text x="86" y="24">MON</text>
+            <text x="86" y="47">TUE</text>
+            <text x="86" y="70">WED</text>
+            <text x="86" y="93">THU</text>
+            <text x="86" y="116">FRI</text>
+            <text x="86" y="139">SAT</text>
+            <text x="86" y="162">SUN</text>
+          </g>
+          <g data-hw-align-rows="true"></g>
+          <g data-hw-fill-bars="true"></g>
+        </svg>
+      </div>
+      <div>
+        <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
+          <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">02</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Tidy up</span>
+        </div>
+        <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">Real data is messy. We line it up.</h2>
+        <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">Banks report at different times, spell their own names three ways, skip days, and occasionally post a number that can't be right. We match each bank to its district, put every reading on the same daily clock, <b>fill small gaps</b>, and flag the values that look like typing errors rather than real drops.</p>
+        <p style="font-size:14px; font-weight:600; line-height:1.5; color:#7A3A12; background:#FCD9C8; border-left:4px solid #FA8743; padding:12px 14px; margin:0; max-width:52ch;"><b>In one line:</b> before you can spot a pattern, every day has to be measured the same way.</p>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div data-step="true" data-reveal="true" data-steprow="true" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:52px; align-items:center; padding:64px 0; border-bottom:2px solid #171019;">
+      <div>
+        <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
+          <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">03</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Learn the rhythm</span>
+        </div>
+        <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">Every day of history teaches it a little more.</h2>
+        <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">Lay a district's stock history on top of itself and you can see how far each group usually wanders, and how often it drops well below its normal level. The model measures that from every snapshot we have kept, and is re-tested against a naive guess after each new one. With only weeks of record it can't yet learn weekends or monsoon — it will, as the archive grows.</p>
+        <p style="font-size:14px; font-weight:600; line-height:1.5; color:#7A3A12; background:#FCD9C8; border-left:4px solid #FA8743; padding:12px 14px; margin:0; max-width:52ch;"><b>In one line:</b> it isn't guessing the future — it's measuring how stock has behaved before, and saying honestly how sure it is.</p>
+      </div>
+      <div data-diagram="true" style="border:2px solid #171019; background:#FFF7F3; padding:22px;">
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">Past weeks (faint) → the usual pattern (red)</span>
+        <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto;" aria-label="Many faint historical curves with one strong learned curve drawn over them">
+          <g data-hw-ghost-lines="true"></g>
+          <polyline data-draw="true" data-hw-learned="true" points="" fill="none" stroke="#E3312A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:900; animation-delay:.6s;"></polyline>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div data-step="true" data-reveal="true" data-steprow="true" style="display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:52px; align-items:center; padding:64px 0; border-bottom:2px solid #171019;">
+      <div data-flip="true" data-diagram="true" style="border:2px solid #171019; background:#FCD9C8; padding:22px; order:-1;">
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); margin-bottom:16px;">The line crosses the floor → we say so early</span>
+        <svg viewBox="0 0 320 180" style="display:block; width:100%; height:auto; overflow:visible;" aria-label="A forecast line crossing below a safety floor, triggering an alert">
+          <rect data-flash="true" x="0" y="118" width="320" height="62" fill="#E3312A" opacity="0.18"></rect>
+          <line x1="0" y1="118" x2="320" y2="118" stroke="#FA8743" stroke-width="2.5" stroke-dasharray="7 6"></line>
+          <text x="4" y="112" font-family="Archivo Narrow, Archivo, sans-serif" font-size="9" font-weight="700" fill="#7A3A12" letter-spacing="1.4">SAFE FLOOR</text>
+          <polyline points="4,42 44,50 84,46 124,62 164,74" fill="none" stroke="#171019" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <polyline data-draw="true" points="164,74 204,96 244,118 284,140 314,152" fill="none" stroke="#E3312A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:900; animation-delay:.5s;"></polyline>
+          <circle cx="244" cy="118" r="6" fill="#E3312A" stroke="#FFF7F3" stroke-width="3" data-alert="true"></circle>
+          <g data-alert="true">
+            <rect x="196" y="18" width="118" height="30" fill="#171019"></rect>
+            <text x="206" y="37" font-family="Archivo, sans-serif" font-size="12" font-weight="800" fill="#FFF7F3">Short in 3 days</text>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px;">
+          <span style="font-size:clamp(46px,5vw,76px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;" data-stepnum="true">04</span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(23,16,25,0.72); white-space:nowrap;">Warn early</span>
+        </div>
+        <h2 style="font-size:clamp(26px,2.8vw,40px); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin:0 0 14px;">A number is useless. A warning isn't.</h2>
+        <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:52ch; margin:0 0 14px; text-wrap:pretty;">Every district has a <b>working floor</b> — the level below which routine surgery starts getting postponed. The moment the forecast line is heading under that floor, the district turns red on the map and anyone watching it gets told: <b>short in three days</b>, not short today.</p>
+        <p style="font-size:14px; font-weight:600; line-height:1.5; color:#7A3A12; background:#FCD9C8; border-left:4px solid #FA8743; padding:12px 14px; margin:0; max-width:52ch;"><b>In one line:</b> three days is enough time to run a camp or move units. Zero days isn't.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- honest limits -->
+  <section style="max-width:1360px; margin:0 auto; padding:56px 28px 20px;">
+    <div data-reveal="true">
+      <h2 style="font-size:clamp(24px,2.4vw,36px); font-weight:900; letter-spacing:-0.05em; margin:0 0 6px;">What it does — and what it doesn't.</h2>
+      <p style="font-size:15px; font-weight:600; color:rgba(23,16,25,0.75); margin:0 0 26px;">Worth being straight about, because a forecast people can't trust is worse than none.</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:18px;">
+        <div data-hover-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:20px 22px 22px;">
+          <span style="display:inline-block; background:#3ECF8E; color:#0B4A38; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:4px 9px; margin-bottom:14px;">It does</span>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Tells you which districts are trending toward a shortage, three to seven days out.</span></p>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Shows the whole state at once, so you can see where spare units actually are.</span></p>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Publishes its confidence, so a shaky forecast looks shaky.</span></p>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#3ECF8E; font-weight:900;">→</span><span>Runs entirely on data that is already public — nothing private, nothing patient-level.</span></p>
+        </div>
+        <div data-hover-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:20px 22px 22px;">
+          <span style="display:inline-block; background:#171019; color:#FFF7F3; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:4px 9px; margin-bottom:14px;">It doesn't</span>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#E3312A; font-weight:900;">×</span><span>Replace a blood bank&rsquo;s own records — eRaktKosh lags reality by hours.</span></p>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#E3312A; font-weight:900;">×</span><span>Predict a road accident, a disaster, or any single sudden event.</span></p>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#E3312A; font-weight:900;">×</span><span>Know about stock a bank holds but never reported.</span></p>
+          <p style="font-size:15px; font-weight:600; line-height:1.5; margin:0 0 10px; display:flex; gap:10px;"><span style="color:#E3312A; font-weight:900;">×</span><span>Give clinical advice. It is a planning signal, not an official instruction.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- red poster close -->
+  <section style="padding:10px 28px 50px;">
+    <div style="max-width:1360px; margin:0 auto;">
+      <figure style="margin:0;">
+        <div style="position:relative; width:100%; height:420px; border:2px solid #171019; filter:grayscale(1) contrast(1.05); background:#EAE7E7; display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:var(--font-body), Arial, sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.45);">Photo — blood-bank cold chain / courier handoff</span>
+        </div>
+        <figcaption style="font-family:var(--font-body), Arial, sans-serif; font-size:14px; line-height:1.5; color:rgba(23,16,25,0.75); margin-top:10px; max-width:52ch;">A transfer only works if someone is driving. Hemzo's job is to tell them three days earlier.</figcaption>
+      </figure></div>
+  </section>
+
+  <section style="background:#171019; color:#FFF7F3; margin-top:46px; padding:72px 28px 78px;">
+    <div style="max-width:1360px; margin:0 auto; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(260px,0.7fr); gap:40px; align-items:end;">
+      <div>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#FFD9CF; margin-bottom:16px;">That's the whole idea</span>
+        <h2 style="font-size:clamp(30px,4.4vw,66px); font-weight:900; letter-spacing:-0.055em; line-height:0.96; margin:0; max-width:22ch;">Now go look at a district that's about to run short.</h2>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <a href="live-map.html" data-cta="true" style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:#FCD9C8; color:#171019; font-size:15px; font-weight:800; padding:17px 20px;"><span style="white-space:nowrap;">Open the live map</span><span>→</span></a>
+        <a href="data-sources.html" data-cta="true" style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:transparent; color:#FFF7F3; border:2px solid #FFF7F3; font-size:15px; font-weight:800; padding:15px 18px;"><span style="white-space:nowrap;">Read the methodology</span><span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const rnd = (a, b) => { const x = Math.sin(a * 91.3 + b * 271.9) * 43758.5453; return x - Math.floor(x); };
+
+class Component extends DCLogic {
+  componentDidMount() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('[data-reveal]').forEach(n => n.classList.add('hw-in'));
+      this._renderDiagrams();
+      return;
+    }
+    this._renderDiagrams();
+    this.io = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('hw-in'); this.io.unobserve(e.target); } });
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(n => this.io.observe(n));
+  }
+
+  componentWillUnmount() { if (this.io) this.io.disconnect(); }
+
+  _renderDiagrams() {
+    const svgns = 'http://www.w3.org/2000/svg';
+    const el = (tag, attrs) => {
+      const n = document.createElementNS(svgns, tag);
+      for (const k in attrs) n.setAttribute(k, attrs[k]);
+      return n;
+    };
+
+    // step 1: 6x5 grid of "readings" that fly in from scattered offsets
+    const snapGrid = document.querySelector('[data-hw-snap-grid]');
+    if (snapGrid) {
+      for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 6; c++) {
+          const i = r * 6 + c;
+          const fill = ['#FFF7F3', '#FFF7F3', '#FFF7F3', '#4FC3F7', '#FFC845', '#3ECF8E'][Math.floor(rnd(r + 1, c + 1) * 6)];
+          const dx = ((rnd(c + 2, r + 3) - 0.5) * 220).toFixed(0) + 'px';
+          const dy = ((rnd(r + 5, c + 7) - 0.5) * 150).toFixed(0) + 'px';
+          const rect = el('rect', {
+            x: 12 + c * 50, y: 16 + r * 32, width: 26, height: 14, fill,
+            stroke: '#171019', 'stroke-width': 1.5, 'data-snap': 'true',
+          });
+          rect.style.setProperty('--dx', dx);
+          rect.style.setProperty('--dy', dy);
+          rect.style.animationDelay = (0.1 + i * 0.028).toFixed(2) + 's';
+          snapGrid.appendChild(rect);
+        }
+      }
+    }
+
+    // step 2: ragged rows that slide onto a shared baseline
+    const alignRows = document.querySelector('[data-hw-align-rows]');
+    const fillBars = document.querySelector('[data-hw-fill-bars]');
+    if (alignRows) {
+      const rowFills = ['#FCD9C8', '#4FC3F7', '#FCD9C8', '#A78BFA', '#FCD9C8', '#FCD9C8', '#4FC3F7'];
+      for (let i = 0; i < 7; i++) {
+        const y = 14 + i * 23;
+        const w = Math.round(70 + rnd(i + 1, 2) * 140);
+        const off = (-40 - rnd(i, 4) * 90).toFixed(0) + 'px';
+        const g = el('g', { 'data-align': 'true' });
+        g.style.setProperty('--off', off);
+        g.style.animationDelay = (0.15 + i * 0.09).toFixed(2) + 's';
+        const rect = el('rect', { x: 96, y, width: w, height: 12, fill: rowFills[i], stroke: '#171019', 'stroke-width': 1.5 });
+        g.appendChild(rect);
+        alignRows.appendChild(g);
+      }
+    }
+    if (fillBars) {
+      const bars = [
+        { x: 178, y: 37, delay: '1.05s' },
+        { x: 152, y: 106, delay: '1.2s' },
+        { x: 214, y: 152, delay: '1.35s' },
+      ];
+      bars.forEach((b) => {
+        const rect = el('rect', {
+          x: b.x, y: b.y, width: 14, height: 12, fill: '#FFC845',
+          stroke: '#171019', 'stroke-width': 1.5, 'data-fill': 'true',
+        });
+        rect.style.animationDelay = b.delay;
+        fillBars.appendChild(rect);
+      });
+    }
+
+    // step 3: faint historical curves + one learned curve
+    const curve = (seed, amp) => {
+      const pts = [];
+      for (let i = 0; i <= 16; i++) {
+        const x = 8 + (i / 16) * 304;
+        const base = 96 + Math.sin((i / 16) * Math.PI * 2.1) * 34 + Math.sin((i / 16) * Math.PI * 4.4) * 12;
+        const y = base + (rnd(seed, i) - 0.5) * amp;
+        pts.push(x.toFixed(1) + ',' + Math.max(12, Math.min(168, y)).toFixed(1));
+      }
+      return pts.join(' ');
+    };
+    const ghostLines = document.querySelector('[data-hw-ghost-lines]');
+    if (ghostLines) {
+      for (let k = 0; k < 10; k++) {
+        const line = el('polyline', {
+          points: curve(k + 1, 56), fill: 'none', stroke: '#171019', 'stroke-width': 1.5, 'data-ghost': 'true',
+        });
+        line.style.animationDelay = (0.1 + k * 0.05).toFixed(2) + 's';
+        ghostLines.appendChild(line);
+      }
+    }
+    const learned = document.querySelector('[data-hw-learned]');
+    if (learned) learned.setAttribute('points', curve(0, 0));
+  }
+}
+</script>
+</body>
+</html>

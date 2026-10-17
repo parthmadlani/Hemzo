@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Sources — Hemzo</title>
+<script src="js/hemzo-data.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="ds/styles.css">
+  <script src="ds/ds-bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=Archivo+Narrow:wght@600;700&amp;display=swap">
+  <style>
+    body { margin: 0; background: #FFF7F3; }
+    a { color: #171019; text-decoration: none; }
+    a:hover { color: #E3312A; }
+    @keyframes dsMask { from { transform: translateY(110%) } to { transform: none } }
+    @keyframes dsFade { from { opacity:0 } to { opacity:1 } }
+    @keyframes dsRise { from { opacity:0; transform:translateY(20px) } to { opacity:1; transform:none } }
+    @keyframes dsPulse { 0%{box-shadow:0 0 0 0 currentColor} 70%{box-shadow:0 0 0 9px rgba(0,0,0,0)} 100%{box-shadow:0 0 0 0 rgba(0,0,0,0)} }
+    @keyframes dsMarquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+    @keyframes dsGrow { 0%{ transform:scaleX(0) } 22%{ transform:none } 78%{ transform:none } 100%{ transform:scaleX(0) } }
+    @keyframes dsDraw { 0%{ stroke-dashoffset:1200 } 35%{ stroke-dashoffset:0 } 82%{ stroke-dashoffset:0 } 100%{ stroke-dashoffset:1200 } }
+    @keyframes dsFlow { 0%{ transform:translateX(-12px); opacity:0 } 18%{ opacity:1 } 82%{ opacity:1 } 100%{ transform:translateX(12px); opacity:0 } }
+    @keyframes dsDrift { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-5px) } }
+    @keyframes dsBlink { 0%,100%{ opacity:1 } 50%{ opacity:.25 } }
+    @keyframes dsScan { 0%{ transform:translateY(-100%) } 100%{ transform:translateY(400%) } }
+
+    [data-reveal] { }
+    [data-reveal].ds-in { animation: hzcRise .8s cubic-bezier(.16,1,.3,1); }
+
+    [data-stage].ds-in [data-stagebar] { animation: dsGrow 5.6s cubic-bezier(.16,1,.3,1) infinite both; }
+    [data-stage].ds-in [data-stagedot] { animation: dsFlow 5.6s cubic-bezier(.16,1,.3,1) infinite both; }
+    [data-imp].ds-in [data-impbar] { animation: dsGrow 6.4s cubic-bezier(.16,1,.3,1) infinite both; }
+    [data-chart].ds-in [data-draw] { animation: dsDraw 7s cubic-bezier(.16,1,.3,1) infinite both; }
+    [data-chart].ds-in [data-scanline] { animation: dsScan 7s linear infinite; }
+
+    [data-row] { transition: background .22s ease, padding-left .3s cubic-bezier(.16,1,.3,1); }
+    [data-row]:hover { background: rgba(252,217,200,.6); padding-left: 10px; }
+    [data-card] { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease; }
+    [data-card]:hover { transform: translateY(-5px); box-shadow: 5px 5px 0 #171019; }
+    [data-cta] { position:relative; overflow:hidden; transition: transform .28s cubic-bezier(.16,1,.3,1), background .22s ease; }
+    [data-cta]:hover { transform: translateY(-3px); }
+    nav a { position:relative; transition: color .22s ease; }
+    nav a::after { content:''; position:absolute; left:0; bottom:-4px; height:2px; width:100%; background:#FCD9C8; transform:scaleX(0); transform-origin:left; transition:transform .36s cubic-bezier(.16,1,.3,1); }
+    nav a:hover::after, nav a[aria-current="page"]::after { transform:scaleX(1); }
+
+    @media (max-width: 960px) {
+      [data-split] { grid-template-columns: 1fr !important; }
+      [data-flip] { order: 0 !important; }
+      [data-index] { display: none !important; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } [data-reveal] { opacity:1 !important; transform:none !important; } }
+
+    @keyframes hzcRise { from { transform: translateY(24px); } to { transform: none; } }
+    .hzc-skip { position: absolute; left: -9999px; top: 0; z-index: 999; background: #171019; color: #FFF7F3; padding: 10px 16px; font-size: 13px; font-weight: 800; }
+    .hzc-skip:focus { left: 8px; top: 8px; }
+    :focus-visible { outline: 2px solid #E3312A; outline-offset: 2px; }
+    nav :focus-visible, footer :focus-visible { outline-color: #FCD9C8; }
+    .hzc-link { position: relative; }
+    .hzc-link::after { content: ''; position: absolute; left: 0; bottom: -5px; height: 2px; width: 100%; background: #FCD9C8; transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+    .hzc-link:hover::after, .hzc-link[aria-current="page"]::after { transform: scaleX(1); }
+    .hzc-burger { display: none; }
+    .hzc-drawer summary::-webkit-details-marker { display: none; }
+    .hzc-cta { transition: transform .28s cubic-bezier(.16,1,.3,1); }
+    .hzc-cta:hover { transform: translateY(-2px); }
+    @media (max-width: 1180px) { .hzc-desk { display: none !important; } .hzc-burger { display: block !important; } }
+    @media (max-width: 1000px) { .hzc-fgrid { grid-template-columns: 1fr 1fr !important; } }
+    @media (max-width: 640px) { .hzc-fgrid { grid-template-columns: 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="font-family:Archivo, Arial, sans-serif; color:#171019; background:#FFF7F3; font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased;">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:3px; background:transparent; z-index:1000;">
+    <div data-progress="true" style="height:100%; width:0%; background:#E3312A; transition:width .1s linear;"></div>
+  </div>
+
+  <a class="hzc-skip" href="#main">Skip to content</a>
+
+  <nav style="position:sticky; top:0; z-index:900; background:#E3312A; color:#FFF7F3; border-bottom:2px solid rgba(255,247,243,0.28);">
+    <div style="display:flex; align-items:center; gap:24px; max-width:1360px; margin:0 auto; padding:14px 28px;">
+      <a href="index.html" style="display:flex; align-items:center; gap:10px; margin-right:auto; color:#FFF7F3;">
+        <img src="assets/logo-transparent.png" alt="Hemzo" style="width:34px; height:34px; object-fit:contain; display:block; flex:none;">
+        <span style="font-size:20px; font-weight:900; letter-spacing:-0.04em;">Hemzo</span>
+      </a>
+      <div class="hzc-desk" style="display:flex; align-items:center; gap:22px;">
+        <a class="hzc-link" href="live-map.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Live map</a>
+        <a class="hzc-link" href="forecast-detail.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Forecast</a>
+        <a class="hzc-link" href="alerts.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Alerts</a>
+        <a class="hzc-link" href="how-it-works.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">How it works</a>
+        <a class="hzc-link" href="data-sources.html" aria-current="page" style="font-size:14px; font-weight:700; color:#FFF7F3; white-space:nowrap;">Data</a>
+        <a class="hzc-link" href="about.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">About</a>
+        <a class="hzc-cta" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-size:13px; font-weight:800; padding:10px 16px; text-align:left; white-space:nowrap;">Get alerts</a>
+      </div>
+      <details class="hzc-burger hzc-drawer" style="position:relative;">
+        <summary aria-label="Open menu" style="list-style:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:8px 4px;">
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+        </summary>
+        <div style="position:absolute; right:0; top:calc(100% + 14px); background:#171019; border:2px solid #FFF7F3; min-width:248px; display:flex; flex-direction:column; z-index:950;">
+          <a href="live-map.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Live map</a>
+          <a href="forecast-detail.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Forecast</a>
+          <a href="alerts.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Alerts</a>
+          <a href="how-it-works.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">How it works</a>
+          <a href="data-sources.html" aria-current="page" style="font-size:15px; font-weight:700; color:#FCD9C8; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Data</a>
+          <a href="about.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">About</a>
+          <a href="onboarding.html" style="font-size:15px; font-weight:800; color:#171019; background:#FCD9C8; padding:14px 18px;">Get alerts</a>
+        </div>
+      </details>
+    </div>
+  </nav>
+
+  <header id="main" style="background:#E3312A; color:#FFF7F3; padding:74px 28px 0;">
+    <div style="max-width:1360px; margin:0 auto;">
+      <h1 style="font-size:clamp(42px, 7vw, 116px); font-weight:900; letter-spacing:-0.06em; line-height:0.88; margin:0 0 26px; max-width:13ch;">
+        <span style="display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em;"><span style="display:block; animation:dsMask 1s cubic-bezier(.16,1,.3,1) .12s both;">Show your</span></span>
+        <span style="display:block; overflow:hidden; padding-bottom:.12em; margin-bottom:-.12em;"><span style="display:block; color:transparent; -webkit-text-stroke:2px #FFF7F3; animation:dsMask 1s cubic-bezier(.16,1,.3,1) .26s both;">working.</span></span>
+      </h1>
+      <p style="font-size:clamp(17px,1.5vw,21px); font-weight:600; color:#FFD9CF; line-height:1.5; max-width:58ch; margin:0 0 40px; text-wrap:pretty; animation:dsRise .9s cubic-bezier(.16,1,.3,1) .5s both;">
+        Every figure on this site traces back to a public record and a documented step. Here is the source, the cleaning, the model, and the score it earned on data it had never seen — including the parts where it does no better than a naive guess.
+      </p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); border-top:2px solid rgba(255,247,243,.3);">
+        <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
+          <div style="{{ s.wrap }}">
+            <div style="font-size:clamp(28px,3vw,46px); font-weight:900; letter-spacing:-0.05em; line-height:1;"><span>{{ s.value }}</span></div>
+            <span style="display:block; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:#FFD9CF;">{{ s.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </header>
+
+  <div style="background:#171019; color:#FFF7F3; overflow:hidden; border-bottom:2px solid #171019;">
+    <div style="display:flex; width:max-content; animation:dsMarquee 38s linear infinite;">
+      <div style="display:flex; gap:40px; padding:11px 20px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;">
+        <span>eRaktKosh public stock register</span><span>·</span><span>GitHub Actions snapshots every ~4 h</span><span>·</span><span>No patient or donor data</span><span>·</span><span>Forecast rebuilt after every snapshot</span><span>·</span>
+      </div>
+      <div style="display:flex; gap:40px; padding:11px 20px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;" aria-hidden="true">
+        <span>eRaktKosh public stock register</span><span>·</span><span>GitHub Actions snapshots every ~4 h</span><span>·</span><span>No patient or donor data</span><span>·</span><span>Forecast rebuilt after every snapshot</span><span>·</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1360px; margin:0 auto; padding:0 28px;">
+
+    <!-- 01 sources -->
+    <section id="sources" data-reveal="true" style="padding:60px 0 8px;">
+      <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:20px;">
+        <span style="font-size:clamp(34px,3.6vw,54px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;">01</span>
+        <h2 style="font-size:clamp(22px,2.2vw,34px); font-weight:900; letter-spacing:-0.05em; margin:0;">Where the numbers come from</h2>
+      </div>
+      <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:62ch; margin:0 0 26px; text-wrap:pretty;">{{ sourcesIntro }}</p>
+
+      <div style="border-top:2px solid #171019;">
+        <div style="display:grid; grid-template-columns:minmax(180px,1.5fr) minmax(90px,.7fr) minmax(90px,.7fr) minmax(160px,1.6fr); gap:16px; padding:10px 0; border-bottom:2px solid #171019; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">
+          <span>Source</span><span>Cadence</span><span>Lag</span><span>What we take from it</span>
+        </div>
+        <sc-for list="{{ sources }}" as="s" hint-placeholder-count="1">
+          <div data-row="true" style="display:grid; grid-template-columns:minmax(180px,1.5fr) minmax(90px,.7fr) minmax(90px,.7fr) minmax(160px,1.6fr); gap:16px; padding:14px 0; border-bottom:1px solid rgba(23,16,25,0.22); align-items:start;">
+            <div>
+              <b style="display:block; font-size:15px; font-weight:800; letter-spacing:-0.02em;">{{ s.name }}</b>
+              <span style="display:block; margin-top:3px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ s.org }}</span>
+            </div>
+            <span style="font-size:13px; font-weight:700;">{{ s.cadence }}</span>
+            <span style="font-size:13px; font-weight:800; color:{{ s.lagColor }};">{{ s.lag }}</span>
+            <span style="font-size:13.5px; font-weight:500; line-height:1.45; color:rgba(23,16,25,0.72);">{{ s.takes }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 02 pipeline -->
+    <section id="pipeline" data-reveal="true" data-stage="true" style="padding:56px 0 20px;">
+      <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:20px;">
+        <span style="font-size:clamp(34px,3.6vw,54px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;">02</span>
+        <h2 style="font-size:clamp(22px,2.2vw,34px); font-weight:900; letter-spacing:-0.05em; margin:0;">The pipeline, start to finish</h2>
+      </div>
+      <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:62ch; margin:0 0 26px; text-wrap:pretty;">A scheduled job fetches the register about every four hours and commits the raw answer to the repository. The forecast is then rebuilt from the full archive and published as one file, which this site reads. If any step fails, the previous forecast stays up.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:14px;">
+        <sc-for list="{{ stages }}" as="st" hint-placeholder-count="5">
+          <div data-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:16px 16px 18px; position:relative; overflow:hidden;">
+            <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:12px;">
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">Stage {{ st.n }}</span>
+              <span style="margin-left:auto; font-size:11px; font-weight:800; letter-spacing:-0.01em; background:{{ st.tint }}; color:{{ st.tintInk }}; padding:3px 7px;">{{ st.runtime }}</span>
+            </div>
+            <b style="display:block; font-size:16px; font-weight:900; letter-spacing:-0.03em; line-height:1.1; margin-bottom:8px;">{{ st.name }}</b>
+            <p style="font-size:13px; font-weight:500; line-height:1.45; color:rgba(23,16,25,0.7); margin:0 0 14px; min-height:3.9em;">{{ st.body }}</p>
+            <div style="height:6px; background:rgba(23,16,25,0.12); position:relative;">
+              <i data-stagebar="true" style="{{ st.bar }}"></i>
+            </div>
+            <div style="margin-top:10px; display:flex; align-items:center; gap:7px;">
+              <span data-stagedot="true" style="{{ st.dot }}"></span>
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ st.out }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 03 model card + backtest -->
+    <section id="model" data-reveal="true" data-split="true" style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:46px; padding:56px 0 20px; align-items:start;">
+      <div>
+        <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:20px;">
+          <span style="font-size:clamp(34px,3.6vw,54px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;">03</span>
+          <h2 style="font-size:clamp(22px,2.2vw,34px); font-weight:900; letter-spacing:-0.05em; margin:0;">Model card</h2>
+        </div>
+        <div style="border-top:2px solid #171019;">
+          <sc-for list="{{ modelCard }}" as="m" hint-placeholder-count="8">
+            <div data-row="true" style="display:flex; gap:16px; padding:11px 0; border-bottom:1px solid rgba(23,16,25,0.22); align-items:baseline;">
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72); min-width:130px;">{{ m.k }}</span>
+              <span style="font-size:14px; font-weight:600; line-height:1.4;">{{ m.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div data-flip="true" style="border:2px solid #171019; background:#FCD9C8; padding:20px; position:relative; overflow:hidden;">
+        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:14px;">
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.75);">Backtest · error by horizon</span>
+          <span style="margin-left:auto; display:flex; gap:12px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.75);">
+            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#171019; display:inline-block;"></span>Naive (persistence)</span>
+            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#E3312A; display:inline-block;"></span>Model</span>
+          </span>
+        </div>
+        <svg viewBox="0 0 640 260" preserveAspectRatio="none" style="display:block; width:100%; height:clamp(220px,28vh,280px);" aria-label="Backtest error of the model versus a naive forecast at each horizon">
+          <g stroke="rgba(23,16,25,0.16)" stroke-width="1">
+            <line x1="0" y1="0" x2="640" y2="0"></line>
+            <line x1="0" y1="65" x2="640" y2="65"></line>
+            <line x1="0" y1="130" x2="640" y2="130"></line>
+            <line x1="0" y1="195" x2="640" y2="195"></line>
+            <line x1="0" y1="260" x2="640" y2="260"></line>
+          </g>
+          <sc-for list="{{ errBars }}" as="b" hint-placeholder-count="14">
+            <rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" fill="{{ b.fill }}" stroke="#171019" stroke-width="1.5"></rect>
+          </sc-for>
+        </svg>
+        <div style="display:flex; justify-content:space-around; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
+          <span>1 day</span><span>2 days</span><span>3 days</span><span>4 days</span><span>5 days</span><span>6 days</span><span>7 days</span>
+        </div>
+        <p style="font-size:12.5px; font-weight:500; line-height:1.45; color:rgba(23,16,25,0.8); margin:12px 0 0;">{{ chartNote }}</p>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; border-top:2px solid #171019; padding-top:14px;">
+          <sc-for list="{{ scores }}" as="sc" hint-placeholder-count="3">
+            <div>
+              <div style="font-size:26px; font-weight:900; letter-spacing:-0.05em; line-height:1;"><span>{{ sc.value }}</span></div>
+              <span style="display:block; margin-top:6px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.75);">{{ sc.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 features -->
+    <section id="features" data-reveal="true" style="padding:56px 0 20px;">
+      <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:20px;">
+        <span style="font-size:clamp(34px,3.6vw,54px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;">04</span>
+        <h2 style="font-size:clamp(22px,2.2vw,34px); font-weight:900; letter-spacing:-0.05em; margin:0;">What the model actually looks at</h2>
+      </div>
+      <p style="font-size:16px; font-weight:500; line-height:1.55; color:rgba(23,16,25,0.75); max-width:62ch; margin:0 0 26px; text-wrap:pretty;">Only what is in the public record. Every input is divided by the series&rsquo; own recent level, so a three-unit whole-blood group and a two-thousand-unit red-cell group can share one model. There are no weather, calendar or demand inputs yet.</p>
+      <div style="border-top:2px solid #171019;">
+        <sc-for list="{{ features }}" as="f" hint-placeholder-count="8">
+          <div data-row="true" style="display:grid; grid-template-columns:minmax(150px,1.1fr) minmax(0,2fr) 92px; gap:16px; align-items:center; padding:11px 0; border-bottom:1px solid rgba(23,16,25,0.22);">
+            <b style="display:block; font-size:14px; font-weight:800; letter-spacing:-0.02em;">{{ f.name }}</b>
+            <span style="display:block; font-size:12.5px; font-weight:600; color:rgba(23,16,25,0.72);">{{ f.note }}</span>
+            <span style="justify-self:end; background:{{ f.tint }}; color:{{ f.tintInk }}; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; padding:3px 8px;">{{ f.tag }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- 05 limits + privacy -->
+    <section id="limits" data-reveal="true" style="padding:56px 0 20px;">
+      <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:20px;">
+        <span style="font-size:clamp(34px,3.6vw,54px); font-weight:900; letter-spacing:-0.06em; line-height:.8; color:#E3312A;">05</span>
+        <h2 style="font-size:clamp(22px,2.2vw,34px); font-weight:900; letter-spacing:-0.05em; margin:0;">Known limits &amp; privacy</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;">
+        <sc-for list="{{ limitCards }}" as="l" hint-placeholder-count="4">
+          <div data-card="true" style="border:2px solid #171019; background:#FFF7F3; padding:18px 20px 20px;">
+            <span style="display:inline-block; background:{{ l.tint }}; color:{{ l.tintInk }}; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; white-space:nowrap; padding:4px 9px; margin-bottom:13px; white-space:nowrap;">{{ l.tag }}</span>
+            <b style="display:block; font-size:16px; font-weight:900; letter-spacing:-0.03em; line-height:1.15; margin-bottom:8px;">{{ l.title }}</b>
+            <p style="font-size:13.5px; font-weight:500; line-height:1.5; color:rgba(23,16,25,0.72); margin:0;">{{ l.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+  </div>
+
+  <section style="background:#171019; color:#FFF7F3; margin-top:50px; padding:70px 28px 76px;">
+    <div style="max-width:1360px; margin:0 auto; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(250px,0.7fr); gap:40px; align-items:end;">
+      <div>
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:#FFD9CF; margin-bottom:16px; white-space:nowrap;">Reproducible by design</span>
+        <h2 style="font-size:clamp(28px,4vw,60px); font-weight:900; letter-spacing:-0.055em; line-height:0.96; margin:0 0 16px; max-width:24ch;">Same inputs, same forecast, every time.</h2>
+        <p style="font-size:16px; font-weight:600; color:#FFD9CF; line-height:1.5; max-width:54ch; margin:0;">Every forecast file is stamped with the snapshot it was built from, the model is seeded, and every raw snapshot is kept in the repository. Any forecast on this site can be regenerated from the record it was built on.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <a href="live-map.html" data-cta="true" style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:#FCD9C8; color:#171019; font-size:15px; font-weight:800; padding:17px 20px;"><span style="white-space:nowrap;">See it on the live map</span><span>→</span></a>
+        <a href="how-it-works.html" data-cta="true" style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:transparent; color:#FFF7F3; border:2px solid #FFF7F3; font-size:15px; font-weight:800; padding:15px 18px;"><span style="white-space:nowrap;">How it works</span><span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const HD = window.HemzoData;
+
+class Component extends DCLogic {
+  state = { data: null, error: null };
+
+  componentDidMount() {
+    HD.load().then((data) => this.setState({ data })).catch((e) => this.setState({ error: e.message }));
+
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (this.reduced) {
+      document.querySelectorAll('[data-reveal]').forEach(n => n.classList.add('ds-in'));
+      return;
+    }
+    this.io = new IntersectionObserver((es) => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('ds-in');
+        this.io.unobserve(e.target);
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(n => this.io.observe(n));
+
+    this.onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const bar = document.querySelector('[data-progress]');
+      if (bar) bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0).toFixed(1) + '%';
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  componentWillUnmount() {
+    if (this.io) this.io.disconnect();
+    if (this.onScroll) window.removeEventListener('scroll', this.onScroll);
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const dash = '—';
+    const meta = d ? d.meta : null, met = d ? d.metrics : null;
+    const H = met ? met.horizons : {};
+    const fmt = (x, suffix) => (x == null ? dash : x + (suffix || ''));
+    const rise = (i) => 'dsRise .8s cubic-bezier(.16,1,.3,1) ' + (0.6 + i * 0.08).toFixed(2) + 's both';
+
+    const heroStats = [
+      { value: d ? '1' : dash, label: 'Public source' },
+      { value: d ? meta.history_days.toFixed(0) + ' d' : dash, label: 'Days of history' },
+      { value: d ? meta.snapshots : dash, label: 'Snapshots so far' },
+      { value: d ? meta.series_modelled : dash, label: 'Series forecast' },
+    ].map((s, i) => Object.assign({}, s, {
+      wrap: {
+        padding: i === 0 ? '18px 22px 22px 0' : i === 3 ? '18px 0 22px 22px' : '18px 22px 22px',
+        borderRight: i === 3 ? 'none' : '2px solid rgba(255,247,243,.3)',
+        animation: rise(i),
+      },
+    }));
+
+    const sources = [
+      { name: 'eRaktKosh stock register', org: 'NIC · Ministry of Health & Family Welfare', cadence: 'Every ~4 h', lag: 'Hours', lagColor: '#7A5A00',
+        takes: 'Units in stock per blood bank, per component and blood group — the only input to the model today.' },
+    ];
+
+    const stageDefs = [
+      { n: '01', name: 'Fetch', runtime: 'every ~4 h', body: 'A scheduled GitHub Action asks the public register for every blood bank in the state and commits the unmodified answer with a timestamp.', out: 'data/raw/*.json', tint: '#4FC3F7', tintInk: '#0B4A66' },
+      { n: '02', name: 'Parse', runtime: 'per snapshot', body: 'Turns the portal’s HTML text (“Available, O-Ve:1, A+Ve:9”) into clean unit counts per bank, component and blood group.', out: meta ? meta.banks_listed + ' banks listed' : dash, tint: '#A78BFA', tintInk: '#3B2170' },
+      { n: '03', name: 'Resolve', runtime: 'by address', body: 'Reads each bank’s district from its address and totals units across banks, so the forecast works per district.', out: meta ? meta.districts + ' districts' : dash, tint: '#FFC845', tintInk: '#7A5A00' },
+      { n: '04', name: 'Model', runtime: 'full re-train', body: 'Puts every series on a 6-hour grid, builds features, backtests against a naive forecast and fits the final model on everything known.', out: met ? met.training_rows.toLocaleString('en-IN') + ' training rows' : dash, tint: '#FA8743', tintInk: '#7A3A12' },
+      { n: '05', name: 'Publish', runtime: 'one file', body: 'Writes web/data/forecast.json — forecasts, bands, risk scores and these metrics — which every page on this site reads.', out: meta ? 'through ' + HD.stamp(meta) : dash, tint: '#3ECF8E', tintInk: '#0B4A38' },
+    ];
+    const stages = stageDefs.map((s, i) => Object.assign({}, s, {
+      bar: { display: 'block', height: '100%', width: '100%', background: s.tint, transformOrigin: 'left', animationDelay: (i * 0.28).toFixed(2) + 's' },
+      dot: { width: '7px', height: '7px', borderRadius: '50%', background: s.tint, display: 'inline-block', animationDelay: (i * 0.28 + 0.2).toFixed(2) + 's' },
+    }));
+
+    const deployed = d ? (Object.keys(H).every(h => H[h].method === 'persistence')
+      ? 'Naive persistence at every horizon — the model has not yet beaten it by ' + met.min_gain_to_deploy_model + '% out-of-sample'
+      : Object.keys(H).map(h => h + 'd: ' + H[h].method).join(' · ')) : dash;
+    const modelCard = [
+      { k: 'Task', v: 'Per-district, per-group unit-count forecast, 1–7 days ahead' },
+      { k: 'Model', v: d ? met.algorithm : dash },
+      { k: 'Deployed today', v: deployed },
+      { k: 'Training window', v: d ? meta.history_days.toFixed(0) + ' days of snapshots, growing with every run' : dash },
+      { k: 'Validation', v: d ? 'Forward-chaining: ' + met.folds + ' test windows of ' + met.fold_days + ' days; training only on outcomes already known at each cut' : dash },
+      { k: 'Interval', v: '80% band from out-of-fold residual percentiles (p10 / p90), relative to each series’ level' },
+      { k: 'Retrain', v: 'Every run — i.e. after each new snapshot' },
+      { k: 'Known weakness', v: 'Too little history for seasonality; sudden single-event demand' },
+    ];
+
+    // error by horizon: naive vs model
+    const errBars = [];
+    let chartNote = '';
+    if (d) {
+      const keys = Object.keys(H);
+      const max = Math.max(1, ...keys.map(h => Math.max(H[h].model_error || 0, H[h].baseline_error || 0))) * 1.08;
+      const slot = 640 / keys.length;
+      keys.forEach((h, i) => {
+        const x0 = i * slot + slot * 0.16, w = slot * 0.3;
+        [['baseline_error', '#171019'], ['model_error', '#E3312A']].forEach(([k, fill], j) => {
+          const v = H[h][k] || 0, hh = (v / max) * 255;
+          errBars.push({ x: (x0 + j * (w + 4)).toFixed(1), y: (258 - hh).toFixed(1), w: w.toFixed(1), h: hh.toFixed(1), fill });
+        });
+      });
+      const gain1 = H['1'] && H['1'].gain_pct;
+      chartNote = 'Error = average miss as a % of each series’ own recent level (lower is better), measured only on days the model never saw. A gap of ' + fmt(gain1, '%') +
+        ' at one day is too small to call a win, which is why the naive forecast is what ships.';
+    }
+
+    const sr = d ? met.shortage_risk : null;
+    const scores = [
+      { value: d && H['1'] ? fmt(H['1'].baseline_error, '%') : dash, label: 'Naive error · 1 day' },
+      { value: d && H['3'] ? fmt(H['3'].band_coverage, '%') : dash, label: 'Band coverage · 3 days' },
+      { value: sr && sr.available ? sr.auc_model.toFixed(2) : dash, label: sr && sr.available ? 'Shortage AUC (rule: ' + sr.auc_baseline.toFixed(2) + ')' : 'Shortage AUC' },
+    ];
+
+    const features = [
+      { name: 'Units now', note: 'Latest published count for the group', tag: 'Level', tint: '#4FC3F7', tintInk: '#0B4A66' },
+      { name: 'Change over 1, 2, 3 and 7 days', note: 'Direction and speed of the drift', tag: 'Trend', tint: '#FFC845', tintInk: '#7A5A00' },
+      { name: '7-day mean, spread, low and high', note: 'Recent range, smoothed', tag: 'Level', tint: '#4FC3F7', tintInk: '#0B4A66' },
+      { name: '14-day median and cover', note: 'How today compares with its own usual level', tag: 'Level', tint: '#4FC3F7', tintInk: '#0B4A66' },
+      { name: 'How often it moves', note: 'Changes in the last week and days since the last one — banks update unevenly', tag: 'Rhythm', tint: '#A78BFA', tintInk: '#3B2170' },
+      { name: 'Banks in the district', note: 'How many banks stand behind the number', tag: 'Context', tint: '#FA8743', tintInk: '#7A3A12' },
+      { name: 'District total, all groups', note: 'Overall stock level around this group', tag: 'Context', tint: '#FA8743', tintInk: '#7A3A12' },
+      { name: 'Blood group and component', note: 'Lets the model learn that red cells and whole blood behave differently', tag: 'Context', tint: '#FA8743', tintInk: '#7A3A12' },
+    ];
+
+    const limitCards = [
+      { tag: 'History', tint: '#FFC845', tintInk: '#7A5A00', title: d ? 'Only ' + meta.history_days.toFixed(0) + ' days of record' : 'A short record',
+        body: 'Weekly and seasonal rhythms, festivals and monsoon effects cannot be learned from a few weeks. The model is retrained after every snapshot and is expected to improve as the archive grows.' },
+      { tag: 'Reporting', tint: '#4FC3F7', tintInk: '#0B4A66', title: 'Publishing changes look like stock changes',
+        body: 'Banks start, stop and update on their own schedule, and totals rose sharply in the first weeks of the record. The data cannot tell a real stock change from a bank beginning to publish.' },
+      { tag: 'Shocks', tint: '#A78BFA', tintInk: '#3B2170', title: 'Single events are not predictable',
+        body: 'A highway pile-up or a disaster produces demand no historical pattern contains. Hemzo forecasts the trend, never the incident.' },
+      { tag: 'Privacy', tint: '#3ECF8E', tintInk: '#0B4A38', title: 'No patient data, at any point',
+        body: 'Only aggregate unit counts per bank per group are ever read. There is no donor, recipient or individual record anywhere in the pipeline.' },
+    ];
+
+    return {
+      heroStats, sources, stages, modelCard, scores, features, limitCards, errBars, chartNote,
+      sourcesIntro: 'Nothing here is scraped from a private system and nothing is patient-level. One public source today: the government’s eRaktKosh stock register. Other inputs such as weather or holidays are not used yet.',
+    };
+  }
+}
+</script>
+</body>
+</html>

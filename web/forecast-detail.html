@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forecast Detail — Hemzo</title>
+<script src="js/hemzo-data.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="ds/styles.css">
+  <script src="ds/ds-bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@600;700&display=swap">
+  <style>
+    body { margin: 0; background: #FFF7F3; }
+    a { color: #171019; text-decoration: none; }
+    a:hover { color: #E3312A; }
+    @keyframes fdRise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+    @keyframes fdMask { from { transform: translateY(110%); } to { transform: none; } }
+    @keyframes fdFade { from { opacity:0 } to { opacity:1 } }
+    @keyframes fdPulse { 0%{box-shadow:0 0 0 0 currentColor} 70%{box-shadow:0 0 0 8px rgba(0,0,0,0)} 100%{box-shadow:0 0 0 0 rgba(0,0,0,0)} }
+    @keyframes fdDraw { from { stroke-dashoffset: 1400 } to { stroke-dashoffset: 0 } }
+    @keyframes fdBand { from { opacity:0; transform:scaleY(.3); } to { opacity:1; transform:none; } }
+    @keyframes fdGrow { from { transform: scaleX(0) } to { transform: none } }
+    @keyframes fdTick { 0%{ transform:translateY(0) } 50%{ transform:translateY(-4px) } 100%{ transform:translateY(0) } }
+    @keyframes fdSweep { from { transform: translateX(-100%) } to { transform: translateX(100%) } }
+    @keyframes fdOrbit { to { transform: rotate(360deg) } }
+    @keyframes fdBlip { 0%,100%{ r:5; opacity:1 } 50%{ r:9; opacity:.55 } }
+    @keyframes fdFloat { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-5px) } }
+    /* hover choreography */
+    [data-fd-seg] { transition: background .22s ease, color .22s ease, transform .22s cubic-bezier(.16,1,.3,1); }
+    [data-fd-seg]:hover { background: rgba(227,49,42,.12); transform: translateY(-2px); }
+    [data-fd-chip] { transition: background .22s ease, color .22s ease, transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease; }
+    [data-fd-chip]:hover { transform: translateY(-3px); box-shadow: 4px 4px 0 #171019; }
+    [data-fd-card] { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s ease, background .25s ease; }
+    [data-fd-card]:hover { transform: translateY(-5px); box-shadow: 5px 5px 0 #171019; }
+    [data-fd-row] { transition: background .22s ease, padding-left .28s cubic-bezier(.16,1,.3,1); }
+    [data-fd-row]:hover { background: rgba(252,217,200,.55); padding-left: 8px; }
+    [data-fd-cta] { position: relative; overflow: hidden; transition: transform .28s cubic-bezier(.16,1,.3,1), background .22s ease; }
+    [data-fd-cta]:hover { transform: translateY(-3px); background: #c9271f; }
+    [data-fd-cta]::after {
+      content:''; position:absolute; inset:0; background:linear-gradient(100deg, transparent 20%, rgba(255,247,243,.3) 50%, transparent 80%);
+      transform: translateX(-100%);
+    }
+    [data-fd-cta]:hover::after { animation: fdSweep .8s ease both; }
+    [data-fd-kpi] .fd-v { transition: transform .35s cubic-bezier(.16,1,.3,1), color .25s ease; display:inline-block; }
+    [data-fd-kpi]:hover .fd-v { transform: translateY(-3px) scale(1.04); color:#E3312A; }
+    nav a { transition: color .22s ease; }
+    nav a::after { content:''; position:absolute; left:0; bottom:-4px; height:2px; width:100%; background:#FCD9C8; transform:scaleX(0); transform-origin:left; transition:transform .36s cubic-bezier(.16,1,.3,1); }
+    nav a:hover::after { transform: scaleX(1); }
+    /* scroll reveal */
+    [data-reveal] { }
+    [data-reveal].fd-in { animation: hzcRise .8s cubic-bezier(.16,1,.3,1); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+    @keyframes hzcRise { from { transform: translateY(24px); } to { transform: none; } }
+    .hzc-skip { position: absolute; left: -9999px; top: 0; z-index: 999; background: #171019; color: #FFF7F3; padding: 10px 16px; font-size: 13px; font-weight: 800; }
+    .hzc-skip:focus { left: 8px; top: 8px; }
+    :focus-visible { outline: 2px solid #E3312A; outline-offset: 2px; }
+    nav :focus-visible, footer :focus-visible { outline-color: #FCD9C8; }
+    .hzc-link { position: relative; }
+    .hzc-link::after { content: ''; position: absolute; left: 0; bottom: -5px; height: 2px; width: 100%; background: #FCD9C8; transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+    .hzc-link:hover::after, .hzc-link[aria-current="page"]::after { transform: scaleX(1); }
+    .hzc-burger { display: none; }
+    .hzc-drawer summary::-webkit-details-marker { display: none; }
+    .hzc-cta { transition: transform .28s cubic-bezier(.16,1,.3,1); }
+    .hzc-cta:hover { transform: translateY(-2px); }
+    @media (max-width: 1180px) { .hzc-desk { display: none !important; } .hzc-burger { display: block !important; } }
+    @media (max-width: 1000px) { .hzc-fgrid { grid-template-columns: 1fr 1fr !important; } }
+    @media (max-width: 640px) { .hzc-fgrid { grid-template-columns: 1fr !important; } }
+  </style>
+</helmet>
+
+<div style="font-family:Archivo, Arial, sans-serif; color:#171019; background:#FFF7F3; font-variant-numeric:tabular-nums; -webkit-font-smoothing:antialiased; min-height:100vh;">
+
+  <a class="hzc-skip" href="#main">Skip to content</a>
+
+  <nav style="position:sticky; top:0; z-index:900; background:#E3312A; color:#FFF7F3; border-bottom:2px solid rgba(255,247,243,0.28);">
+    <div style="display:flex; align-items:center; gap:24px; max-width:1560px; margin:0 auto; padding:14px 28px;">
+      <a href="index.html" style="display:flex; align-items:center; gap:10px; margin-right:auto; color:#FFF7F3;">
+        <img src="assets/logo-transparent.png" alt="Hemzo" style="width:34px; height:34px; object-fit:contain; display:block; flex:none;">
+        <span style="font-size:20px; font-weight:900; letter-spacing:-0.04em;">Hemzo</span>
+      </a>
+      <div class="hzc-desk" style="display:flex; align-items:center; gap:22px;">
+        <a class="hzc-link" href="live-map.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Live map</a>
+        <a class="hzc-link" href="forecast-detail.html" aria-current="page" style="font-size:14px; font-weight:700; color:#FFF7F3; white-space:nowrap;">Forecast</a>
+        <a class="hzc-link" href="alerts.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Alerts</a>
+        <a class="hzc-link" href="how-it-works.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">How it works</a>
+        <a class="hzc-link" href="data-sources.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">Data</a>
+        <a class="hzc-link" href="about.html" style="font-size:14px; font-weight:600; color:#FFD9CF; white-space:nowrap;">About</a>
+        <a class="hzc-cta" href="onboarding.html" style="background:#FFF7F3; color:#171019; font-size:13px; font-weight:800; padding:10px 16px; text-align:left; white-space:nowrap;">Get alerts</a>
+      </div>
+      <details class="hzc-burger hzc-drawer" style="position:relative;">
+        <summary aria-label="Open menu" style="list-style:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; padding:8px 4px;">
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+          <span style="display:block; width:26px; height:2px; background:#FFF7F3;"></span>
+        </summary>
+        <div style="position:absolute; right:0; top:calc(100% + 14px); background:#171019; border:2px solid #FFF7F3; min-width:248px; display:flex; flex-direction:column; z-index:950;">
+          <a href="live-map.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Live map</a>
+          <a href="forecast-detail.html" aria-current="page" style="font-size:15px; font-weight:700; color:#FCD9C8; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Forecast</a>
+          <a href="alerts.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Alerts</a>
+          <a href="how-it-works.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">How it works</a>
+          <a href="data-sources.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">Data</a>
+          <a href="about.html" style="font-size:15px; font-weight:700; color:#FFF7F3; padding:14px 18px; border-bottom:2px solid rgba(255,247,243,0.22);">About</a>
+          <a href="onboarding.html" style="font-size:15px; font-weight:800; color:#171019; background:#FCD9C8; padding:14px 18px;">Get alerts</a>
+        </div>
+      </details>
+    </div>
+  </nav>
+
+  <div id="main" style="max-width:1560px; margin:0 auto; padding:0 28px;">
+
+    <div style="display:flex; align-items:center; gap:10px; padding:20px 0 0; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); animation:fdFade .6s ease both;">
+      <a href="live-map.html" style="color:rgba(23,16,25,0.72);">Live map</a>
+      <span>→</span>
+      <span>{{ hubName }}</span>
+      <span>→</span>
+      <span style="color:#E3312A;">{{ group }} forecast</span>
+    </div>
+
+    <header style="display:grid; grid-template-columns:minmax(0,1.25fr) minmax(280px,0.75fr); gap:40px; align-items:end; padding:18px 0 18px; border-bottom:2px solid #171019;">
+      <div>
+        <div style="display:inline-flex; align-items:center; gap:8px; background:#E3312A; color:#FFF7F3; padding:5px 11px; margin-bottom:12px; animation:fdRise .6s cubic-bezier(.16,1,.3,1) .05s both;">
+          <span style="{{ liveDotStyle }}"></span>
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap;">{{ horizonLabel }}</span>
+        </div>
+        <h1 style="font-size:clamp(34px, 4.4vw, 68px); font-weight:900; letter-spacing:-0.055em; line-height:0.9; margin:0;">
+          <span style="display:block; overflow:hidden; padding-bottom:0.08em; margin-bottom:-0.08em;">
+            <span style="display:block; animation:fdMask .9s cubic-bezier(.16,1,.3,1) .15s both;">{{ hubName }}</span>
+          </span>
+          <span style="display:block; overflow:hidden; padding-bottom:0.1em; margin-bottom:-0.1em;">
+            <span style="display:block; color:#E3312A; animation:fdMask .9s cubic-bezier(.16,1,.3,1) .28s both;">{{ headlineVerdict }}</span>
+          </span>
+        </h1>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px; animation:fdRise .7s cubic-bezier(.16,1,.3,1) .4s both;">
+        <div>
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">Component</span>
+          <div style="display:flex; border:2px solid #171019;">
+            <sc-for list="{{ compOptions }}" as="c" hint-placeholder-count="2">
+              <button type="button" data-fd-seg="true" onClick="{{ c.onSelect }}" aria-pressed="{{ c.active }}" style="{{ c.style }}">{{ c.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">Blood group</span>
+          <div style="display:flex; border:2px solid #171019;">
+            <sc-for list="{{ groupOptions }}" as="g" hint-placeholder-count="8">
+              <button type="button" data-fd-seg="true" onClick="{{ g.onSelect }}" aria-pressed="{{ g.active }}" style="{{ g.style }}">{{ g.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:6px;">District</span>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+            <sc-for list="{{ hubOptions }}" as="h" hint-placeholder-count="5">
+              <button type="button" data-fd-chip="true" onClick="{{ h.onSelect }}" aria-pressed="{{ h.active }}" style="{{ h.style }}">{{ h.label }}</button>
+            </sc-for>
+            <select aria-label="Choose any district" onChange="{{ onHubPick }}" value="{{ hubValue }}" style="background:transparent; border:2px solid #171019; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:6px 8px; color:#171019; cursor:pointer;">
+              <sc-for list="{{ hubChoices }}" as="o" hint-placeholder-count="5">
+                <option value="{{ o.value }}">{{ o.label }}</option>
+              </sc-for>
+            </select>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); border-bottom:2px solid #171019;">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+        <div data-fd-kpi="true" style="{{ k.wrapStyle }}">
+          <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">{{ k.label }}</span>
+          <div style="display:flex; align-items:baseline; gap:8px; margin-top:8px;">
+            <span class="fd-v" style="font-size:40px; font-weight:900; letter-spacing:-0.05em; line-height:1;">{{ k.value }}</span>
+            <span style="font-size:13px; font-weight:700; color:rgba(23,16,25,0.72);">{{ k.unit }}</span>
+          </div>
+          <span style="display:block; margin-top:8px; font-size:12px; font-weight:600; color:{{ k.noteColor }};">{{ k.note }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <section style="display:grid; grid-template-columns:minmax(0,1.62fr) minmax(280px,0.9fr); border-bottom:2px solid #171019;">
+
+      <div style="padding:22px 26px 26px 0; border-right:2px solid #171019; min-width:0;">
+        <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:6px;">
+          <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">Units of {{ group }} · 14 days observed, {{ axisEnd }} forecast</span>
+          <span style="margin-left:auto; display:flex; gap:14px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
+            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#171019; display:inline-block;"></span>Observed</span>
+            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:3px; background:#E3312A; display:inline-block;"></span>Forecast</span>
+            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:14px; height:10px; background:#FCD9C8; border:1px solid rgba(23,16,25,.3); display:inline-block;"></span>80% band</span>
+          </span>
+        </div>
+
+        <div style="border:2px solid #171019; background:#FFF7F3; padding:16px 14px 10px;">
+          <svg viewBox="0 0 720 300" preserveAspectRatio="none" style="display:block; width:100%; height:clamp(240px, 32vh, 330px);" aria-label="Forecast chart">
+            <g stroke="rgba(23,16,25,0.14)" stroke-width="1">
+              <line x1="0" y1="0" x2="720" y2="0"></line>
+              <line x1="0" y1="75" x2="720" y2="75"></line>
+              <line x1="0" y1="150" x2="720" y2="150"></line>
+              <line x1="0" y1="225" x2="720" y2="225"></line>
+              <line x1="0" y1="300" x2="720" y2="300"></line>
+            </g>
+            <line x1="0" y1="{{ floorY }}" x2="720" y2="{{ floorY }}" stroke="#FA8743" stroke-width="2" stroke-dasharray="7 6"></line>
+            <sc-if value="{{ showBand }}" hint-placeholder-val="{{ true }}">
+              <path d="{{ bandPath }}" fill="#FCD9C8" opacity="0.95" style="transform-origin:center; animation:fdBand .9s cubic-bezier(.16,1,.3,1) .5s both;"></path>
+            </sc-if>
+            <line x1="{{ splitX }}" y1="0" x2="{{ splitX }}" y2="300" stroke="#171019" stroke-width="2"></line>
+            <polyline points="{{ obsPoints }}" fill="none" stroke="#171019" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:1400; animation:fdDraw 1.5s cubic-bezier(.16,1,.3,1) .25s both;"></polyline>
+            <polyline points="{{ fcPoints }}" fill="none" stroke="#E3312A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1400" style="animation:fdDraw 1.2s cubic-bezier(.16,1,.3,1) 1.1s both;"></polyline>
+            <circle cx="{{ lastX }}" cy="{{ lastY }}" r="12" fill="none" stroke="#E3312A" stroke-width="2" opacity="0.5" style="animation:fdOrbit 8s linear infinite; transform-origin:{{ lastX }}px {{ lastY }}px; stroke-dasharray:4 7;"></circle>
+            <circle cx="{{ lastX }}" cy="{{ lastY }}" r="6" fill="#E3312A" stroke="#FFF7F3" stroke-width="3" style="animation:fdBlip 2.4s ease-in-out infinite;"></circle>
+            <circle data-fd-scan="true" r="5" cx="0" cy="0" fill="#171019" opacity="0"></circle>
+          </svg>
+          <div style="display:flex; justify-content:space-between; margin-top:8px; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(23,16,25,0.72);">
+            <span>−14d</span><span>−7d</span><span>Today</span><span>{{ axisMid }}</span><span>{{ axisEnd }}</span>
+          </div>
+        </div>
+
+        <p style="font-size:13.5px; font-weight:500; line-height:1.5; color:rgba(23,16,25,0.75); max-width:660px; margin:16px 0 0; text-wrap:pretty;">{{ narrative }}</p>
+      </div>
+
+      <aside data-reveal="true" style="padding:22px 0 26px 26px; min-width:0;">
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:12px;">What the record shows</span>
+        <div style="border-top:2px solid #171019;">
+          <sc-for list="{{ drivers }}" as="d" hint-placeholder-count="4">
+            <div data-fd-row="true" style="padding:11px 0; border-bottom:1px solid rgba(23,16,25,0.22);">
+              <div style="display:flex; align-items:baseline; gap:10px;">
+                <b style="font-size:13px; font-weight:800; letter-spacing:-0.01em;">{{ d.name }}</b>
+                <span style="margin-left:auto; font-size:13px; font-weight:800; letter-spacing:-0.03em; color:{{ d.color }};">{{ d.effect }}</span>
+              </div>
+              <div style="height:6px; background:rgba(23,16,25,0.12); margin:8px 0 6px;">
+                <i style="{{ d.barStyle }}"></i>
+              </div>
+              <span style="font-size:11.5px; font-weight:600; color:rgba(23,16,25,0.75);">{{ d.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin:22px 0 12px;">Nearest districts above their usual level</span>
+        <div style="border-top:2px solid #171019;">
+          <sc-for list="{{ donors }}" as="t" hint-placeholder-count="3">
+            <div data-fd-row="true" style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(23,16,25,0.22);">
+              <b style="font-size:13px; font-weight:800; letter-spacing:-0.01em; min-width:92px;">{{ t.name }}</b>
+              <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(23,16,25,0.72);">{{ t.km }}</span>
+              <span style="margin-left:auto; padding:4px 9px; background:#3ECF8E; color:#0B4A38; font-size:11px; font-weight:800; letter-spacing:-0.01em;">+{{ t.spare }} above usual</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <a href="alerts.html" data-fd-cta="true" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:#E3312A; color:#FFF7F3; font-size:13px; font-weight:800; padding:14px 16px; margin-top:20px;">
+          <span>Alert me when {{ group }} drops here</span><span>→</span>
+        </a>
+      </aside>
+    </section>
+
+    <section data-reveal="true" style="padding:22px 0 46px;">
+      <span style="display:block; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72); margin-bottom:12px;">All groups at {{ hubName }} · {{ compLabel }}</span>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:8px;">
+        <sc-for list="{{ allGroups }}" as="g" hint-placeholder-count="8">
+          <button type="button" data-fd-card="true" onClick="{{ g.onSelect }}" style="{{ g.cardStyle }}">
+            <div style="display:flex; align-items:baseline; gap:8px;">
+              <b style="font-size:16px; font-weight:900; letter-spacing:-0.04em;">{{ g.label }}</b>
+              <span style="margin-left:auto; font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:{{ g.statusInk }}; background:{{ g.statusColor }}; padding:3px 7px;">{{ g.status }}</span>
+            </div>
+            <div style="height:7px; background:rgba(23,16,25,0.12); margin:12px 0 10px;">
+              <i style="{{ g.barStyle }}"></i>
+            </div>
+            <div style="display:flex; align-items:baseline; gap:6px;">
+              <span style="font-size:26px; font-weight:900; letter-spacing:-0.05em; line-height:1;">{{ g.units }}</span>
+              <span style="font-size:11px; font-weight:700; color:rgba(23,16,25,0.72);">units · {{ g.delta }}</span>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <footer style="border-top:2px solid #171019; padding:18px 0 40px; display:flex; flex-wrap:wrap; gap:16px; align-items:baseline;">
+      <span style="font-family:'Archivo Narrow', Archivo, sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; white-space:nowrap; color:rgba(23,16,25,0.72);">{{ footnote }}</span>
+      <a href="data-sources.html" data-fd-arrow="true" style="margin-left:auto; font-size:13px; font-weight:800; color:#E3312A;">Methodology →</a>
+    </footer>
+
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const HD = window.HemzoData;
+const NOTE_INK = { critical: '#E3312A', low: '#7A5A00', steady: '#0B4A66', surplus: '#0B4A38', sparse: 'rgba(23,16,25,0.75)', none: 'rgba(23,16,25,0.75)' };
+const EMPTY = { units: 0, ref: 0, floor: 0, cover: 0, status: null, obs: Array(14).fill(0), fc: Array(8).fill(0),
+  lo: Array(8).fill(0), hi: Array(8).fill(0), delta: 0, risk3: null, days_to_floor: null };
+
+class Component extends DCLogic {
+  state = { data: null, error: null, hub: null, group: 'O+', comp: 'Packed RBC' };
+
+  componentDidMount() {
+    HD.load().then((data) => {
+      const q = new URLSearchParams(location.search);
+      const comps = data.meta.components;
+      const comp = comps.includes(q.get('c')) ? q.get('c') : (comps.includes('Packed RBC') ? 'Packed RBC' : comps[0]);
+      const total = (d) => Object.values(d.components[comp]).reduce((a, g) => a + (g.units || 0), 0);
+      const byUnits = data.districts.slice().sort((a, b) => total(b) - total(a));
+      const hub = data.districts.some(d => d.name === q.get('d')) ? q.get('d') : byUnits[0].name;
+      const group = data.meta.groups.includes(q.get('g')) ? q.get('g') : 'O+';
+      this.setState({ data, comp, hub, group });
+    }).catch((e) => this.setState({ error: e.message }));
+
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (this.reduced) {
+      document.querySelectorAll('[data-reveal]').forEach(n => n.classList.add('fd-in'));
+      return;
+    }
+    this.io = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('fd-in'); this.io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('[data-reveal]').forEach(n => this.io.observe(n));
+    this.scan();
+  }
+
+  componentWillUnmount() {
+    if (this.io) this.io.disconnect();
+    if (this.raf) cancelAnimationFrame(this.raf);
+  }
+
+  scan() {
+    const step = (now) => {
+      const line = document.querySelector('polyline[stroke="#171019"]');
+      const dot = document.querySelector('[data-fd-scan]');
+      if (line && dot && line.getPointAtLength) {
+        const total = line.getTotalLength();
+        const period = 5200, hold = 1400;
+        const c = (now % (period + hold));
+        if (c <= period) {
+          const p = line.getPointAtLength((c / period) * total);
+          dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y);
+          dot.setAttribute('opacity', String(Math.min(1, Math.sin((c / period) * Math.PI) * 3) * 0.85));
+        } else { dot.setAttribute('opacity', '0'); }
+      }
+      this.raf = requestAnimationFrame(step);
+    };
+    this.raf = requestAnimationFrame(step);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const live = { width: '6px', height: '6px', borderRadius: '50%', background: '#3ECF8E', color: '#3ECF8E', display: 'inline-block', animation: 'fdPulse 1.7s ease-out infinite' };
+    const segBase = 'background:transparent; border:none; border-right:2px solid #171019; cursor:pointer; font-family:Archivo, sans-serif; font-size:12px; font-weight:800; letter-spacing:-0.02em; padding:7px 4px; color:#171019; flex:1 1 0; min-width:0; text-align:center;';
+    const chipBase = 'background:transparent; border:2px solid #171019; cursor:pointer; font-family:"Archivo Narrow", Archivo, sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:6px 10px; color:#171019;';
+
+    if (!s.data) {
+      return Object.assign(this.shell(EMPTY, '—'), {
+        hubName: s.error ? 'No data' : 'Loading…', group: s.group, compLabel: '', axisMid: '', axisEnd: '+7d',
+        headlineVerdict: s.error ? 'could not load the forecast.' : 'reading the latest record.',
+        narrative: s.error ? s.error + '. If you opened this file from disk, serve the web/ folder over http.' : '',
+        footnote: '', horizonLabel: 'Forecast horizon · 7 days', liveDotStyle: live,
+        kpis: [], groupOptions: [], hubOptions: [], hubChoices: [], hubValue: '', compOptions: [], onHubPick: () => {},
+        drivers: [], donors: [], allGroups: [],
+      });
+    }
+
+    const data = s.data, meta = data.meta, GROUPS = meta.groups;
+    const dist = data.districts.find(d => d.name === s.hub);
+    const comp = dist.components[s.comp];
+    const raw = comp[s.group];
+    const g = raw.nodata ? EMPTY : raw;
+    const stt = raw.nodata ? HD.NODATA : HD.STATUS[g.status];
+    const compLabel = HD.COMPONENT_LABEL[s.comp] || s.comp;
+    const dg = HD.disp(s.group);
+    const pct = (x) => Math.round(x * 100);
+    const sign = (n) => (n >= 0 ? '+' : '−') + Math.abs(n);
+
+    const geom = this.shell(g, dg);
+    const d7 = g.obs[13] - g.obs[6];
+
+    let verdict;
+    if (raw.nodata) verdict = 'has no published stock.';
+    else if (g.status === 'sparse') verdict = 'has too few units to judge.';
+    else if (g.days_to_floor === 0) verdict = 'is below its critical line.';
+    else if (g.days_to_floor) verdict = 'reaches the critical line in ' + g.days_to_floor + ' days.';
+    else if (g.status === 'low') verdict = 'is running low.';
+    else if (g.status === 'surplus') verdict = 'is well stocked.';
+    else verdict = 'holds steady this week.';
+
+    const narrative = raw.nodata
+      ? 'No bank in ' + dist.name + ' has published a ' + dg + ' count for ' + compLabel.toLowerCase() + ' in the record so far (' + meta.history_days + ' days).'
+      : g.units + ' units of ' + dg + ' are on hand against a usual level of ' + Math.round(g.ref) + ' (its own 14-day median) — ' + stt.note + '. ' +
+        'The record shows ' + sign(d7) + ' units over the last week. The forecast holds the latest level and widens its 80% band to ' + g.lo[7] + '–' + g.hi[7] +
+        ' units by day 7, sized from how wrong a naive forecast has been out-of-sample. ' +
+        (g.risk3 == null ? '' : 'Chance of dropping below 55% of usual within 3 days: ' + pct(g.risk3) + '%.') +
+        (g.low_volume ? ' This is a low-volume series, so small counts swing a lot.' : '');
+
+    // districts with this component/group above their own usual level, nearest first
+    const donors = data.districts
+      .filter(d => d.name !== dist.name && d.lat != null && dist.lat != null)
+      .map(d => ({ name: d.name, x: d.components[s.comp][s.group], km: HD.haversineKm(dist, d) }))
+      .filter(o => !o.x.nodata && o.x.units - o.x.ref >= 1)
+      .sort((a, b) => a.km - b.km).slice(0, 4)
+      .map(o => ({ name: o.name, km: Math.round(o.km) + ' km', spare: Math.round(o.x.units - o.x.ref) }));
+
+    const total = (d) => Object.values(d.components[s.comp]).reduce((a, x) => a + (x.units || 0), 0);
+    const top = data.districts.slice().sort((a, b) => total(b) - total(a)).slice(0, 8).map(d => d.name);
+    if (!top.includes(dist.name)) top.push(dist.name);
+
+    const sig = (name, effect, color, w, barColor, note) => ({
+      name, note, effect, color,
+      barStyle: { display: 'block', height: '100%', width: Math.max(2, Math.min(100, w)) + '%', background: barColor, transformOrigin: 'left', animation: 'fdGrow .8s cubic-bezier(.16,1,.3,1) .7s both' },
+    });
+
+    return Object.assign(geom, {
+      hubName: dist.name, group: dg, compLabel,
+      headlineVerdict: verdict, narrative,
+      horizonLabel: 'Forecast horizon · 7 days',
+      footnote: 'Source: eRaktKosh public records, ' + meta.snapshots + ' snapshots since ' + meta.first_snapshot + ' · data through ' + HD.stamp(meta) + ' · model output, not official advice',
+      liveDotStyle: live,
+
+      kpis: [
+        { label: 'Units on hand', value: raw.nodata ? '—' : g.units, unit: raw.nodata ? '' : 'of ' + Math.round(g.ref) + ' usual', note: stt.label + ' · ' + stt.note, noteColor: NOTE_INK[g.status || 'none'],
+          wrapStyle: { padding: '18px 22px 20px 0', borderRight: '2px solid #171019', animation: 'fdRise .7s cubic-bezier(.16,1,.3,1) .5s both' } },
+        { label: 'Versus usual level', value: raw.nodata ? '—' : pct(g.cover) + '%', unit: raw.nodata ? '' : 'of usual', note: 'Usual = the series’ own 14-day median', noteColor: 'rgba(23,16,25,0.75)',
+          wrapStyle: { padding: '18px 22px 20px', borderRight: '2px solid #171019', animation: 'fdRise .7s cubic-bezier(.16,1,.3,1) .58s both' } },
+        { label: '7-day move', value: raw.nodata ? '—' : sign(g.delta) + '%', unit: raw.nodata ? '' : 'to ' + g.fc[7] + ' units', note: raw.nodata ? '' : '80% band ' + g.lo[7] + '–' + g.hi[7] + ' units', noteColor: 'rgba(23,16,25,0.75)',
+          wrapStyle: { padding: '18px 22px 20px', borderRight: '2px solid #171019', animation: 'fdRise .7s cubic-bezier(.16,1,.3,1) .66s both' } },
+        { label: 'Shortage risk · 3 days', value: g.risk3 == null ? '—' : pct(g.risk3) + '%', unit: g.risk3 == null ? '' : 'chance', note: 'Of falling below 55% of the usual level', noteColor: g.risk3 > 0.4 ? '#E3312A' : 'rgba(23,16,25,0.75)',
+          wrapStyle: { padding: '18px 0 20px 22px', animation: 'fdRise .7s cubic-bezier(.16,1,.3,1) .74s both' } },
+      ],
+
+      compOptions: meta.components.map((c, i) => ({
+        label: HD.COMPONENT_LABEL[c] || c, active: c === s.comp,
+        style: segBase + (i === meta.components.length - 1 ? 'border-right:none;' : '') + (c === s.comp ? 'background:#E3312A; color:#FFF7F3;' : ''),
+        onSelect: () => this.setState({ comp: c }),
+      })),
+      groupOptions: GROUPS.map((gr, i) => ({
+        label: HD.disp(gr), active: gr === s.group,
+        style: segBase + (i === GROUPS.length - 1 ? 'border-right:none;' : '') + (gr === s.group ? 'background:#E3312A; color:#FFF7F3;' : ''),
+        onSelect: () => this.setState({ group: gr }),
+      })),
+      hubOptions: top.map(n => ({
+        label: n, active: n === dist.name,
+        style: chipBase + (n === dist.name ? 'background:#171019; color:#FFF7F3;' : ''),
+        onSelect: () => this.setState({ hub: n }),
+      })),
+      hubChoices: data.districts.map(d => ({ value: d.name, label: d.name })).sort((a, b) => a.label.localeCompare(b.label)),
+      hubValue: dist.name,
+      onHubPick: (e) => this.setState({ hub: e.target.value }),
+
+      drivers: raw.nodata ? [] : [
+        sig('Versus usual level', sign(pct(g.cover) - 100) + '%', g.cover < 1 ? '#E3312A' : '#0B4A38', g.cover * 62, g.cover < 1 ? '#E3312A' : '#3ECF8E', 'Usual = this series’ own 14-day median (' + Math.round(g.ref) + ' units)'),
+        sig('Past 7 days', sign(d7) + ' u', d7 < 0 ? '#E3312A' : '#0B4A38', Math.abs(d7) / Math.max(1, g.ref) * 100, d7 < 0 ? '#E3312A' : '#3ECF8E', 'Observed change, same hour a week ago to now'),
+        sig('Forecast band, day 7', g.lo[7] + '–' + g.hi[7], 'rgba(23,16,25,0.85)', (g.hi[7] - g.lo[7]) / Math.max(1, g.hi[7]) * 100, '#171019', 'Where the record says it could land (80%)'),
+        sig('Banks publishing stock', meta.banks_reporting + ' / ' + meta.banks_listed, 'rgba(23,16,25,0.85)', meta.banks_reporting / meta.banks_listed * 100, '#4FC3F7', 'State-wide, in the latest snapshot'),
+      ],
+      donors,
+      allGroups: GROUPS.map(gr => {
+        const x = comp[gr], xx = x.nodata ? EMPTY : x, xs = x.nodata ? HD.NODATA : HD.STATUS[x.status];
+        return {
+          label: HD.disp(gr), units: x.nodata ? '—' : x.units, status: xs.label, statusColor: xs.color, statusInk: xs.ink,
+          delta: xx.risk3 == null ? 'no forecast' : pct(xx.risk3) + '% risk',
+          cardStyle: 'text-align:left; cursor:pointer; background:' + (gr === s.group ? '#FCD9C8' : '#FFF7F3') +
+            '; border:2px solid #171019; padding:12px 14px 14px; font-family:Archivo, sans-serif; color:#171019;' + (gr === s.group ? 'box-shadow:5px 5px 0 #E3312A;' : ''),
+          barStyle: { display: 'block', height: '100%', width: Math.min(100, Math.round(xx.cover * 62)) + '%', background: xs.color, transformOrigin: 'left', animation: 'fdGrow .8s cubic-bezier(.16,1,.3,1) .6s both' },
+          onSelect: () => this.setState({ group: gr }),
+        };
+      }),
+    });
+  }
+
+  // chart geometry for a series: 14 observed days + 7 forecast days on a 720x300 canvas
+  shell(g, dg) {
+    const W = 720, H = 300, N = 21, PAD = 16;
+    const max = Math.max(1, ...g.obs, ...g.hi, g.floor) * 1.08;
+    const X = i => PAD + (i / (N - 1)) * (W - PAD * 2);
+    const Y = v => H - (v / max) * H;
+    const line = (vals, off) => vals.map((v, i) => X(i + off).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ');
+    const top = g.hi.map((v, i) => X(13 + i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' L ');
+    const bot = g.lo.slice().reverse().map((v, i) => X(20 - i).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' L ');
+    return {
+      showBand: true, axisMid: '+4d', axisEnd: '+7d',
+      obsPoints: line(g.obs, 0), fcPoints: line(g.fc, 13),
+      bandPath: 'M ' + top + ' L ' + bot + ' Z',
+      splitX: X(13).toFixed(1), lastX: X(20).toFixed(1), lastY: Y(g.fc[7]).toFixed(1), floorY: Y(g.floor).toFixed(1),
+    };
+  }
+}
+</script>
+</body>
+</html>
